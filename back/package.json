@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "migrate": "npx sequelize-cli db:migrate",
-    "seed": "npx sequelize-cli db:seed:all"
+    "seed": "npx sequelize-cli db:seed:all",
+    "undomigrate": "npx sequelize-cli db:migrate:undo:all"
   },
   "dependencies": {
     "axios": "^1.6.7",
