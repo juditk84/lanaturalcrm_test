@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Member.init({
     id: {
-      type: DataTypes.UUID.V4,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUID.V4,
       primaryKey: true,
     },
@@ -31,11 +31,12 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     address: DataTypes.STRING,
     city: DataTypes.STRING,
-    postcode: DataTypes.INTEGER,
+    postcode: DataTypes.STRING,
     country: DataTypes.STRING,
     phoneNumber: DataTypes.INTEGER,
     authorizationImg: DataTypes.BOOLEAN,
-    memberType: DataTypes.ENUM
+    memberType: DataTypes.ENUM('entity', 'contact')
+
   }, {
     sequelize,
     modelName: 'Member',

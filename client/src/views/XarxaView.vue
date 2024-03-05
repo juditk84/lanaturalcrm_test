@@ -14,6 +14,8 @@ import SectionTitle from '@/components/SectionTitle.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import NotificationBarInCard from '@/components/NotificationBarInCard.vue'
+import AddMemberForm from '@/components/AddMemberForm.vue'
+import ViewMembers from '@/components/ViewMembers.vue'
 
 </script>
 
@@ -26,12 +28,14 @@ import NotificationBarInCard from '@/components/NotificationBarInCard.vue'
 
     </SectionMain>
 
-    <SectionTitle>Custom elements</SectionTitle>
+   <ViewMembers></ViewMembers>
 
     <SectionMain>
 
-      <SectionTitle>Form with status example</SectionTitle>
-
+ <BaseDivider/>
+      <AddMemberForm>
+        
+      </AddMemberForm>
     </SectionMain>
   </LayoutAuthenticated>
 </template>

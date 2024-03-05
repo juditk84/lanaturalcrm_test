@@ -3,22 +3,22 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Transaction_Category extends Model {
+  class ProjectType extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      Transaction_Category.hasMany(models.Transaction, {foreignKey: "categoryId", allowNull: true});
+      ProjectType.hasMany(models.Project);
+      ProjectType.belongsToMany(models.Task, {through: "Tasks_By_ProjectType"})
     }
   }
-  Transaction_Category.init({
-    category: DataTypes.STRING
+  ProjectType.init({
+    type: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Transaction_Category',
+    modelName: 'ProjectType',
   });
-  return Transaction_Category;
+  return ProjectType;
 };

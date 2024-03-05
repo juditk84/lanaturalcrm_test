@@ -23,6 +23,21 @@ router.get('/', async (req, res, next) => {
         }
       })
       : null
+      res.status(200).send('hello, we here')
+  } catch (err) {
+    res.status(500).send({message: "no s'ha trobat el membre que busques, revisa les dades oi"})
+  }
+})
+
+router.get('/totis', async (req, res, next) => {
+
+  try {
+  
+      const workerInfo = await models.Member.findAll(
+       { attributes: ['firstname', 'lastname1', 'commercialName1']}
+        // include:{ models.Tag, models.Notes}.... etc
+    )
+  
       res.status(200).send(workerInfo)
   } catch (err) {
     res.status(500).send({message: "no s'ha trobat el membre que busques, revisa les dades oi"})
@@ -31,6 +46,9 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   const { data } = req.body
+  console.log(data.authorizationImg)
+  console.log(data.memberType.label)
+
   try {
       const newMember = await models.Member.create({
         id: uuidv4(),
@@ -48,13 +66,12 @@ router.post('/', async (req, res, next) => {
         postcode: data.postcode || null,
         phoneNumber: data.phoneNumber || null,
         authorizationImg: data.authorizationImg || null,
-        memberType: data.memberType || null
+        memberType: data.memberType || null // ojo que estem hardcoding the enum values al frontend
       })
       // do we need to add fields ?
-      newMember = models.Member
       res.status(200).send(newMember)
   } catch (err) {
-    res.status(500).send({message: "algo ha anat malament, no s'ha pogut crear el membro"})
+    res.status(500).send(err.message)
   }
 })
 

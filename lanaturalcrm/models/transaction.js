@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Transaction.belongsTo(models.Transaction_Category, {foreignKey: "categoryId", allowNull: true});
+      Transaction.belongsTo(models.Transaction_TipusIVA, {foreignKey: "tipusIVAId", allowNull: true});
+      Transaction.belongsTo(models.Project, {foreignKey: "projectId", allowNull: true});
     }
   }
   Transaction.init({
@@ -18,10 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.DATE,
     description: DataTypes.STRING,
     base: DataTypes.INTEGER,
-    iva: DataTypes.INTEGER,
     irpf: DataTypes.INTEGER,
-    status: DataTypes.ENUM,
-    transactionType: DataTypes.ENUM
+    status: DataTypes.ENUM("en curs", "tancada"),
+    transactionType: DataTypes.ENUM("factura", "nòmina", "subvenció")
   }, {
     sequelize,
     modelName: 'Transaction',

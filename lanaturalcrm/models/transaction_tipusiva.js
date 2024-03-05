@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Transaction_Category extends Model {
+  class Transaction_TipusIVA extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,14 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Transaction_Category.hasMany(models.Transaction, {foreignKey: "categoryId", allowNull: true});
+      Transaction_TipusIVA.hasMany(models.Transaction, {foreignKey: "tipusIVAId", allowNull: true});
     }
   }
-  Transaction_Category.init({
-    category: DataTypes.STRING
+  Transaction_TipusIVA.init({
+    tipusIVA: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Transaction_Category',
+    modelName: 'Transaction_TipusIVA',
   });
-  return Transaction_Category;
+  return Transaction_TipusIVA;
 };

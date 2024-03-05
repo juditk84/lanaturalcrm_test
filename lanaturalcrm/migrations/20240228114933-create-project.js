@@ -2,33 +2,26 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Transactions', {
+    await queryInterface.createTable('Projects', {
       id: {
         type: Sequelize.UUID,
         primaryKey: true,
         defaultValue: Sequelize.UUIDV4,
       },
-      transactionRef: {
+      name: {
         type: Sequelize.STRING
       },
-      description: {
-        type: Sequelize.STRING,
-        defaultValue: "en curs"
-      },
-      date: {
+      start_date: {
         type: Sequelize.DATE
       },
-      base: {
-        type: Sequelize.INTEGER
+      end_date: {
+        type: Sequelize.DATE
       },
-      irpf: {
-        type: Sequelize.INTEGER
+      data_entrega: {
+        type: Sequelize.DATE
       },
-      status: {
-        type: Sequelize.ENUM("en curs", "tancada")
-      },
-      transactionType: {
-        type: Sequelize.ENUM("factura", "nòmina", "subvenció")
+      description: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -41,6 +34,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Transactions');
+    await queryInterface.dropTable('Projects');
   }
 };

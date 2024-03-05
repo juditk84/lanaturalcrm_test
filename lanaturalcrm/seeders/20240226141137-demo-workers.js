@@ -19,15 +19,16 @@ module.exports = {
 
     await queryInterface.bulkInsert('Workers', [
       {
-        id: uuidv4(),
+        id: "58a7331f-ec3c-4a43-9bc1-472706575828",
         firstname: 'Iris',
         lastname1: 'Balboa',
         email: 'it@lanaturalcoopmunicacio.org',
+        hourlyRate: 20,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       { 
-        id: uuidv4(),
+        id: "db3bdc18-ae29-4a7d-b48d-1a3b891985ab",
         firstname: 'Judit',
         lastname1: 'LaRanota',
         lastname2: 'Calida',
