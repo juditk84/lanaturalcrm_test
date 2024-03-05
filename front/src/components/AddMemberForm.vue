@@ -48,13 +48,11 @@ const customElementsForm = reactive({
 })
 
 async function submit() {
-    // const data = form.value;
-  console.log(form.value)
-  console.log(form.authorizationImg)
+
     try {
       const response = await axios.post("api/members", {data: form.value})
 
-      if (response.ok) {
+      if (response.statusText === 'OK') {
         message = "ha funcionat?"
         console.log("yes!" + response)
       } else {
