@@ -8,7 +8,7 @@ const memberStore = useMemberStore()
 async function getMembers() {
     
 }
-let members = computed(() => memberStore.members.value.value)
+let members = computed(() => memberStore.members.value)
 
 function doSomethin() {
     console.log(members)
