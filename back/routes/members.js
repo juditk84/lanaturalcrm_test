@@ -34,7 +34,7 @@ router.get('/', async (req, res, next) => {
   try {
   
       const workerInfo = await models.Member.findAll(
-       { attributes: ['firstname', 'lastname1', 'commercialName1']}
+       { attributes: ['firstname', 'lastname1', 'commercialName1', 'email', 'officialId', 'address', 'city']}
         // include:{ models.Tag, models.Notes}.... etc
     )
   
