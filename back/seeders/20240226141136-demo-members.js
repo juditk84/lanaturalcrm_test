@@ -35,7 +35,7 @@ module.exports = {
       {
         id: "a0ff9e3d-2bc0-4e95-bdea-e7eb3028f4c1",
         commercialName1: 'Abacus Cooperativa',
-        email: 'candelagestio@gmail.com',
+        email: 'abacusonline@abacus.coop',
         officialId: "F08226714",
         address: "CARRER PERU, 186",
         city: "BARCELONA",

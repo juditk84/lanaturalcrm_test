@@ -15,7 +15,7 @@ defineProps({
   checkable: Boolean
 })
 
-const tableContent = ref();
+const tableContent = ref([]);
 
 const route = useRoute();
 
@@ -25,12 +25,12 @@ async function fetchContent() {
     try {
       const results = await axios(`api/${route.params.asideMenuCategoria}`)
       tableContent.value = results.data
-      console.log(tableContent.value)
 
     } catch(error) {
         alert(error.message)
     }
   }
+
 
 
 const mainStore = useMainStore()
@@ -91,7 +91,7 @@ const remove = (arr, cb) => {
     <p>This is sample modal</p>
   </CardBoxModal>
 
-  <table>
+  <!-- <table>
     <thead>
       <tr>
         <th v-if="checkable" />
@@ -140,6 +140,31 @@ const remove = (arr, cb) => {
             />
           </BaseButtons>
         </td>
+      </tr>
+    </tbody>
+  </table> -->
+
+  <div>
+
+   Selecciona el tipus de membres que vols visualitzar: <select name="categoria_membre" id="">
+
+      <option value="entitat">entitats</option>
+      <option value="contacte">contactes</option>
+
+    </select>
+      
+
+  
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th v-for="(value, key) in tableContent[0]">{{ key }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="element in tableContent">
+        <td v-for="value in element"> {{ value }}</td>
       </tr>
     </tbody>
   </table>
