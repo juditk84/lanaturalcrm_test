@@ -4,20 +4,29 @@ import axios from 'axios'
 import { useMemberStore } from '@/stores/memberStore'
 import { computed, ref } from 'vue'
 
-const memberStore = useMemberStore()
-async function getMembers() {
+const members = ref([])
+
+
+async function fetchMembers() {
+   try {
+     const results = await axios('api/members/totis')
+     members.value = results?.data
     
+   } catch(error) {
+       alert(error.message)
+   }
 }
-let members = computed(() => memberStore.members.value)
 
 function doSomethin() {
-    console.log(members)
+    fetchMembers()
+    console.log(members.value)
 }
 </script>
 
 <template>
     <h1>Membros i membrillos</h1>
-    <!-- <div v-for="member in members"> -->
+    <div v-for="member in members">
+        {{ member.commercialName1 }}
+    </div>
     <button @click="doSomethin"> click me</button>
-    <!-- </div> -->
 </template>

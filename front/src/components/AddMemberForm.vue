@@ -15,7 +15,7 @@ import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import NotificationBarInCard from '@/components/NotificationBarInCard.vue'
 import axios from 'axios'
-let message = "hello"
+let message = ref("hello")
 
 const selectOptions = ["entity", "contact"]
 
@@ -54,11 +54,11 @@ async function submit() {
     try {
       const response = await axios.post("api/members", {data: form.value})
 
-      if (response.ok) {
-        message = "ha funcionat?"
-        console.log("yes!" + response)
-      } else {
+      if (response.statusText === "OK") {
+        message.value = "ha funcionat"
         console.log(response)
+      } else {
+        message.value = "no ha funcionat"
       }
     } catch (error) {
       console.log(error);
@@ -112,7 +112,7 @@ function addMember() {
         
         <BaseDivider />
       <CardBox form @submit.prevent="submit">
-        <FormField v-if="form.memberType.label === 'contact'" label="noms, cognoms">
+        <FormField v-if="form.memberType === 'contact'" label="noms, cognoms">
           <FormControl v-model="form.firstname" :icon="mdiAccount" placeholder="monti"/>
           <FormControl v-model="form.lastname1" :icon="mdiAccount" placeholder="buli"/>
           <FormControl v-model="form.lastname2" :icon="mdiAccount" placeholder="de la cruz"/>
@@ -131,7 +131,7 @@ function addMember() {
         </FormField>
         <BaseDivider />
 
-        <FormField v-if="form.memberType.label === 'entitat'" label="nom">
+        <FormField v-if="form.memberType === 'entity'" label="nom">
           <FormControl v-model="form.commercialName1" :icon="mdiAccount" />
           <!-- add option to add one more name -->
             <FormField label="nif">
