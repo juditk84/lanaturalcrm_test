@@ -7,34 +7,34 @@ const uppercaseFirst = str => `${str[0].toUpperCase()}${str.substr(1)}`
 /* GET users listing. */
 
 
-router.get('/', async (req, res, next) => {
-  const {firstname, lastname1, lastname2, memberType} = req.body
-  try {
+// router.get('/', async (req, res, next) => {
+//   const {firstname, lastname1, lastname2, memberType} = req.body
+//   try {
   
-      const workerInfo = memberType === "contact" ? await models.Member.findAll({
-        where: {
-          firstname, lastname1, lastname2, memberType
-        }
-        // include: models.Tag, models.Notes.... etc
-      })
-      : memberType === "entity" ? await models.Member.findAll({
-        where: {
-          commercialName1, 
-        }
-      })
-      : null
-      res.status(200).send('hello, we here')
-  } catch (err) {
-    res.status(500).send({message: "no s'ha trobat el membre que busques, revisa les dades oi"})
-  }
-})
+//       const workerInfo = memberType === "contact" ? await models.Member.findAll({
+//         where: {
+//           firstname, lastname1, lastname2, memberType
+//         }
+//         // include: models.Tag, models.Notes.... etc
+//       })
+//       : memberType === "entity" ? await models.Member.findAll({
+//         where: {
+//           commercialName1, 
+//         }
+//       })
+//       : null
+//       res.status(200).send('hello, we here')
+//   } catch (err) {
+//     res.status(500).send({message: "no s'ha trobat el membre que busques, revisa les dades oi"})
+//   }
+// })
 
-router.get('/totis', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
 
   try {
   
       const workerInfo = await models.Member.findAll(
-       { attributes: ['firstname', 'lastname1', 'commercialName1']}
+       { attributes: ['firstname', 'lastname1', 'commercialName1', 'email', 'officialId', 'address', 'city']}
         // include:{ models.Tag, models.Notes}.... etc
     )
   

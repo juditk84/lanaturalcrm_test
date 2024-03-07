@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var membersRouter = require('./routes/members');
 var workersRouter = require('./routes/workers');
 var transactionsRouter = require('./routes/transactions');
+var projectesRouter = require('./routes/projectes');
 
 var app = express();
 
@@ -19,7 +20,8 @@ app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', indexRouter);
-app.use('/api/members', membersRouter);
+app.use('/api/xarxa', membersRouter);
 app.use('/api/workers', workersRouter);
 app.use('/api/transactions', transactionsRouter);
+app.use('/api/projectes', projectesRouter);
 module.exports = app;

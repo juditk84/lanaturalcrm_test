@@ -34,9 +34,9 @@ module.exports = {
       },
       {
         id: "a0ff9e3d-2bc0-4e95-bdea-e7eb3028f4c1",
-        commercialName1: 'Ateneu Candela',
-        email: 'candelagestio@gmail.com',
-        officialId: "G6346477",
+        commercialName1: 'Abacus Cooperativa',
+        email: 'abacusonline@abacus.coop',
+        officialId: "F08226714",
         address: "CARRER PERU, 186",
         city: "BARCELONA",
         postcode: "08020",
