@@ -9,7 +9,7 @@ const members = ref([])
 
 async function fetchMembers() {
    try {
-     const results = await axios('api/members/totis')
+     const results = await axios('api/xarxa')
      members.value = results?.data
     
    } catch(error) {
