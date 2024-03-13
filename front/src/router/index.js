@@ -1,6 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Style from '@/views/StyleView.vue'
 import Home from '@/views/HomeView.vue'
+import LandingView from '@/views/LandingView.vue'
+import AllMembers from '@/views/xarxa/AllMembers.vue'
+import AddMember from '@/views/xarxa/AddMember.vue'
+import AllProjects from '@/views/projectes/AllProjects.vue'
 
 const routes = [
   {
@@ -27,23 +31,31 @@ const routes = [
     },
     path: '/:asideMenuCategoria/landingview',
     name: 'Landing Hub',
-    component: () => import('@/views/LandingView.vue')
+    component: LandingView
   },
   {
     meta: {
-      title: 'Xarxa'
+      title: 'Xarxatotis'
     },
-    path: '/xarxa',
+    path: '/xarxa/totis',
+    name: 'Xarxatotis',
+    component: AllMembers
+  },
+  {
+    meta: {
+      title: 'Afegirmembre'
+    },
+    path: '/xarxa/afegirmembre',
     name: 'Xarxa',
-    component: () => import('@/views/XarxaView.vue')
+    component: AddMember
   },
   {
     meta: {
       title: 'Projectes'
     },
-    path: '/projectes/',
+    path: '/projectes/tots',
     name: 'Projectes',
-    component: () => import('@/views/ProjectesView.vue')
+    component: AllProjects
   },
   {
     meta: {

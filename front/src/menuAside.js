@@ -55,11 +55,11 @@ export default [
     label: 'Xarxa',
     menu: [
       {
-        to: '/xarxa',
+        to: '/xarxa/totis',
         label: 'Veure-ho tot'
       },
       {
-        // to: '/afegir_membre_xarxa',
+        to: '/xarxa/afegirmembre',
         label: 'Afegir membre'
       }
     ]
@@ -70,7 +70,7 @@ export default [
     icon: mdiCardMultiple,
     menu: [
       {
-        to: '/projectes',
+        to: '/projectes/tots',
         label: 'Tots els projectes'
       },
       {

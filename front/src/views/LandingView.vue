@@ -7,7 +7,7 @@ import SectionTitle from '@/components/SectionTitle.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import CardBox from '@/components/CardBox.vue'
-import TableLandingView from '@/components/TableLandingView.vue'
+import LandingTable from '@/components/LandingTable.vue'
 import ModalForTechnicalNotes from '@/components/ModalForTechnicalNotes.vue'
 
 const route = useRoute();
@@ -35,7 +35,7 @@ function showModal(event){
       <ModalForTechnicalNotes :modal-is-visible="modalIsVisible" :modal-button-name="modalButtonName" @show-modal="showModal"/>
       <h3 class="text-center">{{ route.params.asideMenuCategoria.toUpperCase() }} LANDING VIEW</h3>
       <CardBox class="h-1/3">
-        <TableLandingView/>
+        <LandingTable/>
         <button name="landing_list" 
                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                 @click="showModal" >Technical Notes
