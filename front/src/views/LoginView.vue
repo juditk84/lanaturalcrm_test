@@ -20,7 +20,7 @@ const form = reactive({
 })
 
 const router = useRouter()
-const authStore = useAuthStore()
+let authStore = useAuthStore()
 
 
 const submit = async () => {
@@ -32,9 +32,9 @@ const submit = async () => {
       })
       console.log(data)
       localStorage.setItem("token", data.token);
-      localStorage.setItem("username", username);
-      authStore.onLogin(username);
-      router.push('/xarxa/')
+      localStorage.setItem("username", form.login);
+      authStore.authObject.onLogin(form.login);
+      router.push('/xarxa/totis')
       console.log(data.message, data.token)
     } catch (error) {
       console.log(error);
