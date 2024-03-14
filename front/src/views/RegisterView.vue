@@ -12,7 +12,7 @@ import BaseButtons from '@/components/BaseButtons.vue'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
 
 const form = reactive({
-  login: 'john.doe',
+  username: 'john.doe',
   pass: 'highly-secure-password-fYjUw-',
   remember: true
 })
@@ -20,7 +20,7 @@ const form = reactive({
 const router = useRouter()
 
 const submit = () => {
-  router.push('/dashboard')
+  // add POST to db with all the bcrypt thing logic.
 }
 </script>
 
@@ -28,11 +28,12 @@ const submit = () => {
   <LayoutGuest>
     <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
       <CardBox :class="cardClass" is-form @submit.prevent="submit">
-        <FormField label="Login" help="Please enter your login">
+        Add your username and password pleeeeeeeease
+        <FormField label="User name" help="Please enter your login">
           <FormControl
-            v-model="form.login"
+            v-model="form.username"
             :icon="mdiAccount"
-            name="login"
+            name="username"
             autocomplete="username"
           />
         </FormField>

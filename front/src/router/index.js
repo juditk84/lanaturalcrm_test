@@ -2,9 +2,11 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Style from '@/views/StyleView.vue'
 import Home from '@/views/HomeView.vue'
 import LandingView from '@/views/LandingView.vue'
+import RegisterView from '@/views/RegisterView.vue'
 import AllMembers from '@/views/xarxa/AllMembers.vue'
 import AddMember from '@/views/xarxa/AddMember.vue'
 import AllProjects from '@/views/projectes/AllProjects.vue'
+
 
 const routes = [
   {
@@ -96,6 +98,14 @@ const routes = [
     path: '/login',
     name: 'login',
     component: () => import('@/views/LoginView.vue')
+  },
+  {
+    meta: {
+      title: 'Register'
+    },
+    path: '/register',
+    name: 'register',
+    component: RegisterView
   },
   {
     meta: {
