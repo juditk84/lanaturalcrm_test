@@ -109,6 +109,14 @@ const routes = [
   },
   {
     meta: {
+      title: 'Login'
+    },
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/LoginView.vue')
+  },
+  {
+    meta: {
       title: 'Error'
     },
     path: '/error',

@@ -2,6 +2,8 @@
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { mdiAccount, mdiAsterisk } from '@mdi/js'
+import { useAuthStore } from '@/stores/authStore'
+import axios from 'axios'
 import SectionFullScreen from '@/components/SectionFullScreen.vue'
 import CardBox from '@/components/CardBox.vue'
 import FormCheckRadio from '@/components/FormCheckRadio.vue'
@@ -18,10 +20,34 @@ const form = reactive({
 })
 
 const router = useRouter()
+const authStore = useAuthStore()
 
-const submit = () => {
-  router.push('/dashboard')
+
+const submit = async () => {
+  const credentials = {username: form.login, password: form.pass} 
+    try {
+      const { data } = await axios("api/inici/login", {
+        method: "POST",
+        data: credentials,
+      })
+      console.log(data)
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("username", username);
+      authStore.onLogin(username);
+      router.push('/xarxa/')
+      console.log(data.message, data.token)
+    } catch (error) {
+      console.log(error);
+    }
 }
+
+const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("character")
+    localStorage.removeItem("username")
+    console.log("Logged out");
+};
+
 </script>
 
 <template>
