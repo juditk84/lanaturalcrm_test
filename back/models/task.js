@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Task.belongsTo(models.Project, {foreignKey: "projectId"})
-      Task.belongsTo(models.Task, {as: "parentTask", foreignKey: "parentID"})
+      Task.belongsTo(models.Task, {as: "parentTask", foreignKey: "parentId"})
       Task.hasMany(models.Task, {as: "subTasks", foreignKey: "parentId"})
       Task.belongsToMany(models.Worker, {through: "Tasks_By_Worker"})
       Task.belongsToMany(models.ProjectType, {through: "Tasks_By_ProjectType"})
