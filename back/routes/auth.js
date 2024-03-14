@@ -5,6 +5,7 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const models = require("../models");
+const { v4: uuidv4 } = require('uuid');
 
 const supersecret = process.env.SUPER_SECRET;
 
@@ -13,7 +14,7 @@ router.post("/register", async (req, res) => {
 
   try {
       const hash = await bcrypt.hash(password, saltRounds);
-      const newUser = await models.User.create({username: username, password: hash})
+      const newUser = await models.User.create({id: uuidv4(), username: username, password: hash})
       res.status(200).send({ message: `${username} was created!` }); 
   } catch (err) {
     res.status(500).send({ message: err.message });
@@ -37,7 +38,7 @@ router.post("/login", async (req, res) => {
 
       if (!correctPassword) throw new Error("Incorrect password");
       var token = jwt.sign({ user_id }, supersecret);
-      res.send({ message: "Login successful", token});
+      res.send({ message: "Login successful"});
     } else {
       throw new Error("User does not exist");
     }

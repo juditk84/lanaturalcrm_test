@@ -2,6 +2,7 @@
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { mdiAccount, mdiAsterisk } from '@mdi/js'
+import axios from 'axios'
 import SectionFullScreen from '@/components/SectionFullScreen.vue'
 import CardBox from '@/components/CardBox.vue'
 import FormCheckRadio from '@/components/FormCheckRadio.vue'
@@ -19,8 +20,19 @@ const form = reactive({
 
 const router = useRouter()
 
-const submit = () => {
-  // add POST to db with all the bcrypt thing logic.
+const submit = async () => {
+  const credentials = {username: form.username, password: form.pass}    
+   
+  try {
+          const { data } = await axios("api/inici/register", {
+            method: "POST",
+            data: credentials,
+          })
+          console.log(data)
+          
+        } catch (err) {
+          return err
+        }
 }
 </script>
 

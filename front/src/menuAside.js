@@ -94,4 +94,14 @@ export default [
       }
     ]
   },
+  {
+    to: '/register',            
+    icon: mdiLock,
+    label: 'Crear usuaria',
+  },
+  {
+    to: '/login',            
+    icon: mdiPalette,
+    label: 'Iniciar sesió',
+  },
 ]
