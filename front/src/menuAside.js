@@ -94,4 +94,9 @@ export default [
       }
     ]
   },
+  {
+    to: '/register',            
+    icon: mdiLock,
+    label: 'Crear usuaria',
+  },
 ]
