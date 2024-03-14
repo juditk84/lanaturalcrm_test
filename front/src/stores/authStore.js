@@ -4,17 +4,18 @@ import axios from 'axios'
 
 export const useAuthStore = defineStore('auth', () => {
 
-    let isLoggedIn = !!localStorage.getItem("token")
-    let username = localStorage.getItem("username")
+    const isLoggedIn = ref(!!localStorage.getItem("token"))
+    const username = ref(localStorage.getItem("username"))
 
     function onLogin(user) {
-    isLoggedIn = true;
+    isLoggedIn.value = true;
+    console.log("username: ", username.value)
     // navigate("/userhome");
     }
 
     function onLogout() {
-    username = null;
-    isLoggedIn = false;
+    username.value = null;
+    isLoggedIn.value = false;
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("character");
