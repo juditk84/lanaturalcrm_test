@@ -33,20 +33,13 @@ const submit = async () => {
       console.log(data)
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", form.login);
-      authStore.authObject.onLogin(form.login);
+      authStore.onLogin(form.login);
       router.push('/xarxa/totis')
       console.log(data.message, data.token)
     } catch (error) {
       console.log(error);
     }
 }
-
-const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("character")
-    localStorage.removeItem("username")
-    console.log("Logged out");
-};
 
 </script>
 

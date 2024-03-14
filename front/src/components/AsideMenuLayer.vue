@@ -4,6 +4,7 @@ import { computed } from 'vue'
 import AsideMenuList from '@/components/AsideMenuList.vue'
 import AsideMenuItem from '@/components/AsideMenuItem.vue'
 import BaseIcon from '@/components/BaseIcon.vue'
+import { useAuthStore } from '@/stores/authStore'
 
 defineProps({
   menu: {
@@ -11,6 +12,8 @@ defineProps({
     required: true
   },
 })
+
+const authStore = useAuthStore();
 
 const emit = defineEmits(['menu-click', 'aside-lg-close-click'])
 
@@ -23,6 +26,11 @@ const logoutItem = computed(() => ({
 
 const menuClick = (event, item) => {
   emit('menu-click', event, item)
+}
+
+const onLogoutClick = () => {
+ console.log("hello")
+ authStore.onLogout();
 }
 
 const asideLgCloseClick = (event) => {
@@ -51,7 +59,7 @@ const asideLgCloseClick = (event) => {
       </div>
 
       <ul>
-        <AsideMenuItem :item="logoutItem" @menu-click="menuClick" />
+        <AsideMenuItem :item="logoutItem" @click="onLogoutClick"/>
       </ul>
     </div>
   </aside>

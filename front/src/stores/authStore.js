@@ -7,30 +7,26 @@ export const useAuthStore = defineStore('auth', () => {
     const isLoggedIn = ref(!!localStorage.getItem("token"))
     const username = ref(localStorage.getItem("username"))
 
-    function onLogin(user) {
+    const onLogin = (user) => {
     isLoggedIn.value = true;
     console.log("username: ", username.value)
     // navigate("/userhome");
-    }
+    };
 
-    function onLogout() {
+    const onLogout = () => {
     username.value = null;
     isLoggedIn.value = false;
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("character");
+    console.log("username: ", username.value)
     // navigate("/login");
-    }
-    
-    const authObject = {
+    };
+
+  return {
     isLoggedIn,
     onLogin,
     onLogout,
     username,
-    };
-    
-
-  return {
-    authObject
   }
 })
