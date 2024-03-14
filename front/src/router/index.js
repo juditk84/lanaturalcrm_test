@@ -7,6 +7,7 @@ import AllMembers from '@/views/xarxa/AllMembers.vue'
 import AddMember from '@/views/xarxa/AddMember.vue'
 import AllProjects from '@/views/projectes/AllProjects.vue'
 
+import { useAuthStore } from '@/stores/authStore'
 
 const routes = [
   {
@@ -125,12 +126,23 @@ const routes = [
   }
 ]
 
+const authenticated = false;
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
     return savedPosition || { top: 0 }
   }
+})
+
+router.beforeEach((to, from, next) => {
+
+  const authStore = useAuthStore();
+
+  if (to.name !== 'login' && !authStore.isLoggedIn) next({ name: 'login' })
+  else next()
+
 })
 
 export default router

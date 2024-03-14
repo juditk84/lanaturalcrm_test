@@ -34,7 +34,6 @@ const submit = async () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", form.login);
       authStore.onLogin(form.login);
-      router.push('/xarxa/totis')
       console.log(data.message, data.token)
     } catch (error) {
       console.log(error);
