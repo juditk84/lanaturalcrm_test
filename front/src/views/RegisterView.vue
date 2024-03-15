@@ -2,7 +2,6 @@
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { mdiAccount, mdiAsterisk } from '@mdi/js'
-import { useAuthStore } from '@/stores/authStore'
 import axios from 'axios'
 import SectionFullScreen from '@/components/SectionFullScreen.vue'
 import CardBox from '@/components/CardBox.vue'
@@ -14,43 +13,39 @@ import BaseButtons from '@/components/BaseButtons.vue'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
 
 const form = reactive({
-  login: 'john.doe',
+  username: 'john.doe',
   pass: 'highly-secure-password-fYjUw-',
   remember: true
 })
 
 const router = useRouter()
-let authStore = useAuthStore()
-
 
 const submit = async () => {
-  const credentials = {username: form.login, password: form.pass} 
-    try {
-      const { data } = await axios("api/inici/login", {
-        method: "POST",
-        data: credentials,
-      })
-      console.log(data)
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("username", form.login);
-      authStore.onLogin(form.login);
-      console.log(data.message, data.token)
-    } catch (error) {
-      console.log(error);
-    }
+  const credentials = {username: form.username, password: form.pass}    
+   
+  try {
+          const { data } = await axios("api/inici/register", {
+            method: "POST",
+            data: credentials,
+          })
+          console.log(data)
+          
+        } catch (err) {
+          return err
+        }
 }
-
 </script>
 
 <template>
   <LayoutGuest>
     <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
       <CardBox :class="cardClass" is-form @submit.prevent="submit">
-        <FormField label="Login" help="Please enter your login">
+        Add your username and password pleeeeeeeease
+        <FormField label="User name" help="Please enter your login">
           <FormControl
-            v-model="form.login"
+            v-model="form.username"
             :icon="mdiAccount"
-            name="login"
+            name="username"
             autocomplete="username"
           />
         </FormField>

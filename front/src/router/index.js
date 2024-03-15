@@ -2,9 +2,12 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Style from '@/views/StyleView.vue'
 import Home from '@/views/HomeView.vue'
 import LandingView from '@/views/LandingView.vue'
+import RegisterView from '@/views/RegisterView.vue'
 import AllMembers from '@/views/xarxa/AllMembers.vue'
 import AddMember from '@/views/xarxa/AddMember.vue'
 import AllProjects from '@/views/projectes/AllProjects.vue'
+
+import { useAuthStore } from '@/stores/authStore'
 
 const routes = [
   {
@@ -99,6 +102,22 @@ const routes = [
   },
   {
     meta: {
+      title: 'Register'
+    },
+    path: '/register',
+    name: 'register',
+    component: RegisterView
+  },
+  {
+    meta: {
+      title: 'Login'
+    },
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/LoginView.vue')
+  },
+  {
+    meta: {
       title: 'Error'
     },
     path: '/error',
@@ -107,12 +126,23 @@ const routes = [
   }
 ]
 
+const authenticated = false;
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
     return savedPosition || { top: 0 }
   }
+})
+
+router.beforeEach((to, from, next) => {
+
+  const authStore = useAuthStore();
+
+  if (to.name !== 'login' && !authStore.isLoggedIn) next({ name: 'login' })
+  else next()
+
 })
 
 export default router
