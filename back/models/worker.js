@@ -10,7 +10,19 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Worker.hasMany(models.Document);
+      Worker.hasMany(models.Estimate);
+      Worker.hasMany(models.Link);
+      Worker.hasMany(models.Member);
+      Worker.hasMany(models.Note);
+      Worker.hasMany(models.Project);
+      Worker.hasMany(models.Reunion);
+      Worker.hasMany(models.Task);
+      Worker.hasMany(models.Transaction);
+
+      Worker.belongsToMany(models.Project, {through: "Projects_Assigned_To_Workers"})
+      Worker.belongsToMany(models.Task, {through: "Tasks_Assigned_To_Workers"})
+      Worker.belongsToMany(models.Reunion, {through: "Workers_Invited_To_Reunions"})
     }
   }
   Worker.init({

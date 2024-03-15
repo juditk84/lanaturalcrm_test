@@ -36,7 +36,7 @@ module.exports = {
           model: "Workers",
           key: "id",
         },
-        allowNull:false,
+        allowNull: false,
       },
       ReunionId: {
         type: Sequelize.INTEGER,
@@ -58,6 +58,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("Workers_Invited_To_Reunions", "Members_Invited_To_Reunions")
+    await queryInterface.dropTable("Workers_Invited_To_Reunions");
+    await queryInterface.dropTable("Members_Invited_To_Reunions")
   }
 };
