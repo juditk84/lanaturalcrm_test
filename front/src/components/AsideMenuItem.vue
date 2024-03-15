@@ -16,7 +16,6 @@ const props = defineProps({
 
 const route = useRoute();
 
-
 const isDropdownActive = ref(false)
 
 watch(route, () => {
@@ -44,17 +43,8 @@ const componentClass = computed(() => [
 
 const hasDropdown = computed(() => !!props.item.menu)
 
-
-
 const menuClick = (event) => {
   emit('menu-click', event, props.item)
-  console.log(route.params.asideMenuCategoria.toUpperCase())
-  console.log(props.item.label.toUpperCase())
-  //   if (hasDropdown.value) {
-
-  //   isDropdownActive.value = !isDropdownActive.value
-
-  // }
 }
 </script>
 

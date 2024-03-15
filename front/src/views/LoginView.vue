@@ -30,11 +30,10 @@ const submit = async () => {
         method: "POST",
         data: credentials,
       })
-      console.log(data)
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", form.login);
       authStore.onLogin(form.login);
-      console.log(data.message, data.token)
+      router.push("/dashboard")
     } catch (error) {
       console.log(error);
     }
