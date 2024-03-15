@@ -18,6 +18,8 @@ import {
   mdiClockStarFourPoints
 } from '@mdi/js'
 
+import { ref } from "vue"
+
 export default [
   {
     to: '/global/landingview',            
@@ -95,13 +97,9 @@ export default [
     ]
   },
   {
+    // add the necessary logic to this to conditionally display this if the user is admin or not.
     to: '/register',            
     icon: mdiLock,
     label: 'Crear usuaria',
-  },
-  {
-    to: '/login',            
-    icon: mdiPalette,
-    label: 'Iniciar sesió',
   },
 ]

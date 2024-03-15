@@ -9,10 +9,9 @@ import AsideMenuList from '@/components/AsideMenuList.vue'
 const props = defineProps({
   item: {
     type: Object,
-    required: true
+    required: true,
   },
-  isDropdownList: Boolean,
-
+  activeItem: Object
 })
 
 const emit = defineEmits(['menu-click'])
@@ -23,8 +22,6 @@ const asideMenuItemActiveStyle = computed(() =>
   hasColor.value ? '' : 'aside-menu-item-active font-bold'
 )
 
-const isDropdownActive = ref(false)
-
 const componentClass = computed(() => [
   props.isDropdownList ? 'py-3 px-6 text-sm' : 'py-3',
   hasColor.value
@@ -32,16 +29,15 @@ const componentClass = computed(() => [
     : `aside-menu-item dark:text-slate-300 dark:hover:text-white`
 ])
 
-const hasDropdown = computed(() => !!props.item.menu) // if it has dropdown, hasDropdown === true. Otherwise, === false
+const hasDropdown = computed(() => !!props.item.menu)
 
-const itemItself = ref(props.item)
+const isDropdownActive = ref(false)
 
-// extra stuff because testing of prop passing and event emitting:
 const menuClick = (event) => {
-  emit('menu-click', event, isDropdownActive, itemItself)
+  emit('menu-click', event, props.item, isDropdownActive)
 
-  if (hasDropdown.value) {
 
+    if (hasDropdown.value) {
     isDropdownActive.value = !isDropdownActive.value
   }
 }
@@ -59,8 +55,6 @@ const menuClick = (event) => {
       :class="componentClass"
       :menu-click="menuClick"
       @click="menuClick"
-
-
     >
       <BaseIcon
         v-if="item.icon"

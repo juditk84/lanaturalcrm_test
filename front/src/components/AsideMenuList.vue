@@ -10,14 +10,11 @@ const props = defineProps({
   },
 })
 
-const activeDropdownObject = ref({})
 
-// testing of props passing and emiting:
-function leaveOnlyTheActiveDropdownOpen(event, itemItself){
- 
-  console.log(itemItself.value)
-  activeDropdownObject.value = itemItself.value
+const emit = defineEmits(['menu-click'])
 
+const menuClick = (event, item, isDropdownActive) => {
+  emit('menu-click', event, item, isDropdownActive)
 }
 
 </script>
@@ -29,7 +26,7 @@ function leaveOnlyTheActiveDropdownOpen(event, itemItself){
       :key="index"
       :item="item"
       :is-dropdown-list="isDropdownList"
-      @menu-click="leaveOnlyTheActiveDropdownOpen"
+      @menu-click="menuClick"
 
     />
   </ul>

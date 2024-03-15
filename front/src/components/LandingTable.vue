@@ -19,7 +19,7 @@ const tableContent = ref([]);
 
 const route = useRoute();
 
-watch(route, () => {fetchContent(); console.log(route.params.asideMenuCategoria)})
+watch(route, () => fetchContent())
 
 async function fetchContent() {
     try {

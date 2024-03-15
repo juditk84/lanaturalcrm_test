@@ -136,6 +136,9 @@ const router = createRouter({
   }
 })
 
+
+// guard preventing access to pages unless the user is logged in like a boss:
+
 router.beforeEach((to, from, next) => {
 
   const authStore = useAuthStore();
