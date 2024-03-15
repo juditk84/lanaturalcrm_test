@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref, computed, watch } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
 import { mdiConsoleNetworkOutline, mdiMinus, mdiPlus } from '@mdi/js'
 import { getButtonColor } from '@/colors.js'
 import BaseIcon from '@/components/BaseIcon.vue'
@@ -11,7 +11,20 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  activeItem: Object
+  activeItemLabel: String
+})
+
+const route = useRoute();
+
+
+const isDropdownActive = ref(false)
+
+watch(route, () => {
+  if(route.params.asideMenuCategoria.toUpperCase() === props.item.label.toUpperCase()){
+    isDropdownActive.value = true
+  }
+  else {
+    isDropdownActive.value = false}
 })
 
 const emit = defineEmits(['menu-click'])
@@ -31,15 +44,17 @@ const componentClass = computed(() => [
 
 const hasDropdown = computed(() => !!props.item.menu)
 
-const isDropdownActive = ref(false)
+
 
 const menuClick = (event) => {
-  emit('menu-click', event, props.item, isDropdownActive)
+  emit('menu-click', event, props.item)
+  console.log(route.params.asideMenuCategoria.toUpperCase())
+  console.log(props.item.label.toUpperCase())
+  //   if (hasDropdown.value) {
 
+  //   isDropdownActive.value = !isDropdownActive.value
 
-    if (hasDropdown.value) {
-    isDropdownActive.value = !isDropdownActive.value
-  }
+  // }
 }
 </script>
 
@@ -84,7 +99,6 @@ const menuClick = (event) => {
       v-if="hasDropdown"
       :menu="item.menu"
       :class="['aside-menu-dropdown', isDropdownActive ? 'block dark:bg-slate-800/50' : 'hidden']"
-      is-dropdown-list
     />
   </li>
 </template>

@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue';
 
 const props = defineProps({
   isDropdownList: Boolean,
+  activeItemLabel: String,
   menu: {
     type: Array,
     required: true
@@ -13,8 +14,9 @@ const props = defineProps({
 
 const emit = defineEmits(['menu-click'])
 
-const menuClick = (event, item, isDropdownActive) => {
-  emit('menu-click', event, item, isDropdownActive)
+const menuClick = (event, item) => {
+  emit('menu-click', event, item)
+  // console.log(props.activeItemLabel)
 }
 
 </script>
@@ -26,6 +28,7 @@ const menuClick = (event, item, isDropdownActive) => {
       :key="index"
       :item="item"
       :is-dropdown-list="isDropdownList"
+      :active-item-label="activeItemLabel"
       @menu-click="menuClick"
 
     />
