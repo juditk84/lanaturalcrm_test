@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Estimate.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'estimate'}});
+      Estimate.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'estimate'}});
+      Estimate.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'estimate'}});
     }
   }
   Estimate.init({

@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
       Project.belongsTo(models.ProjectType);
       Project.hasMany(models.Transaction, {foreignKey: "projectId", allowNull: true});
       Project.hasMany(models.Task)
+
+      Project.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'project'}});
+      Project.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'project'}});
+      Project.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'project'}});
     }
   }
   Project.init({

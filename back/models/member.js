@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Member.belongsTo(models.Member, {as: "Parent", foreignKey: "parentId", allowNull: true});
       Member.hasMany(models.Member, {as: "LinkedMembers", foreignKey: "parentId"})
+      Member.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'member'}});
+      Member.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'member'}});
+      Member.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'member'}});
     }
   }
   Member.init({

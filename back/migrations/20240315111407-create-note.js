@@ -4,15 +4,17 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Notes', {
       id: {
-        allowNull: false,
-        autoIncrement: true,
+        type: Sequelize.UUID,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        defaultValue: Sequelize.UUIDV4,
       },
       title: {
         type: Sequelize.STRING
       },
       text: {
+        type: Sequelize.STRING
+      },
+      commentableType: {
         type: Sequelize.STRING
       },
       createdAt: {

@@ -5,7 +5,7 @@ module.exports = {
   async up (queryInterface, Sequelize) {
 
     await queryInterface.addColumn("Documents", 
-      "WorkerId",
+      "creator",
       {
         type: Sequelize.UUID,
         references: {
@@ -18,7 +18,7 @@ module.exports = {
     ),
 
     await queryInterface.addColumn("Estimates",
-      "WorkerId",
+      "creator",
       {
         type: Sequelize.UUID,
         references: {
@@ -30,7 +30,7 @@ module.exports = {
       }
     ),
     await queryInterface.addColumn("Links",
-      "WorkerId",
+      "creator",
       {
         type: Sequelize.UUID,
         references: {
@@ -42,7 +42,7 @@ module.exports = {
       }
     ),
     await queryInterface.addColumn("Members", 
-      "WorkerId",
+      "creator",
       {
         type: Sequelize.UUID,
         references: {
@@ -54,7 +54,7 @@ module.exports = {
       }
     ),
     await queryInterface.addColumn("Reunions", 
-      "WorkerId",
+      "creator",
       {
         type: Sequelize.UUID,
         references: {
@@ -66,7 +66,7 @@ module.exports = {
       }
     ),
     await queryInterface.addColumn("Tasks",       
-      "WorkerId",
+      "creator",
       {
         type: Sequelize.UUID,
         references: {
@@ -78,7 +78,7 @@ module.exports = {
       }
     ),
     await queryInterface.addColumn("Transactions", 
-      "WorkerId",
+      "creator",
       {
         type: Sequelize.UUID,
         references: {
@@ -90,7 +90,7 @@ module.exports = {
       }
     ),
     await queryInterface.addColumn("Projects", 
-      "WorkerId",
+      "creator",
       {
         type: Sequelize.UUID,
         references: {
@@ -102,7 +102,7 @@ module.exports = {
       }
     ),
     await queryInterface.addColumn("Notes",
-      "WorkerId",
+      "creator",
       {
         type: Sequelize.UUID,
         references: {
@@ -116,14 +116,14 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.removeColumn("Notes", "WorkerId");
-    await queryInterface.removeColumn("Projects", "WorkerId")
-    await queryInterface.removeColumn("Reunions", "WorkerId")
-    await queryInterface.removeColumn("Transactions", "WorkerId")
-    await queryInterface.removeColumn("Tasks", "WorkerId")
-    await queryInterface.removeColumn("Members", "WorkerId")
-    await queryInterface.removeColumn("Links", "WorkerId")
-    await queryInterface.removeColumn("Estimates", "WorkerId")
-    await queryInterface.removeColumn("Documents", "WorkerId")
+    await queryInterface.removeColumn("Notes", "creator");
+    await queryInterface.removeColumn("Projects", "creator")
+    await queryInterface.removeColumn("Reunions", "creator")
+    await queryInterface.removeColumn("Transactions", "creator")
+    await queryInterface.removeColumn("Tasks", "creator")
+    await queryInterface.removeColumn("Members", "creator")
+    await queryInterface.removeColumn("Links", "creator")
+    await queryInterface.removeColumn("Estimates", "creator")
+    await queryInterface.removeColumn("Documents", "creator")
   }
 };
