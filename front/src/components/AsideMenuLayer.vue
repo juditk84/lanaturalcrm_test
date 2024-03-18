@@ -1,6 +1,6 @@
 <script setup>
 import { mdiLogout, mdiClose } from '@mdi/js'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import AsideMenuList from '@/components/AsideMenuList.vue'
 import AsideMenuItem from '@/components/AsideMenuItem.vue'
 import BaseIcon from '@/components/BaseIcon.vue'
@@ -12,6 +12,8 @@ defineProps({
     required: true
   },
 })
+
+const activeItemLabel = ref("")
 
 const authStore = useAuthStore();
 
@@ -26,11 +28,8 @@ const logoutItem = computed(() => ({
 
 const menuClick = (event, item) => {
   emit('menu-click', event, item)
-}
-
-const onLogoutClick = () => {
- console.log("hello")
- authStore.onLogout();
+  activeItemLabel.value = item.label
+  // console.log(activeItemLabel.value)
 }
 
 const asideLgCloseClick = (event) => {
@@ -55,11 +54,11 @@ const asideLgCloseClick = (event) => {
       <div
         class="flex-1 overflow-y-auto overflow-x-hidden aside-scrollbars dark:aside-scrollbars-[slate]"
       >
-        <AsideMenuList :menu="menu" @menu-click="menuClick" />
+        <AsideMenuList :menu="menu" :active-item-label.value="activeItemLabel" @menu-click="menuClick" />
       </div>
 
       <ul>
-        <AsideMenuItem :item="logoutItem" @click="onLogoutClick"/>
+        <AsideMenuItem :item="logoutItem" :active-item-label.value="activeItemLabel" @menu-click="menuClick" />
       </ul>
     </div>
   </aside>

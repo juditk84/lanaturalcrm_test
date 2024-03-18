@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   const onLogout = () => {
-    console.log("username before logout: ", username.value)
+    console.log("username before log out: ", username.value)
     username.value = null;
     isLoggedIn.value = false;
     localStorage.removeItem("token");

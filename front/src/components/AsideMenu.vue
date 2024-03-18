@@ -2,7 +2,7 @@
 import AsideMenuLayer from '@/components/AsideMenuLayer.vue'
 import OverlayLayer from '@/components/OverlayLayer.vue'
 
-defineProps({
+const props = defineProps({
   menu: {
     type: Array,
     required: true

@@ -110,14 +110,6 @@ const routes = [
   },
   {
     meta: {
-      title: 'Login'
-    },
-    path: '/login',
-    name: 'login',
-    component: () => import('@/views/LoginView.vue')
-  },
-  {
-    meta: {
       title: 'Error'
     },
     path: '/error',
@@ -135,6 +127,9 @@ const router = createRouter({
     return savedPosition || { top: 0 }
   }
 })
+
+
+// guard preventing access to pages unless the user is logged in like a boss:
 
 router.beforeEach((to, from, next) => {
 

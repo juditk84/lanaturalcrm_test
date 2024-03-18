@@ -14,8 +14,8 @@ import BaseButtons from '@/components/BaseButtons.vue'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
 
 const form = reactive({
-  login: 'john.doe',
-  pass: 'highly-secure-password-fYjUw-',
+  login: 'Judit',
+  pass: 'Judit',
   remember: true
 })
 
@@ -30,11 +30,10 @@ const submit = async () => {
         method: "POST",
         data: credentials,
       })
-      console.log(data)
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", form.login);
       authStore.onLogin(form.login);
-      console.log(data.message, data.token)
+      router.push("/dashboard")
     } catch (error) {
       console.log(error);
     }
