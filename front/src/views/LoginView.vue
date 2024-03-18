@@ -23,8 +23,11 @@ const router = useRouter()
 let authStore = useAuthStore()
 
 
-const submit = async () => {
-  const credentials = {username: form.login, password: form.pass} 
+const submit = async (event) => {
+
+  const credentials = {username: form.login, password: form.pass}
+
+  if(event.submitter.innerText === "Login"){
     try {
       const { data } = await axios("api/inici/login", {
         method: "POST",
@@ -37,6 +40,21 @@ const submit = async () => {
     } catch (error) {
       console.log(error);
     }
+  }
+  else if(event.submitter.innerText === "Register"){
+    try {
+          const { data } = await axios("api/inici/register", {
+            method: "POST",
+            data: credentials,
+          })
+          console.log(data)
+          
+        } catch (err) {
+          return err
+        }
+  }
+   
+    
 }
 
 </script>
@@ -69,6 +87,7 @@ const submit = async () => {
         <template #footer>
           <BaseButtons>
             <BaseButton type="submit" color="info" label="Login" />
+            <BaseButton type="submit" color="info" label="Register" />
             <BaseButton to="/dashboard" color="info" outline label="Back" />
           </BaseButtons>
         </template>

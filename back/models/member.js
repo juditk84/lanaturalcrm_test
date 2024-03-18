@@ -36,8 +36,6 @@ module.exports = (sequelize, DataTypes) => {
     phoneNumber: DataTypes.INTEGER,
     authorizationImg: DataTypes.BOOLEAN,
     memberType: DataTypes.ENUM('entity', 'contact'),
-    username: DataTypes.STRING,
-    password: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Member',
