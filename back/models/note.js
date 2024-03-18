@@ -15,15 +15,15 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static associate(models) {
-      Note.belongsTo(models.Documents, { foreignKey: 'commentableId', constraints: false });
-      Note.belongsTo(models.Estimates, { foreignKey: 'commentableId', constraints: false });
+      Note.belongsTo(models.Document, { foreignKey: 'commentableId', constraints: false });
+      Note.belongsTo(models.Estimate, { foreignKey: 'commentableId', constraints: false });
       Note.belongsTo(models.Link, { foreignKey: 'commentableId', constraints: false });
-      Note.belongsTo(models.Members, { foreignKey: 'commentableId', constraints: false });
-      Note.belongsTo(models.Projects, { foreignKey: 'commentableId', constraints: false });
-      Note.belongsTo(models.Reunions, { foreignKey: 'commentableId', constraints: false });
-      Note.belongsTo(models.Tasks, { foreignKey: 'commentableId', constraints: false });
-      Note.belongsTo(models.Transactions, { foreignKey: 'commentableId', constraints: false });
-      Note.belongsTo(models.Workers, { foreignKey: 'commentableId', constraints: false });
+      Note.belongsTo(models.Member, { foreignKey: 'commentableId', constraints: false });
+      Note.belongsTo(models.Project, { foreignKey: 'commentableId', constraints: false });
+      Note.belongsTo(models.Reunion, { foreignKey: 'commentableId', constraints: false });
+      Note.belongsTo(models.Task, { foreignKey: 'commentableId', constraints: false });
+      Note.belongsTo(models.Transaction, { foreignKey: 'commentableId', constraints: false });
+      Note.belongsTo(models.Worker, { foreignKey: 'commentableId', constraints: false });
 
       // notes can have subnotes
       Note.belongsTo(models.Member, {as: "Parent", foreignKey: "parentId", allowNull: true});
@@ -33,7 +33,8 @@ module.exports = (sequelize, DataTypes) => {
   Note.init({
     title: DataTypes.STRING,
     text: DataTypes.STRING,
-    commentableType: DataTypes.STRING
+    commentableType: DataTypes.STRING,
+    commentableId: DataTypes.UUID
   }, {
     sequelize,
     modelName: 'Note',

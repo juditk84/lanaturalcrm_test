@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       Transaction.belongsTo(models.Transaction_TipusIVA, {foreignKey: "tipusIVAId", allowNull: true});
       Transaction.belongsTo(models.Project, {foreignKey: "projectId", allowNull: true});
 
-      Transaction.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'note'}});
-      Transaction.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'document'}});
-      Transaction.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'link'}});
+      Transaction.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'transaction'}});
+      Transaction.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'transaction'}});
+      Transaction.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'transaction'}});
     }
   }
   Transaction.init({

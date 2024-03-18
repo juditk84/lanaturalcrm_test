@@ -20,6 +20,9 @@ module.exports = {
       commentableType: {
         type: Sequelize.STRING
       },
+      commentableId: {
+        type: Sequelize.UUID
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

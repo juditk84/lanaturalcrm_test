@@ -15,27 +15,28 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static associate(models) {
-      Link.belongsTo(models.Documents, { foreignKey: 'commentableId', constraints: false });
-      Link.belongsTo(models.Estimates, { foreignKey: 'commentableId', constraints: false });
+      Link.belongsTo(models.Document, { foreignKey: 'commentableId', constraints: false });
+      Link.belongsTo(models.Estimate, { foreignKey: 'commentableId', constraints: false });
       Link.belongsTo(models.Link, { foreignKey: 'commentableId', constraints: false });
-      Link.belongsTo(models.Members, { foreignKey: 'commentableId', constraints: false });
-      Link.belongsTo(models.Projects, { foreignKey: 'commentableId', constraints: false });
-      Link.belongsTo(models.Reunions, { foreignKey: 'commentableId', constraints: false });
-      Link.belongsTo(models.Tasks, { foreignKey: 'commentableId', constraints: false });
-      Link.belongsTo(models.Transactions, { foreignKey: 'commentableId', constraints: false });
-      Link.belongsTo(models.Workers, { foreignKey: 'commentableId', constraints: false });
+      Link.belongsTo(models.Member, { foreignKey: 'commentableId', constraints: false });
+      Link.belongsTo(models.Project, { foreignKey: 'commentableId', constraints: false });
+      Link.belongsTo(models.Reunion, { foreignKey: 'commentableId', constraints: false });
+      Link.belongsTo(models.Task, { foreignKey: 'commentableId', constraints: false });
+      Link.belongsTo(models.Transaction, { foreignKey: 'commentableId', constraints: false });
+      Link.belongsTo(models.Worker, { foreignKey: 'commentableId', constraints: false });
     }
   }
   Link.init({
     title: DataTypes.STRING,
     url: DataTypes.STRING,
     description: DataTypes.STRING,
-    commentableType: DataTypes.STRING
+    commentableType: DataTypes.STRING,
+    commentableId: DataTypes.UUID
   }, {
     sequelize,
     modelName: 'Link',
   });
-  
+
   Link.addHook("afterFind", findResult => {
     if (!Array.isArray(findResult)) findResult = [findResult];
     for (const instance of findResult) {

@@ -15,22 +15,23 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static associate(models) {
-      Document.belongsTo(models.Documents, { foreignKey: 'commentableId', constraints: false });
-      Document.belongsTo(models.Estimates, { foreignKey: 'commentableId', constraints: false });
+      Document.belongsTo(models.Document, { foreignKey: 'commentableId', constraints: false });
+      Document.belongsTo(models.Estimate, { foreignKey: 'commentableId', constraints: false });
       Document.belongsTo(models.Link, { foreignKey: 'commentableId', constraints: false });
-      Document.belongsTo(models.Members, { foreignKey: 'commentableId', constraints: false });
-      Document.belongsTo(models.Projects, { foreignKey: 'commentableId', constraints: false });
-      Document.belongsTo(models.Reunions, { foreignKey: 'commentableId', constraints: false });
-      Document.belongsTo(models.Tasks, { foreignKey: 'commentableId', constraints: false });
-      Document.belongsTo(models.Transactions, { foreignKey: 'commentableId', constraints: false });
-      Document.belongsTo(models.Workers, { foreignKey: 'commentableId', constraints: false });
+      Document.belongsTo(models.Member, { foreignKey: 'commentableId', constraints: false });
+      Document.belongsTo(models.Project, { foreignKey: 'commentableId', constraints: false });
+      Document.belongsTo(models.Reunion, { foreignKey: 'commentableId', constraints: false });
+      Document.belongsTo(models.Task, { foreignKey: 'commentableId', constraints: false });
+      Document.belongsTo(models.Transaction, { foreignKey: 'commentableId', constraints: false });
+      Document.belongsTo(models.Worker, { foreignKey: 'commentableId', constraints: false });
     }
   }
   Document.init({
     title: DataTypes.STRING,
     url: DataTypes.STRING,
     description: DataTypes.STRING,
-    commentableType: DataTypes.STRING
+    commentableType: DataTypes.STRING,
+    commentableId: DataTypes.UUID
   }, {
     sequelize,
     modelName: 'Document',
