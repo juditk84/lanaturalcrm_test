@@ -5,7 +5,7 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('Tasks_Assigned_To_Workers', {
       TaskId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         references: {
           model: "Tasks",
           key: "id",

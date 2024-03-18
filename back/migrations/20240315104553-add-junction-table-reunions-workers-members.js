@@ -13,7 +13,7 @@ module.exports = {
         allowNull:false,
       },
       ReunionId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         references: {
           model: "Reunions",
           key: "id",
@@ -39,7 +39,7 @@ module.exports = {
         allowNull: false,
       },
       ReunionId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         references: {
           model: "Reunions",
           key: "id",

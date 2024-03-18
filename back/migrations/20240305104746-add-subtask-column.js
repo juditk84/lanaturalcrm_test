@@ -7,7 +7,7 @@ module.exports = {
       "Tasks",
       "parentId",
       {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         references: {
           model: "Tasks",
           key: "id",
