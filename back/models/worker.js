@@ -19,13 +19,14 @@ module.exports = (sequelize, DataTypes) => {
       Worker.hasMany(models.Reunion);
       Worker.hasMany(models.Task);
       Worker.hasMany(models.Transaction);
+      Worker.hasMany(models.Document, {foreignKey: 'workerId' });
 
       Worker.belongsToMany(models.Project, {through: "Projects_Assigned_To_Workers"})
       Worker.belongsToMany(models.Task, {through: "Tasks_Assigned_To_Workers"})
       Worker.belongsToMany(models.Reunion, {through: "Workers_Invited_To_Reunions"})
 
       Worker.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'worker'}});
-      Worker.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'worker'}});
+      // Worker.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'worker'}});
       Worker.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'worker'}});
     }
   }

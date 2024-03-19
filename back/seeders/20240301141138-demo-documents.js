@@ -24,7 +24,8 @@ module.exports = {
         url: "URL for document 1",
         description: "description for document 1",
         commentableType: "worker",
-        commentableId: "74114925-269f-4f44-89bd-6d9259847489",
+        commentableId: "jajaja",
+        workerId: "74114925-269f-4f44-89bd-6d9259847489",
         createdAt: new Date(),
         updatedAt: new Date()
       }])

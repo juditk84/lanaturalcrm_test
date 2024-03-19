@@ -4,18 +4,18 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
 
-    // await queryInterface.addColumn("Documents", 
-    //   "creator",
-    //   {
-    //     type: Sequelize.UUID,
-    //     references: {
-    //       model: "Workers",
-    //       key: "id",
-    //     },
-    //     onUpdate: 'CASCADE',
-    //     onDelete: 'SET NULL',
-    //   }
-    // ),
+    await queryInterface.addColumn("Documents", 
+      "workerId",
+      {
+        type: Sequelize.UUID,
+        references: {
+          model: "Workers",
+          key: "id",
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      }
+    ),
 
     // await queryInterface.addColumn("Estimates",
     //   "creator",
