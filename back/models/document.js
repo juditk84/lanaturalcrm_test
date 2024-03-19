@@ -23,9 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       Document.belongsTo(models.Reunion, { foreignKey: 'commentableId', constraints: false });
       Document.belongsTo(models.Task, { foreignKey: 'commentableId', constraints: false });
       Document.belongsTo(models.Transaction, { foreignKey: 'commentableId', constraints: false });
-      Document.belongsTo(models.Worker, { foreignKey: 'workerId' });
       Document.belongsTo(models.Worker, { foreignKey: 'commentableId', constraints: false });
-
+      Document.belongsTo(models.Worker, { foreignKey: 'workerId' });
     }}
 
       Document.init({
