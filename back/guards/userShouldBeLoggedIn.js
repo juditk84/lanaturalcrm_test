@@ -20,12 +20,12 @@ async function userShouldBeLoggedIn(req, res, next) {
           include: [
             {
               model: models.Project,
-              through: models.Projects_Assigned_To_Workers, 
-              attributes: { exclude:[ 'workerId'] },
+              through: models.Projects_Assigned_To_Workers,
+              attributes: { exclude:["workerId"] },
               include: [
-                models.Note, /// notes linked to project
+                models.Note, /// notes linked to project (commentableId de la nota is projectId)
                 models.Member,
-                {model: models.ProjectType, attributes: ["type"]}]   
+                { model: models.ProjectType, attributes: ["type"] }]   
             },
             {
               model: models.Task,
@@ -38,6 +38,7 @@ async function userShouldBeLoggedIn(req, res, next) {
             models.Note, // notes where worker is commentableId (notes left to self)
             models.Document,
             models.Estimate,
+            models.Project,
             models.Link,
             models.Member,
             models.Reunion,
@@ -54,7 +55,14 @@ async function userShouldBeLoggedIn(req, res, next) {
           },
           attributes: ['commentableId', 'title'],
         });
+        const projects = await models.Project.findAll({
+          where: {
+            workerId: decoded.user_id
+          },
+          attributes: ["name"]
+        })
 
+        req.projects = projects
         req.notes = notes;
         req.user = user; 
         next();
