@@ -4,9 +4,10 @@ const models = require('../models');
 const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn'); 
 
 router.get("/", userShouldBeLoggedIn, async (req, res, next) => {
-  const {user} = req
+  const {user, notes} = req
       try {
-          res.status(200).send(user)
+          // console.log(notes)
+          res.status(200).send({user: user, notes: notes})
       } catch (err) {
           res.status(500).send(err.message)
       }

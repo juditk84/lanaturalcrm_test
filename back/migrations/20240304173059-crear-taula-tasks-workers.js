@@ -12,7 +12,7 @@ module.exports = {
         },
         allowNull:false,
       },
-      WorkerId: {
+      workerId: {
         type: Sequelize.UUID,
         references: {
           model: "Workers",

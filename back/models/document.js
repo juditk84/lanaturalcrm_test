@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static associate(models) {
+
+      // because it's a commentable 
       Document.belongsTo(models.Document, { foreignKey: 'commentableId', constraints: false });
       Document.belongsTo(models.Estimate, { foreignKey: 'commentableId', constraints: false });
       Document.belongsTo(models.Link, { foreignKey: 'commentableId', constraints: false });
@@ -24,7 +26,11 @@ module.exports = (sequelize, DataTypes) => {
       Document.belongsTo(models.Task, { foreignKey: 'commentableId', constraints: false });
       Document.belongsTo(models.Transaction, { foreignKey: 'commentableId', constraints: false });
       Document.belongsTo(models.Worker, { foreignKey: 'commentableId', constraints: false });
-      Document.belongsTo(models.Worker, { foreignKey: 'workerId' });
+      Document.belongsTo(models.Worker, { foreignKey: 'workerId', constraints: false}); // as a document left to user self
+
+      // as creator
+      Document.belongsTo(models.Worker, {as: "creator", foreignKey: 'workerId'})
+
     }}
 
       Document.init({

@@ -10,23 +10,24 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // Worker.hasMany(models.Document);
-      Worker.hasMany(models.Estimate);
-      // Worker.hasMany(models.Link);
-      Worker.hasMany(models.Member);
-      // Worker.hasMany(models.Note);
-      Worker.hasMany(models.Project);
-      Worker.hasMany(models.Reunion);
-      Worker.hasMany(models.Task);
-      Worker.hasMany(models.Transaction);
+      Worker.hasMany(models.Document, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Estimate, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Link, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Member, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Note, {foreignKey: 'workerId'});
+      Worker.hasMany(models.Project, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Reunion, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Task, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Transaction, {foreignKey: 'workerId' });
       Worker.hasMany(models.Document, {foreignKey: 'workerId' });
 
       Worker.belongsToMany(models.Project, {through: "Projects_Assigned_To_Workers"})
       Worker.belongsToMany(models.Task, {through: "Tasks_Assigned_To_Workers"})
       Worker.belongsToMany(models.Reunion, {through: "Workers_Invited_To_Reunions"})
 
+      // notes, docs, links, left to SELF 
       Worker.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'worker'}});
-      // Worker.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'worker'}});
+      Worker.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'worker'}});
       Worker.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'worker'}});
     }
   }

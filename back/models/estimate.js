@@ -10,11 +10,18 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+
+      // commentables
       Estimate.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'estimate'}});
       Estimate.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'estimate'}});
       Estimate.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'estimate'}});
 
+      // associated to project
       Estimate.belongsTo(models.Project, {foreignKey: "projectId"})
+
+      // as creator
+      Estimate.belongsTo(models.Worker, {as: "creator", foreignKey: 'workerId'})
+
     }
   }
   Estimate.init({

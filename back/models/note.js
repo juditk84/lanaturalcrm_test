@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static associate(models) {
+      // because it's a commentable:
       Note.belongsTo(models.Document, { foreignKey: 'commentableId', constraints: false });
       Note.belongsTo(models.Estimate, { foreignKey: 'commentableId', constraints: false });
       Note.belongsTo(models.Link, { foreignKey: 'commentableId', constraints: false });
@@ -23,7 +24,10 @@ module.exports = (sequelize, DataTypes) => {
       Note.belongsTo(models.Reunion, { foreignKey: 'commentableId', constraints: false });
       Note.belongsTo(models.Task, { foreignKey: 'commentableId', constraints: false });
       Note.belongsTo(models.Transaction, { foreignKey: 'commentableId', constraints: false });
-      Note.belongsTo(models.Worker, { foreignKey: 'commentableId', constraints: false });
+      Note.belongsTo(models.Worker, { foreignKey: 'commentableId', constraints: false }); // notes left to user self
+
+      // as creator
+      Note.belongsTo(models.Worker, {as: "creator", foreignKey: 'workerId'})
 
       // notes can have subnotes
       Note.belongsTo(models.Member, {as: "Parent", foreignKey: "parentId", allowNull: true});

@@ -10,11 +10,18 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      
+      // tree structure
       Member.belongsTo(models.Member, {as: "Parent", foreignKey: "parentId", allowNull: true});
       Member.hasMany(models.Member, {as: "LinkedMembers", foreignKey: "parentId"})
+
+      // commentables
       Member.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'member'}});
       Member.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'member'}});
       Member.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'member'}});
+
+      // as creator
+      Member.belongsTo(models.Worker, {as: "creator", foreignKey: 'workerId'})
     }
   }
   Member.init({

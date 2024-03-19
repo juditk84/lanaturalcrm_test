@@ -30,7 +30,7 @@ module.exports = {
       }
     })
     await queryInterface.createTable("Workers_Invited_To_Reunions", {
-      WorkerId: {
+      workerId: {
         type: Sequelize.UUID,
         references: {
           model: "Workers",

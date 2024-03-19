@@ -17,78 +17,78 @@ module.exports = {
       }
     ),
 
-    // await queryInterface.addColumn("Estimates",
-    //   "creator",
-    //   {
-    //     type: Sequelize.UUID,
-    //     references: {
-    //       model: "Workers",
-    //       key: "id",
-    //     },
-    //     onUpdate: 'CASCADE',
-    //     onDelete: 'SET NULL',
-    //   }
-    // ),
-    // await queryInterface.addColumn("Links",
-    //   "creator",
-    //   {
-    //     type: Sequelize.UUID,
-    //     references: {
-    //       model: "Workers",
-    //       key: "id",
-    //     },
-    //     onUpdate: 'CASCADE',
-    //     onDelete: 'SET NULL',
-    //   }
-    // ),
-    // await queryInterface.addColumn("Members", 
-    //   "creator",
-    //   {
-    //     type: Sequelize.UUID,
-    //     references: {
-    //       model: "Workers",
-    //       key: "id",
-    //     },
-    //     onUpdate: 'CASCADE',
-    //     onDelete: 'SET NULL',
-    //   }
-    // ),
-    // await queryInterface.addColumn("Reunions", 
-    //   "creator",
-    //   {
-    //     type: Sequelize.UUID,
-    //     references: {
-    //       model: "Workers",
-    //       key: "id",
-    //     },
-    //     onUpdate: 'CASCADE',
-    //     onDelete: 'SET NULL',
-    //   }
-    // ),
-    // await queryInterface.addColumn("Tasks",       
-    //   "creator",
-    //   {
-    //     type: Sequelize.UUID,
-    //     references: {
-    //       model: "Workers",
-    //       key: "id",
-    //     },
-    //     onUpdate: 'CASCADE',
-    //     onDelete: 'SET NULL',
-    //   }
-    // ),
-    // await queryInterface.addColumn("Transactions", 
-    //   "creator",
-    //   {
-    //     type: Sequelize.UUID,
-    //     references: {
-    //       model: "Workers",
-    //       key: "id",
-    //     },
-    //     onUpdate: 'CASCADE',
-    //     onDelete: 'SET NULL',
-    //   }
-    // ),
+    await queryInterface.addColumn("Estimates",
+      "workerId",
+      {
+        type: Sequelize.UUID,
+        references: {
+          model: "Workers",
+          key: "id",
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      }
+    ),
+    await queryInterface.addColumn("Links",
+      "workerId",
+      {
+        type: Sequelize.UUID,
+        references: {
+          model: "Workers",
+          key: "id",
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      }
+    ),
+    await queryInterface.addColumn("Members", 
+      "workerId",
+      {
+        type: Sequelize.UUID,
+        references: {
+          model: "Workers",
+          key: "id",
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      }
+    ),
+    await queryInterface.addColumn("Reunions", 
+      "workerId",
+      {
+        type: Sequelize.UUID,
+        references: {
+          model: "Workers",
+          key: "id",
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      }
+    ),
+    await queryInterface.addColumn("Tasks",       
+      "workerId",
+      {
+        type: Sequelize.UUID,
+        references: {
+          model: "Workers",
+          key: "id",
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      }
+    ),
+    await queryInterface.addColumn("Transactions", 
+      "workerId",
+      {
+        type: Sequelize.UUID,
+        references: {
+          model: "Workers",
+          key: "id",
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      }
+    ),
     await queryInterface.addColumn("Projects", 
       "workerId",
       {
@@ -101,18 +101,18 @@ module.exports = {
         onDelete: 'SET NULL',
       }
     )
-    // await queryInterface.addColumn("Notes",
-    //   "creator",
-    //   {
-    //     type: Sequelize.UUID,
-    //     references: {
-    //       model: "Workers",
-    //       key: "id",
-    //     },
-    //     onUpdate: 'CASCADE',
-    //     onDelete: 'SET NULL',
-    //   }
-    // )
+    await queryInterface.addColumn("Notes",
+      "workerId",
+      {
+        type: Sequelize.UUID,
+        references: {
+          model: "Workers",
+          key: "id",
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      }
+    )
   },
 
   async down (queryInterface, Sequelize) {

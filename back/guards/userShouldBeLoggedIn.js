@@ -18,21 +18,44 @@ async function userShouldBeLoggedIn(req, res, next) {
           },
           attributes: ["username"],
           include: [
-            { model: models.Project, through: models.Projects_Assigned_To_Workers},
-            // { model: models.Task, through: models.Tasks_Assigned_To_Workers},
-            // { model: models.Reunion, through: models.Workers_Invited_To_Reunions},
+            {
+              model: models.Project,
+              through: models.Projects_Assigned_To_Workers, 
+              attributes: { exclude:[ 'workerId'] },
+              include: [
+                models.Note,
+                models.Member,
+                {model: models.ProjectType, attributes: ["type"]}]   /// notes linked to project
+            },
+            {
+              model: models.Task,
+              through: models.Tasks_Assigned_To_Workers
+            },
+            {
+              model: models.Reunion,
+              through: models.Workers_Invited_To_Reunions
+            },
+            models.Note, // notes where worker is commentableId (notes left to self)
             models.Document,
-            // models.Estimate,
-            // models.Link,
-            // models.Member,
-            // models.Note,
-            // models.Project,
-            // models.Reunion,
-            // models.Task,
-            // models.Transaction,   
-          ]
-          // include: { all: true, nested: true }, // Això sembla guai però crec que ho tranca. Caldria probar més
+            models.Estimate,
+            models.Link,
+            models.Member,
+            models.Reunion,
+            models.Task,
+            models.Transaction,   
+          ],
+          
         })
+
+     
+        const notes = await models.Note.findAll({      // notes created by user
+          where: {
+            workerId: decoded.user_id
+          },
+          attributes: ['commentableId', 'title'],
+        });
+
+        req.notes = notes;
         req.user = user; 
         next();
       }

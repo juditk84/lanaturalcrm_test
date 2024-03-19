@@ -10,9 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+
+      // commentables
       Reunion.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'reunion'}});
       Reunion.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'reunion'}});
       Reunion.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'reunion'}});
+
+      // as creator
+      Reunion.belongsTo(models.Worker, {as: "creator", foreignKey: 'workerId'})
     }
   }
   Reunion.init({
