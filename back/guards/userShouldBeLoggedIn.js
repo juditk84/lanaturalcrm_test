@@ -18,11 +18,11 @@ async function userShouldBeLoggedIn(req, res, next) {
           },
           attributes: ["username"],
           include: [
-            // { model: models.Project, through: models.Projects_Assigned_To_Workers},
+            { model: models.Project, through: models.Projects_Assigned_To_Workers},
             // { model: models.Task, through: models.Tasks_Assigned_To_Workers},
             // { model: models.Reunion, through: models.Workers_Invited_To_Reunions},
             models.Document,
-            // models.Estimate,
+            // models.Estimate, ¿¿ Do we need Estimates per user ?? ¿ Potser seria millor Estimates per project ?
             // models.Link,
             // models.Member,
             models.Note,

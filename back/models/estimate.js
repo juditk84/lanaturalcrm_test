@@ -13,9 +13,16 @@ module.exports = (sequelize, DataTypes) => {
       Estimate.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'estimate'}});
       Estimate.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'estimate'}});
       Estimate.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'estimate'}});
+
+      Estimate.belongsTo(models.Project, {foreignKey: "projectId"})
     }
   }
   Estimate.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUID.V4,
+      primaryKey: true,
+    },
     data_alta: DataTypes.DATE,
     type: DataTypes.STRING,
     subtitle: DataTypes.STRING,

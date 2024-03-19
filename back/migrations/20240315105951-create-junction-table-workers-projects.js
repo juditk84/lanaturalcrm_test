@@ -4,6 +4,11 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable("Projects_Assigned_To_Workers", {    
+    id: {
+      type: Sequelize.UUID,
+      primaryKey: true,
+      defaultValue: Sequelize.UUIDV4,
+    },
     ProjectId: {
       type: Sequelize.UUID,
       references: {
