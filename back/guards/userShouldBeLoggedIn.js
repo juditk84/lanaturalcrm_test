@@ -23,9 +23,9 @@ async function userShouldBeLoggedIn(req, res, next) {
               through: models.Projects_Assigned_To_Workers, 
               attributes: { exclude:[ 'workerId'] },
               include: [
-                models.Note,
+                models.Note, /// notes linked to project
                 models.Member,
-                {model: models.ProjectType, attributes: ["type"]}]   /// notes linked to project
+                {model: models.ProjectType, attributes: ["type"]}]   
             },
             {
               model: models.Task,
