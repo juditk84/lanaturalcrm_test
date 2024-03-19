@@ -16,12 +16,12 @@ async function userShouldBeLoggedIn(req, res, next) {
           where: {
             id: decoded.user_id,
           },
-          attributes: ["username"]
-          // include: [
+          attributes: ["username"],
+          include: [
             // { model: models.Project, through: models.Projects_Assigned_To_Workers},
             // { model: models.Task, through: models.Tasks_Assigned_To_Workers},
             // { model: models.Reunion, through: models.Workers_Invited_To_Reunions},
-            // models.Document,
+            // { model: models.Document, where: 'commentableId' },
             // models.Estimate,
             // models.Link,
             // models.Member,
@@ -30,10 +30,11 @@ async function userShouldBeLoggedIn(req, res, next) {
             // models.Reunion,
             // models.Task,
             // models.Transaction,   
-          // ]
+          ]
           // include: { all: true, nested: true }, // Això sembla guai però crec que ho tranca. Caldria probar més
         })
         req.user = user; 
+        console.log(token)
         next();
       }
     });

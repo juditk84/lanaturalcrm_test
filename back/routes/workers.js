@@ -6,7 +6,7 @@ const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn');
 router.get("/", userShouldBeLoggedIn, async (req, res, next) => {
   const {user} = req
       try {
-          res.status(200).send(user)
+          res.status(200).send("we here")
       } catch (err) {
           res.status(500).send(err.message)
       }
