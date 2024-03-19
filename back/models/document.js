@@ -24,18 +24,23 @@ module.exports = (sequelize, DataTypes) => {
       Document.belongsTo(models.Task, { foreignKey: 'commentableId', constraints: false });
       Document.belongsTo(models.Transaction, { foreignKey: 'commentableId', constraints: false });
       Document.belongsTo(models.Worker, { foreignKey: 'commentableId', constraints: false });
-    }
-  }
-  Document.init({
-    title: DataTypes.STRING,
-    url: DataTypes.STRING,
-    description: DataTypes.STRING,
-    commentableType: DataTypes.STRING,
-    commentableId: DataTypes.UUID
-  }, {
-    sequelize,
-    modelName: 'Document',
-  });
+    }}
+
+      Document.init({
+        id: {
+          type: DataTypes.UUID,
+          defaultValue: DataTypes.UUID.V4,
+          primaryKey: true,
+        },
+        title: DataTypes.STRING,
+        url: DataTypes.STRING,
+        description: DataTypes.STRING,
+        commentableType: DataTypes.STRING,
+        commentableId: DataTypes.UUID
+      }, {
+        sequelize,
+        modelName: 'Document',
+      });
 
   Document.addHook("afterFind", findResult => {
     if (!Array.isArray(findResult)) findResult = [findResult];

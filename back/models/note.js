@@ -27,10 +27,15 @@ module.exports = (sequelize, DataTypes) => {
 
       // notes can have subnotes
       Note.belongsTo(models.Member, {as: "Parent", foreignKey: "parentId", allowNull: true});
-      Note.hasMany(models.Member, {as: "SubNotes", foreignKey: "parentId"})
+      Note.hasMany(models.Member, {as: "SubNotes", foreignKey: "parentId", allowNull: true})
     }
   }
   Note.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUID.V4,
+      primaryKey: true,
+    },
     title: DataTypes.STRING,
     text: DataTypes.STRING,
     commentableType: DataTypes.STRING,

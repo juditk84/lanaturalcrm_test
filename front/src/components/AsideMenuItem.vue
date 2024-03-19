@@ -19,11 +19,14 @@ const route = useRoute();
 const isDropdownActive = ref(false)
 
 watch(route, () => {
-  if(route.params.asideMenuCategoria.toUpperCase() === props.item.label.toUpperCase()){
-    isDropdownActive.value = true
+
+  if(hasDropdown){
+
+    route.params.asideMenuCategoria.toUpperCase() === props.item.label.toUpperCase() 
+    ? isDropdownActive.value = true 
+    : isDropdownActive.value = false
+    
   }
-  else {
-    isDropdownActive.value = false}
 })
 
 const emit = defineEmits(['menu-click'])

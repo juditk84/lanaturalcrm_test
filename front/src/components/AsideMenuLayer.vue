@@ -13,7 +13,7 @@ defineProps({
   },
 })
 
-const activeItemLabel = ref("")
+
 
 const authStore = useAuthStore();
 
@@ -28,8 +28,6 @@ const logoutItem = computed(() => ({
 
 const menuClick = (event, item) => {
   emit('menu-click', event, item)
-  activeItemLabel.value = item.label
-  // console.log(activeItemLabel.value)
 }
 
 const asideLgCloseClick = (event) => {
@@ -54,11 +52,11 @@ const asideLgCloseClick = (event) => {
       <div
         class="flex-1 overflow-y-auto overflow-x-hidden aside-scrollbars dark:aside-scrollbars-[slate]"
       >
-        <AsideMenuList :menu="menu" :active-item-label.value="activeItemLabel" @menu-click="menuClick" />
+        <AsideMenuList :menu="menu" @menu-click="menuClick" />
       </div>
 
       <ul>
-        <AsideMenuItem :item="logoutItem" :active-item-label.value="activeItemLabel" @menu-click="menuClick" />
+        <AsideMenuItem :item="logoutItem" @menu-click="menuClick" />
       </ul>
     </div>
   </aside>

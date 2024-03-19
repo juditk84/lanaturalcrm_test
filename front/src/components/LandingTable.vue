@@ -29,9 +29,7 @@ async function fetchContent() {
     } catch(error) {
         alert(error.message)
     }
-  }
-
-
+}
 
 const mainStore = useMainStore()
 
@@ -77,72 +75,25 @@ const remove = (arr, cb) => {
   return newArr
 }
 
+function onRowClick(){
+  console.log("row clicked!")
+  isModalActive.value = true;
+}
 
 </script>
 
 <template>
   <CardBoxModal v-model="isModalActive" title="Sample modal">
-    <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
-    <p>This is sample modal</p>
+    <b>Aquest modal hauria de mostrar dades bàsiques d'alló clicat.</b> <br>
+      
+    <p>MIND YOU potser ens cal refactor the modal content, sí? <br>
+    Hi ha un slot al component pensat per conditionally rendering stuff.</p>
   </CardBoxModal>
 
   <CardBoxModal v-model="isModalDangerActive" title="Please confirm" button="danger" has-cancel>
     <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
     <p>This is sample modal</p>
   </CardBoxModal>
-
-  <!-- <table>
-    <thead>
-      <tr>
-        <th v-if="checkable" />
-        <th />
-        <th>Nom</th>
-        <th>Responsable</th>
-        <th>Client</th>
-        <th>Progress</th>
-        <th>Created</th>
-        <th />
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="projecte in itemsPaginated" :key="projecte.id">
-        <TableCheckboxCell v-if="checkable" @checked="checked($event, projecte)" />
-        <td class="border-b-0 lg:w-6 before:hidden">
-          <UserAvatar :username="projecte.nom" class="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
-        </td>
-        <td data-label="Name">
-          {{ projecte.nom }}
-        </td>
-        <td data-label="Company">
-          {{ projecte.responsable }}
-        </td>
-        <td data-label="Client">
-          {{ projecte.client }}
-        </td>
-        <td data-label="Progress" class="lg:w-32">
-          <progress class="flex w-2/5 self-center lg:w-full" max="100" :value="projecte.progress">
-            {{ projecte.progress }}
-          </progress>
-        </td>
-        <td data-label="Created" class="lg:w-1 whitespace-nowrap">
-          <small class="text-gray-500 dark:text-slate-400" :title="projecte.created">{{
-            projecte.created
-          }}</small>
-        </td>
-        <td class="before:hidden lg:w-1 whitespace-nowrap">
-          <BaseButtons type="justify-start lg:justify-end" no-wrap>
-            <BaseButton color="info" :icon="mdiEye" small @click="isModalActive = true" />
-            <BaseButton
-              color="danger"
-              :icon="mdiTrashCan"
-              small
-              @click="isModalDangerActive = true"
-            />
-          </BaseButtons>
-        </td>
-      </tr>
-    </tbody>
-  </table> -->
 
   <div>
 
@@ -152,9 +103,7 @@ const remove = (arr, cb) => {
       <option value="contacte">contactes</option>
 
     </select>
-      
 
-  
   </div>
   <table>
     <thead>
@@ -163,7 +112,7 @@ const remove = (arr, cb) => {
       </tr>
     </thead>
     <tbody>
-      <tr v-for="element in tableContent">
+      <tr v-for="element in tableContent" @click="onRowClick">
         <td v-for="value in element"> {{ value }}</td>
       </tr>
     </tbody>
