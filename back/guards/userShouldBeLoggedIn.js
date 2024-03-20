@@ -42,7 +42,6 @@ async function userShouldBeLoggedIn(req, res, next) {
             models.Document,
             models.Link,
           ],
-          
         })
 
         //********* elements created by user
