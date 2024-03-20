@@ -3,10 +3,58 @@ var router = express.Router();
 const models = require('../models');
 const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn'); 
 
-router.get("/", userShouldBeLoggedIn, async (req, res, next) => {
-  const {user, notes, projects} = req
+router.get("/", userShouldBeLoggedIn, async (req, res) => {
+
+    const { user } = req
       try {
-          res.status(200).send({user: user, notes: notes, projects: projects})
+
+        //********* elements created by user
+        const userCreatedNotes = await models.Note.findAll({      
+          where: {
+            workerId: user.id,
+          },
+          attributes: ['commentableId', 'title'],
+        });
+        const userCreatedProjects = await models.Project.findAll({ 
+          where: {
+            workerId: user.id,
+          },
+          attributes: ["name"], 
+          include: [
+            {model: models.Task, attributes: ["title"]}
+          ]
+        });
+        const userCreatedContacts = await models.Member.findAll({    /// estic pensant que contacts i entities potser s'haurien de separar... aviam
+          where: {
+            workerId: user.id,
+            memberType: "contact"
+          },
+          attributes: ["firstname", "lastname1", "lastname2", "pronouns", "role"]
+        });
+        const userCreatedEntities = await models.Member.findAll({
+          where: {
+            workerId: user.id,
+            memberType: "entity"
+          },
+          attributes: ["commercialName1"]
+        })
+        const userCreatedTasks = await models.Task.findAll({
+          where: {
+            workerId: user.id,
+          },
+          attributes: ["title"], 
+          include: [
+            {model: models.Project, attributes: ["name"]}
+          ]
+        })
+
+          res.status(200).send({user: user,
+                                notes: userCreatedNotes,
+                                tasks: userCreatedTasks,
+                                entities: userCreatedEntities,
+                                contacts: userCreatedContacts
+                              })
+
       } catch (err) {
           res.status(500).send(err.message)
       }
