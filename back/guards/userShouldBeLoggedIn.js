@@ -21,10 +21,12 @@ async function userShouldBeLoggedIn(req, res, next) {
             {
               model: models.Project,
               through: models.Projects_Assigned_To_Workers,
-              attributes: { exclude:["workerId"] },
+              attributes: { exclude: ["workerId", "memberId", "id", "createdAt", "updatedAt", "projectTypeId"] },
               include: [
-                models.Note, /// notes linked to project (commentableId de la nota is projectId)
-                models.Member,
+                {model: models.Note, attributes: { exclude: ["id", "workerId", "createdAt", "updatedAt"]}}, /// notes linked to project (commentableId de la nota is projectId)
+                {model: models.Member, attributes: { exclude: ["id", "createdAt", "updatedAt"]}},
+                models.Estimate,
+                models.Transaction, 
                 { model: models.ProjectType, attributes: ["type"] }]   
             },
             {
@@ -35,35 +37,60 @@ async function userShouldBeLoggedIn(req, res, next) {
               model: models.Reunion,
               through: models.Workers_Invited_To_Reunions
             },
-            models.Note, // notes where worker is commentableId (notes left to self)
+            // **** commentables associated with user-self (pinboard?)
+            models.Note,
             models.Document,
-            models.Estimate,
-            models.Project,
             models.Link,
-            models.Member,
-            models.Reunion,
-            models.Task,
-            models.Transaction,   
           ],
           
         })
 
-     
-        const notes = await models.Note.findAll({      // notes created by user
+        //********* elements created by user
+        const userCreatedNotes = await models.Note.findAll({      
           where: {
             workerId: decoded.user_id
           },
           attributes: ['commentableId', 'title'],
         });
-        const projects = await models.Project.findAll({
+        const userCreatedProjects = await models.Project.findAll({ 
           where: {
             workerId: decoded.user_id
           },
-          attributes: ["name"]
+          attributes: ["name"], 
+          include: [
+            {model: models.Task, attributes: ["title"]}
+          ]
+        });
+        const userCreatedContacts = await models.Member.findAll({    /// estic pensant que contacts i entities potser s'haurien de separar... aviam
+          where: {
+            workerId: decoded.user_id,
+            memberType: "contact"
+          },
+          attributes: ["firstname", "lastname1", "lastname2", "pronouns", "role"]
+        });
+        const userCreatedEntities = await models.Member.findAll({
+          where: {
+            workerId: decoded.user_id,
+            memberType: "entity"
+          },
+          attributes: ["commercialName1"]
+        })
+        const userCreatedTasks = await models.Task.findAll({
+          where: {
+            workerId: decoded.user_id
+          },
+          attributes: ["title"], 
+          include: [
+            {model: models.Project, attributes: ["name"]}
+          ]
         })
 
-        req.projects = projects
-        req.notes = notes;
+        req.projects = userCreatedProjects;
+        req.notes = userCreatedNotes;
+        req.tasks = userCreatedTasks;
+        req.entities = userCreatedEntities;
+        req.contact = userCreatedContacts;
+
         req.user = user; 
         next();
       }

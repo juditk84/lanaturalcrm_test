@@ -6,16 +6,6 @@ const { v4: uuidv4 } = require('uuid')
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
-   
 
     await queryInterface.bulkInsert('Notes', [
       {
@@ -58,16 +48,31 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        id: "08e2e87a-7e31-46e8-9abd-037bc4d931pp",
+        title: "Note 5",
+        text: "note 5, linked to juju",
+        commentableType: "worker",
+        commentableId: "74114925-269f-4f44-89bd-6d9259847489", // ets la Juju
+        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: "08e2e87a-7e31-46e8-9abd-037bc4d931pp",
+        title: "Note 6",
+        text: "si et sort aquesta nota amora, ha funcionat el polimorfi",
+        commentableType: "project",
+        commentableId: "837c6321-e1f3-4c25-86fe-de028bfe3222", // projecte temps de qualitat, assignat a Juju
+        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ])
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
-    await queryInterface.bulkDelete('Transactions', null, {});
+
+    await queryInterface.bulkDelete('Notes', null, {});
   }
 };

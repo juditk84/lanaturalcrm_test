@@ -17,8 +17,9 @@ module.exports = (sequelize, DataTypes) => {
       // has a project type
       Project.belongsTo(models.ProjectType);
 
-      // associated transactions
+      // associated transactions & estimates
       Project.hasMany(models.Transaction, {foreignKey: "projectId", allowNull: true});
+      Project.hasOne(models.Estimate, {foreignKey: "projectId"})
 
       // associated tasks
       Project.hasMany(models.Task)
