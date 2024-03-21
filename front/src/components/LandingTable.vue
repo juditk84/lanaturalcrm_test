@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, onBeforeMount } from 'vue'
 import { useRoute } from 'vue-router'
 import { useMainStore } from '@/stores/main'
 import { mdiEye, mdiTrashCan } from '@mdi/js'
@@ -15,25 +15,37 @@ defineProps({
   checkable: Boolean
 })
 
+const mainStore = useMainStore()
+
 const tableContent = ref([]);
 
 const route = useRoute();
 
-watch(route, () => fetchContent())
+onBeforeMount(() => { grabContentFromStoreBasedOnRoute() })
 
-async function fetchContent() {
-    try {
-      const results = await axios(`api/${route.params.asideMenuCategoria}`)
-      tableContent.value = results.data
+watch(route, () => grabContentFromStoreBasedOnRoute())
 
-    } catch(error) {
-        alert(error.message)
-    }
+// this is reserved for an ALL items fetch depending on the route:
+
+// async function fetchContent() {
+//     try {
+//       const results = await axios(`api/${route.params.asideMenuCategoria}`)
+//       tableContent.value = results.data
+
+//     } catch(error) {
+//         alert(error.message)
+//     }
+// }
+
+// this is for user related items only depending on the route and grabbed from the mainStore:
+function grabContentFromStoreBasedOnRoute(){
+  if(route.params.asideMenuCategoria === "projectes"){
+    mainStore.allUserProjects ? tableContent.value = mainStore.allUserProjects : tableContent.value = mainStore.emptyPlaceholder
+    
+  }
 }
 
-const mainStore = useMainStore()
-
-const items = computed(() => mainStore.sampleProjectes)
+const items = computed(() => mainStore.emptyPlaceholder)
 
 const isModalActive = ref(false)
 
@@ -94,7 +106,6 @@ function onRowClick(){
     <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
     <p>This is sample modal</p>
   </CardBoxModal>
-
   <div>
 
    Selecciona el tipus de membres que vols visualitzar: <select name="categoria_membre" id="">

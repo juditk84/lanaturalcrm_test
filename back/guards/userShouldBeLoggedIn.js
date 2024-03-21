@@ -4,6 +4,7 @@ const supersecret = process.env.SUPER_SECRET;
 const models = require("../models");
 
 async function userShouldBeLoggedIn(req, res, next) {
+  
   const token = req.headers["authorization"]?.replace(/^Bearer\s/, "");
 
   if (!token) {

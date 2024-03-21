@@ -3,6 +3,7 @@ import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { mdiAccount, mdiAsterisk } from '@mdi/js'
 import { useAuthStore } from '@/stores/authStore'
+import { useMainStore } from '@/stores/main'
 import axios from 'axios'
 import SectionFullScreen from '@/components/SectionFullScreen.vue'
 import CardBox from '@/components/CardBox.vue'
@@ -21,7 +22,7 @@ const form = reactive({
 
 const router = useRouter()
 let authStore = useAuthStore()
-
+let mainStore = useMainStore()
 
 const submit = async (event) => {
 
@@ -33,10 +34,12 @@ const submit = async (event) => {
         method: "POST",
         data: credentials,
       })
+      document.cookie = "Token=" + data.token + ";httponly";
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", form.login);
       authStore.onLogin(form.login);
-      router.push("/dashboard")
+      mainStore.fetchAllUserRelatedAssets();
+      
     } catch (error) {
       console.log(error);
     }
