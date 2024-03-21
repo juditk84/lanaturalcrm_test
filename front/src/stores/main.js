@@ -4,7 +4,7 @@ import axios from 'axios'
 
 export const useMainStore = defineStore('main', () => {
 
-  const allUserRelatedAssets = ref({})
+  const allUserRelatedAssets = ref(null)
   const allUserProjects = ref([])
   const allUserTasks = ref([])
   const allUserNotes = ref([])
@@ -12,6 +12,8 @@ export const useMainStore = defineStore('main', () => {
   const allUserLinks = ref([])
   const userName = ref('Jane Doe')
   const userEmail = ref('doe.doe.doe@example.com')
+
+  const notDevelopedYetHahaha = ref(null)
 
   const userAvatar = computed(  
     () =>
@@ -24,8 +26,7 @@ export const useMainStore = defineStore('main', () => {
   const history = ref([])
 
 const emptyPlaceholder = ref([
-  {emptyyyyy: "al loro amiga, que això està buit"},
-  {id: 2, nom: "Projecte 2", responsable: "Usuària 4", client: "Ajuntament de Terrassa"}
+  {emptyyyyy: "al loro amiga, que això està buit"}
 ])
 
   function setUser(payload) {
@@ -91,6 +92,7 @@ const emptyPlaceholder = ref([
     allUserDocuments,
     allUserLinks,
     userAvatar,
+    notDevelopedYetHahaha,
     isFieldFocusRegistered,
     clients,
     emptyPlaceholder,

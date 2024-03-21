@@ -39,9 +39,20 @@ watch(route, () => grabContentFromStoreBasedOnRoute())
 
 // this is for user related items only depending on the route and grabbed from the mainStore:
 function grabContentFromStoreBasedOnRoute(){
-  if(route.params.asideMenuCategoria === "projectes"){
+  if(route.params.asideMenuCategoria === "global"){
+    mainStore.notDevelopedYetHahaha ? tableContent.value = mainStore.notDevelopedYetHahaha : tableContent.value = mainStore.emptyPlaceholder
+  }
+  else if(route.params.asideMenuCategoria === "user"){
+    mainStore.notDevelopedYetHahaha ? tableContent.value = mainStore.notDevelopedYetHahaha : tableContent.value = mainStore.emptyPlaceholder
+  }
+  else if(route.params.asideMenuCategoria === "xarxa"){
+    mainStore.notDevelopedYetHahaha ? tableContent.value = mainStore.notDevelopedYetHahaha : tableContent.value = mainStore.emptyPlaceholder
+  }
+  else if(route.params.asideMenuCategoria === "projectes"){
     mainStore.allUserProjects ? tableContent.value = mainStore.allUserProjects : tableContent.value = mainStore.emptyPlaceholder
-    
+  }
+  else if(route.params.asideMenuCategoria === "reunions"){
+    mainStore.notDevelopedYetHahaha ? tableContent.value = mainStore.notDevelopedYetHahaha : tableContent.value = mainStore.emptyPlaceholder
   }
 }
 
