@@ -48,7 +48,7 @@ function grabContentFromStoreBasedOnRoute(){
   else if(route.params.asideMenuCategoria === "xarxa"){
     mainStore.notDevelopedYetHahaha ? tableContent.value = mainStore.notDevelopedYetHahaha : tableContent.value = mainStore.emptyPlaceholder
   }
-  else if(route.params.asideMenuCategoria === "projectes"){
+  else if(route.params.asideMenuCategoria === "projectes"){  // this is the one that works for now jsjsjsj
     mainStore.allUserProjects ? tableContent.value = mainStore.allUserProjects : tableContent.value = mainStore.emptyPlaceholder
   }
   else if(route.params.asideMenuCategoria === "reunions"){
@@ -56,6 +56,7 @@ function grabContentFromStoreBasedOnRoute(){
   }
 }
 
+//the "items" logic is deprecated, we're gonna use the above approach. We need to adapt the pagination logic to this.
 const items = computed(() => mainStore.emptyPlaceholder)
 
 const isModalActive = ref(false)
