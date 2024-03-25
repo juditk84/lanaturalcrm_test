@@ -39,7 +39,6 @@ const submit = async (event) => {
       localStorage.setItem("username", form.login);
       authStore.onLogin(form.login);
       mainStore.fetchAllUserRelatedAssets();
-      
     } catch (error) {
       console.log(error);
     }

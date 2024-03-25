@@ -1,6 +1,7 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import { mdiBallotOutline, mdiAccount, mdiMail, mdiGithub, mdiHome, mdiPhoneClassic, mdiPhone, mdiHandshakeOutline } from '@mdi/js'
+import { useMemberStore } from '@/stores/memberStore'
 import SectionMain from '@/components/SectionMain.vue'
 import CardBox from '@/components/CardBox.vue'
 import FormCheckRadioGroup from '@/components/FormCheckRadioGroup.vue'
@@ -15,9 +16,14 @@ import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import NotificationBarInCard from '@/components/NotificationBarInCard.vue'
 import axios from 'axios'
+
 let message = ref("hello")
 
 const selectOptions = ["entity", "contact"]
+
+const memberStore = useMemberStore();
+const fetchedMember = ref();
+
 
 const form = ref({
   firstname: '',
@@ -54,7 +60,10 @@ async function submit() {
 
       if (response.statusText === "OK") {
         message.value = "ha funcionat"
-        console.log(response)
+        // memberStore.fetchedMember = response.data
+        fetchedMember.value = response.data
+        console.log(memberStore.fetchedMember)
+
       } else {
         message.value = "no ha funcionat"
       }
@@ -84,6 +93,7 @@ const formStatusSubmit = () => {
 
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiHandshakeOutline" title="Add a member, help a member" main>
+        fetched member as stored in the memberStore: {{ fetchedMember }}
        
       </SectionTitleLineWithButton>
       <FormField label="Selecciona el tipus de membre:">

@@ -5,7 +5,7 @@ import axios from 'axios'
 export const useMainStore = defineStore('main', () => {
 
   const allUserRelatedAssets = ref(null)
-  const allUserProjects = ref([])
+  const allUserProjects = ref(null)
   const allUserTasks = ref([])
   const allUserNotes = ref([])
   const allUserDocuments = ref([])
@@ -52,9 +52,6 @@ const emptyPlaceholder = ref([
       allUserNotes.value = axiosGet.data.user.Notes
       allUserDocuments.value = axiosGet.data.user.Documents
       allUserLinks.value = axiosGet.data.user.Links
-      console.log("the axiosGet data at the store level: ", axiosGet.data)
-      console.log("the projects data at the store level: ", allUserProjects.value)
-
     } catch (error) {
       console.log(error);
     }
@@ -102,7 +99,4 @@ const emptyPlaceholder = ref([
     fetchSampleHistory,
     fetchAllUserRelatedAssets
   }
-},
-{
-  persist: true,
-},)
+})

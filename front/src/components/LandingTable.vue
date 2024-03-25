@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch, onBeforeMount } from 'vue'
+import { computed, ref, watch, watchEffect, onBeforeMount, onUpdated, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useMainStore } from '@/stores/main'
 import { mdiEye, mdiTrashCan } from '@mdi/js'
@@ -17,28 +17,18 @@ defineProps({
 
 const mainStore = useMainStore()
 
-const tableContent = ref([]);
+const tableContent = ref(null);
 
 const route = useRoute();
 
-onBeforeMount(() => { grabContentFromStoreBasedOnRoute() })
-
-watch(route, () => grabContentFromStoreBasedOnRoute())
-
-// this is reserved for an ALL items fetch depending on the route:
-
-// async function fetchContent() {
-//     try {
-//       const results = await axios(`api/${route.params.asideMenuCategoria}`)
-//       tableContent.value = results.data
-
-//     } catch(error) {
-//         alert(error.message)
-//     }
-// }
+onMounted(() => { grabContentFromStoreBasedOnRoute()})
+watch(route, () => { grabContentFromStoreBasedOnRoute() })
 
 // this is for user related items only depending on the route and grabbed from the mainStore:
-function grabContentFromStoreBasedOnRoute(){
+async function grabContentFromStoreBasedOnRoute(){
+  
+  await mainStore.fetchAllUserRelatedAssets()
+
   if(route.params.asideMenuCategoria === "global"){
     mainStore.notDevelopedYetHahaha ? tableContent.value = mainStore.notDevelopedYetHahaha : tableContent.value = mainStore.emptyPlaceholder
   }
@@ -49,7 +39,7 @@ function grabContentFromStoreBasedOnRoute(){
     mainStore.notDevelopedYetHahaha ? tableContent.value = mainStore.notDevelopedYetHahaha : tableContent.value = mainStore.emptyPlaceholder
   }
   else if(route.params.asideMenuCategoria === "projectes"){  // this is the one that works for now jsjsjsj
-    mainStore.allUserProjects ? tableContent.value = mainStore.allUserProjects : tableContent.value = mainStore.emptyPlaceholder
+    tableContent.value = mainStore.allUserProjects 
   }
   else if(route.params.asideMenuCategoria === "reunions"){
     mainStore.notDevelopedYetHahaha ? tableContent.value = mainStore.notDevelopedYetHahaha : tableContent.value = mainStore.emptyPlaceholder
@@ -130,7 +120,10 @@ function onRowClick(){
   </div>
   <table>
     <thead>
-      <tr>
+      <tr v-if="!tableContent">
+        <th>Loading...</th>
+      </tr>
+      <tr v-else>
         <th v-for="(value, key) in tableContent[0]">{{ key }}</th>
       </tr>
     </thead>

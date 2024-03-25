@@ -5,11 +5,12 @@ import axios from 'axios'
 export const useMemberStore = defineStore('member', () => {
 
   const members = ref([])
+  const fetchedMember = ref(null);
 
 
  async function fetchMembers() {
     try {
-      const results = await axios('api/members/totis')
+      const results = await axios('api/members/')
       members.value = results?.data
     } catch(error) {
         alert(error.message)
@@ -18,6 +19,10 @@ export const useMemberStore = defineStore('member', () => {
 
   return {
     members,
+    fetchedMember,
     fetchMembers
+  },
+  {
+    persist: true,
   }
 })

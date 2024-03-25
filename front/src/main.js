@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 import { useMainStore } from '@/stores/main.js'
 import { useAuthStore } from '@/stores/authStore.js'
+import { useMemberStore } from '@/stores/memberStore.js'
 
 import './css/main.css'
 
