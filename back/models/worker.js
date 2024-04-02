@@ -10,7 +10,25 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Worker.hasMany(models.Document, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Estimate, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Link, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Member, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Note, {foreignKey: 'workerId'});
+      Worker.hasMany(models.Project, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Reunion, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Task, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Transaction, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Document, {foreignKey: 'workerId' });
+
+      Worker.belongsToMany(models.Project, {through: "Projects_Assigned_To_Workers"})
+      Worker.belongsToMany(models.Task, {through: "Tasks_Assigned_To_Workers"})
+      Worker.belongsToMany(models.Reunion, {through: "Workers_Invited_To_Reunions"})
+
+      // notes, docs, links, left to SELF 
+      Worker.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'worker'}});
+      Worker.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'worker'}});
+      Worker.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'worker'}});
     }
   }
   Worker.init({
@@ -25,7 +43,9 @@ module.exports = (sequelize, DataTypes) => {
     pronouns: DataTypes.STRING,
     role: DataTypes.STRING,
     officialId: DataTypes.STRING,
-    email: DataTypes.STRING
+    email: DataTypes.STRING,
+    username: DataTypes.STRING,
+    password: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Worker',

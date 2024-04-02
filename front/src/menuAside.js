@@ -18,6 +18,8 @@ import {
   mdiClockStarFourPoints
 } from '@mdi/js'
 
+import { ref } from "vue"
+
 export default [
   {
     to: '/global/landingview',            
@@ -55,11 +57,11 @@ export default [
     label: 'Xarxa',
     menu: [
       {
-        to: '/xarxa',
+        to: '/xarxa/totis',
         label: 'Veure-ho tot'
       },
       {
-        // to: '/afegir_membre_xarxa',
+        to: '/xarxa/afegirmembre',
         label: 'Afegir membre'
       }
     ]
@@ -70,7 +72,7 @@ export default [
     icon: mdiCardMultiple,
     menu: [
       {
-        to: '/projectes',
+        to: '/projectes/tots',
         label: 'Tots els projectes'
       },
       {
@@ -93,5 +95,11 @@ export default [
         label: 'propera Natural Focus'
       }
     ]
+  },
+  {
+    // add the necessary logic to this to conditionally display this if the user is admin or not.
+    to: '/register',            
+    icon: mdiLock,
+    label: 'Crear usuaria',
   },
 ]

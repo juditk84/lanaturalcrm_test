@@ -3,16 +3,16 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('Tasks_By_Worker', {
+    await queryInterface.createTable('Tasks_Assigned_To_Workers', {
       TaskId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         references: {
           model: "Tasks",
           key: "id",
         },
         allowNull:false,
       },
-      WorkerId: {
+      workerId: {
         type: Sequelize.UUID,
         references: {
           model: "Workers",
@@ -32,7 +32,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable("Tasks_By_Worker")
+    await queryInterface.dropTable("Tasks_Assigned_To_Workers")
   
   }
 };

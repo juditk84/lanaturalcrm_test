@@ -1,6 +1,13 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Style from '@/views/StyleView.vue'
 import Home from '@/views/HomeView.vue'
+import LandingView from '@/views/LandingView.vue'
+import RegisterView from '@/views/RegisterView.vue'
+import AllMembers from '@/views/Xarxa/AllMembers.vue'
+import AddMember from '@/views/Xarxa/AddMember.vue'
+import AllProjects from '@/views/Projectes/AllProjects.vue'
+
+import { useAuthStore } from '@/stores/authStore'
 
 const routes = [
   {
@@ -27,23 +34,31 @@ const routes = [
     },
     path: '/:asideMenuCategoria/landingview',
     name: 'Landing Hub',
-    component: () => import('@/views/LandingView.vue')
+    component: LandingView
   },
   {
     meta: {
-      title: 'Xarxa'
+      title: 'Xarxatotis'
     },
-    path: '/xarxa',
+    path: '/xarxa/totis',
+    name: 'Xarxatotis',
+    component: AllMembers
+  },
+  {
+    meta: {
+      title: 'Afegirmembre'
+    },
+    path: '/xarxa/afegirmembre',
     name: 'Xarxa',
-    component: () => import('@/views/XarxaView.vue')
+    component: AddMember
   },
   {
     meta: {
       title: 'Projectes'
     },
-    path: '/projectes/',
+    path: '/projectes/tots',
     name: 'Projectes',
-    component: () => import('@/views/ProjectesView.vue')
+    component: AllProjects
   },
   {
     meta: {
@@ -87,6 +102,14 @@ const routes = [
   },
   {
     meta: {
+      title: 'Register'
+    },
+    path: '/register',
+    name: 'register',
+    component: RegisterView
+  },
+  {
+    meta: {
       title: 'Error'
     },
     path: '/error',
@@ -95,12 +118,26 @@ const routes = [
   }
 ]
 
+const authenticated = false;
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
     return savedPosition || { top: 0 }
   }
+})
+
+
+// guard preventing access to pages unless the user is logged in like a boss:
+
+router.beforeEach((to, from, next) => {
+
+  const authStore = useAuthStore();
+
+  if (to.name !== 'login' && !authStore.isLoggedIn) next({ name: 'login' })
+  else next()
+
 })
 
 export default router

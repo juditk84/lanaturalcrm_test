@@ -7,7 +7,7 @@ import SectionTitle from '@/components/SectionTitle.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import CardBox from '@/components/CardBox.vue'
-import TableSampleProjectes from '@/components/TableSampleProjectes.vue'
+import LandingTable from '@/components/LandingTable.vue'
 import ModalForTechnicalNotes from '@/components/ModalForTechnicalNotes.vue'
 
 const route = useRoute();
@@ -34,7 +34,8 @@ function showModal(event){
     <SectionMain class="h-fit">
       <ModalForTechnicalNotes :modal-is-visible="modalIsVisible" :modal-button-name="modalButtonName" @show-modal="showModal"/>
       <h3 class="text-center">{{ route.params.asideMenuCategoria.toUpperCase() }} LANDING VIEW</h3>
-      <CardBox class="h-1/3"><br><br><br>Llista resum amb els 3-5 items creats o modificats més recentment.<br><br><br>
+      <CardBox class="h-1/3">
+        <LandingTable/>
         <button name="landing_list" 
                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                 @click="showModal" >Technical Notes

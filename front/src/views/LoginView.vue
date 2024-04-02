@@ -2,6 +2,9 @@
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { mdiAccount, mdiAsterisk } from '@mdi/js'
+import { useAuthStore } from '@/stores/authStore'
+import { useMainStore } from '@/stores/main'
+import axios from 'axios'
 import SectionFullScreen from '@/components/SectionFullScreen.vue'
 import CardBox from '@/components/CardBox.vue'
 import FormCheckRadio from '@/components/FormCheckRadio.vue'
@@ -12,16 +15,50 @@ import BaseButtons from '@/components/BaseButtons.vue'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
 
 const form = reactive({
-  login: 'john.doe',
-  pass: 'highly-secure-password-fYjUw-',
+  login: 'Judit',
+  pass: 'Judit',
   remember: true
 })
 
 const router = useRouter()
+let authStore = useAuthStore()
+let mainStore = useMainStore()
 
-const submit = () => {
-  router.push('/dashboard')
+const submit = async (event) => {
+
+  const credentials = {username: form.login, password: form.pass}
+
+  if(event.submitter.innerText === "Login"){
+    try {
+      const { data } = await axios("api/inici/login", {
+        method: "POST",
+        data: credentials,
+      })
+      document.cookie = "Token=" + data.token + ";httponly";
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("username", form.login);
+      authStore.onLogin(form.login);
+      mainStore.fetchAllUserRelatedAssets();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  else if(event.submitter.innerText === "Register"){
+    try {
+          const { data } = await axios("api/inici/register", {
+            method: "POST",
+            data: credentials,
+          })
+          console.log(data)
+          
+        } catch (err) {
+          return err
+        }
+  }
+   
+    
 }
+
 </script>
 
 <template>
@@ -47,16 +84,12 @@ const submit = () => {
           />
         </FormField>
 
-        <FormCheckRadio
-          v-model="form.remember"
-          name="remember"
-          label="Remember"
-          :input-value="true"
-        />
+
 
         <template #footer>
           <BaseButtons>
             <BaseButton type="submit" color="info" label="Login" />
+            <BaseButton type="submit" color="info" label="Register" />
             <BaseButton to="/dashboard" color="info" outline label="Back" />
           </BaseButtons>
         </template>

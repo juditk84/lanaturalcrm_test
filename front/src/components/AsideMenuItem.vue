@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref, computed, watch } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
 import { mdiConsoleNetworkOutline, mdiMinus, mdiPlus } from '@mdi/js'
 import { getButtonColor } from '@/colors.js'
 import BaseIcon from '@/components/BaseIcon.vue'
@@ -9,10 +9,24 @@ import AsideMenuList from '@/components/AsideMenuList.vue'
 const props = defineProps({
   item: {
     type: Object,
-    required: true
+    required: true,
   },
-  isDropdownList: Boolean,
+  activeItemLabel: String
+})
 
+const route = useRoute();
+
+const isDropdownActive = ref(false)
+
+watch(route, () => {
+
+  if(hasDropdown){
+
+    route.params.asideMenuCategoria.toUpperCase() === props.item.label.toUpperCase() 
+    ? isDropdownActive.value = true 
+    : isDropdownActive.value = false
+    
+  }
 })
 
 const emit = defineEmits(['menu-click'])
@@ -23,8 +37,6 @@ const asideMenuItemActiveStyle = computed(() =>
   hasColor.value ? '' : 'aside-menu-item-active font-bold'
 )
 
-const isDropdownActive = ref(false)
-
 const componentClass = computed(() => [
   props.isDropdownList ? 'py-3 px-6 text-sm' : 'py-3',
   hasColor.value
@@ -32,18 +44,10 @@ const componentClass = computed(() => [
     : `aside-menu-item dark:text-slate-300 dark:hover:text-white`
 ])
 
-const hasDropdown = computed(() => !!props.item.menu) // if it has dropdown, hasDropdown === true. Otherwise, === false
+const hasDropdown = computed(() => !!props.item.menu)
 
-const itemItself = ref(props.item)
-
-// extra stuff because testing of prop passing and event emitting:
 const menuClick = (event) => {
-  emit('menu-click', event, isDropdownActive, itemItself)
-
-  if (hasDropdown.value) {
-
-    isDropdownActive.value = !isDropdownActive.value
-  }
+  emit('menu-click', event, props.item)
 }
 </script>
 
@@ -59,8 +63,6 @@ const menuClick = (event) => {
       :class="componentClass"
       :menu-click="menuClick"
       @click="menuClick"
-
-
     >
       <BaseIcon
         v-if="item.icon"
@@ -90,7 +92,6 @@ const menuClick = (event) => {
       v-if="hasDropdown"
       :menu="item.menu"
       :class="['aside-menu-dropdown', isDropdownActive ? 'block dark:bg-slate-800/50' : 'hidden']"
-      is-dropdown-list
     />
   </li>
 </template>

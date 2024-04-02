@@ -1,20 +1,63 @@
 var express = require('express');
 var router = express.Router();
 const models = require('../models');
+const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn'); 
 
-router.get('/', async (req, res, next) => {
-  const {firstname, lastname1, lastname2, pronouns, role, officialId, email} = req.body
-  try {
-    const workerInfo = await models.Worker.findAll({
-      where: {
-        firstname, lastname1, lastname2
+router.get("/", userShouldBeLoggedIn, async (req, res) => {
+
+    const { user } = req
+      try {
+
+        //********* elements created by user
+        const userCreatedNotes = await models.Note.findAll({      
+          where: {
+            workerId: user.id,
+          },
+          attributes: ['commentableId', 'title'],
+        });
+        const userCreatedProjects = await models.Project.findAll({ 
+          where: {
+            workerId: user.id,
+          },
+          attributes: ["name"], 
+          include: [
+            {model: models.Task, attributes: ["title"]}
+          ]
+        });
+        const userCreatedContacts = await models.Member.findAll({    /// estic pensant que contacts i entities potser s'haurien de separar... aviam
+          where: {
+            workerId: user.id,
+            memberType: "contact"
+          },
+          attributes: ["firstname", "lastname1", "lastname2", "pronouns", "role"]
+        });
+        const userCreatedEntities = await models.Member.findAll({
+          where: {
+            workerId: user.id,
+            memberType: "entity"
+          },
+          attributes: ["commercialName1"]
+        })
+        const userCreatedTasks = await models.Task.findAll({
+          where: {
+            workerId: user.id,
+          },
+          attributes: ["title"], 
+          include: [
+            {model: models.Project, attributes: ["name"]}
+          ]
+        })
+
+          res.status(200).send({user: user,
+                                notes: userCreatedNotes,
+                                tasks: userCreatedTasks,
+                                entities: userCreatedEntities,
+                                contacts: userCreatedContacts
+                              })
+
+      } catch (err) {
+          res.status(500).send(err.message)
       }
-      // include: models.Tag, models.Notes.... etc
-    })
-    res.status(200).send(workerInfo)
-  } catch (err) {
-    res.status(500).send({message: err.message})
-  }
 })
 
 router.get('/all', async (req, res, next) => {
