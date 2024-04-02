@@ -30,7 +30,7 @@ module.exports = {
       {
         id: "d0c0a69f-1549-469f-9e0a-02d519a13292",
         ProjectId: "837c6321-e1f3-4c25-86fe-de028bfe3222", // temps de qualitat
-        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // juju
+        workerId: "74114925-269f-4f44-89bd-6d9259847489", // juju
         createdAt: new Date(),
         updatedAt: new Date()
       },
