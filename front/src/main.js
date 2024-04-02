@@ -30,6 +30,7 @@ mainStore.fetchSampleHistory()
 
 // const darkModeStore = useDarkModeStore(pinia)
 
+console.log("app mounted.")
 // if (
 //   (!localStorage['darkMode'] && window.matchMedia('(prefers-color-scheme: dark)').matches) ||
 //   localStorage['darkMode'] === '1'

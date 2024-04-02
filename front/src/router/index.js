@@ -3,9 +3,9 @@ import Style from '@/views/StyleView.vue'
 import Home from '@/views/HomeView.vue'
 import LandingView from '@/views/LandingView.vue'
 import RegisterView from '@/views/RegisterView.vue'
-import AllMembers from '@/views/xarxa/AllMembers.vue'
-import AddMember from '@/views/xarxa/AddMember.vue'
-import AllProjects from '@/views/projectes/AllProjects.vue'
+import AllMembers from '@/views/Xarxa/AllMembers.vue'
+import AddMember from '@/views/Xarxa/AddMember.vue'
+import AllProjects from '@/views/Projectes/AllProjects.vue'
 
 import { useAuthStore } from '@/stores/authStore'
 

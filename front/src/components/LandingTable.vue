@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref, watch, watchEffect, onBeforeMount, onUpdated, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { useMainStore } from '@/stores/main'
+import { useUserStore } from '@/stores/userStore'
 import { mdiEye, mdiTrashCan } from '@mdi/js'
 import CardBoxModal from '@/components/CardBoxModal.vue'
 import TableCheckboxCell from '@/components/TableCheckboxCell.vue'
@@ -15,7 +15,7 @@ defineProps({
   checkable: Boolean
 })
 
-const mainStore = useMainStore()
+const userStore = useUserStore()
 
 const tableContent = ref(null);
 
@@ -27,27 +27,27 @@ watch(route, () => { grabContentFromStoreBasedOnRoute() })
 // this is for user related items only depending on the route and grabbed from the mainStore:
 async function grabContentFromStoreBasedOnRoute(){
   
-  await mainStore.fetchAllUserRelatedAssets()
+  await userStore.fetchAllUserRelatedAssets()
 
   if(route.params.asideMenuCategoria === "global"){
-    mainStore.notDevelopedYetHahaha ? tableContent.value = mainStore.notDevelopedYetHahaha : tableContent.value = mainStore.emptyPlaceholder
+    userStore.notDevelopedYetHahaha ? tableContent.value = userStore.notDevelopedYetHahaha : tableContent.value = userStore.emptyPlaceholder
   }
   else if(route.params.asideMenuCategoria === "user"){
-    mainStore.notDevelopedYetHahaha ? tableContent.value = mainStore.notDevelopedYetHahaha : tableContent.value = mainStore.emptyPlaceholder
+    userStore.notDevelopedYetHahaha ? tableContent.value = userStore.notDevelopedYetHahaha : tableContent.value = userStore.emptyPlaceholder
   }
   else if(route.params.asideMenuCategoria === "xarxa"){
-    mainStore.notDevelopedYetHahaha ? tableContent.value = mainStore.notDevelopedYetHahaha : tableContent.value = mainStore.emptyPlaceholder
+    userStore.notDevelopedYetHahaha ? tableContent.value = userStore.notDevelopedYetHahaha : tableContent.value = userStore.emptyPlaceholder
   }
   else if(route.params.asideMenuCategoria === "projectes"){  // this is the one that works for now jsjsjsj
-    tableContent.value  = mainStore.allUserProjects 
+    tableContent.value  = userStore.allUserProjects 
   }
   else if(route.params.asideMenuCategoria === "reunions"){
-    mainStore.notDevelopedYetHahaha ? tableContent.value = mainStore.notDevelopedYetHahaha : tableContent.value = mainStore.emptyPlaceholder
+    userStore.notDevelopedYetHahaha ? tableContent.value = userStore.notDevelopedYetHahaha : tableContent.value = userStore.emptyPlaceholder
   }
 }
 
 //the "items" logic is deprecated, we're gonna use the above approach. We need to adapt the pagination logic to this.
-const items = computed(() => mainStore.emptyPlaceholder)
+const items = computed(() => userStore.emptyPlaceholder)
 
 const isModalActive = ref(false)
 
