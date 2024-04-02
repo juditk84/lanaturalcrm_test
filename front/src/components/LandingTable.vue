@@ -11,40 +11,12 @@ import BaseButton from '@/components/BaseButton.vue'
 import UserAvatar from '@/components/UserAvatar.vue'
 import axios from 'axios'
 
-defineProps({
-  checkable: Boolean
+const props = defineProps({
+  checkable: Boolean,
+  tableContent: Object
 })
 
 const userStore = useUserStore()
-
-const tableContent = ref(null);
-
-const route = useRoute();
-
-onMounted(() => { grabContentFromStoreBasedOnRoute()})
-watch(route, () => { grabContentFromStoreBasedOnRoute() })
-
-// this is for user related items only depending on the route and grabbed from the mainStore:
-async function grabContentFromStoreBasedOnRoute(){
-  
-  await userStore.fetchAllUserRelatedAssets()
-
-  if(route.params.asideMenuCategoria === "global"){
-    userStore.notDevelopedYetHahaha ? tableContent.value = userStore.notDevelopedYetHahaha : tableContent.value = userStore.emptyPlaceholder
-  }
-  else if(route.params.asideMenuCategoria === "user"){
-    userStore.notDevelopedYetHahaha ? tableContent.value = userStore.notDevelopedYetHahaha : tableContent.value = userStore.emptyPlaceholder
-  }
-  else if(route.params.asideMenuCategoria === "xarxa"){
-    userStore.notDevelopedYetHahaha ? tableContent.value = userStore.notDevelopedYetHahaha : tableContent.value = userStore.emptyPlaceholder
-  }
-  else if(route.params.asideMenuCategoria === "projectes"){  // this is the one that works for now jsjsjsj
-    tableContent.value  = userStore.allUserProjects 
-  }
-  else if(route.params.asideMenuCategoria === "reunions"){
-    userStore.notDevelopedYetHahaha ? tableContent.value = userStore.notDevelopedYetHahaha : tableContent.value = userStore.emptyPlaceholder
-  }
-}
 
 //the "items" logic is deprecated, we're gonna use the above approach. We need to adapt the pagination logic to this.
 const items = computed(() => userStore.emptyPlaceholder)
@@ -120,15 +92,15 @@ function onRowClick(){
   </div>
   <table>
     <thead>
-      <tr v-if="!tableContent">
+      <tr v-if="!props.tableContent">
         <th>Loading...</th>
       </tr>
       <tr v-else>
-        <th v-for="(value, key) in tableContent[0]">{{ key }}</th>
+        <th v-for="(value, key) in props.tableContent[0]">{{ key }}</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="element in tableContent" @click="onRowClick">
+      <tr v-for="element in props.tableContent" @click="onRowClick">
         <td v-for="value in element"> {{ value }}</td>
       </tr>
     </tbody>

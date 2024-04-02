@@ -20,7 +20,6 @@ const form = reactive({
   remember: true
 })
 
-const router = useRouter()
 let authStore = useAuthStore()
 let mainStore = useMainStore()
 
