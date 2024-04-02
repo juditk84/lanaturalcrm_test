@@ -1,8 +1,5 @@
 'use strict';
 
-const { v4: uuidv4 } = require('uuid')
-
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -49,7 +46,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        id: "08e2e87a-7e31-46e8-9abd-037bc4d931pp",
+        id: "7547cb66-6ea8-44fb-90a6-0b793bec6abb",
         title: "Note 5",
         text: "note 5, linked to juju",
         commentableType: "worker",
@@ -59,7 +56,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        id: "08e2e87a-7e31-46e8-9abd-037bc4d931pp",
+        id: "094a798c-5087-403e-9632-94f56bf91bf6",
         title: "Note 6",
         text: "si et sort aquesta nota amora, ha funcionat el polimorfi",
         commentableType: "project",
