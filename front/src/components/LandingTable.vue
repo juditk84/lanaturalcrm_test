@@ -39,7 +39,7 @@ async function grabContentFromStoreBasedOnRoute(){
     mainStore.notDevelopedYetHahaha ? tableContent.value = mainStore.notDevelopedYetHahaha : tableContent.value = mainStore.emptyPlaceholder
   }
   else if(route.params.asideMenuCategoria === "projectes"){  // this is the one that works for now jsjsjsj
-    tableContent.value = mainStore.allUserProjects 
+    tableContent.value  = mainStore.allUserProjects 
   }
   else if(route.params.asideMenuCategoria === "reunions"){
     mainStore.notDevelopedYetHahaha ? tableContent.value = mainStore.notDevelopedYetHahaha : tableContent.value = mainStore.emptyPlaceholder
