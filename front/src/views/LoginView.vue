@@ -20,9 +20,8 @@ const form = reactive({
   remember: true
 })
 
-const router = useRouter()
 let authStore = useAuthStore()
-let mainStore = useMainStore()
+// let mainStore = useMainStore()
 
 const submit = async (event) => {
 
@@ -38,7 +37,7 @@ const submit = async (event) => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", form.login);
       authStore.onLogin(form.login);
-      mainStore.fetchAllUserRelatedAssets();
+      // mainStore.fetchAllUserRelatedAssets();
     } catch (error) {
       console.log(error);
     }
@@ -54,9 +53,7 @@ const submit = async (event) => {
         } catch (err) {
           return err
         }
-  }
-   
-    
+  } 
 }
 
 </script>

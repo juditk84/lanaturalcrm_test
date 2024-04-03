@@ -10,10 +10,20 @@ export const useAuthStore = defineStore('auth', () => {
   // const isLoggedIn = ref(!!localStorage.getItem("token"))
   const username = ref(localStorage.getItem("username"))
 
+  function setUser(payload) {
+    if (payload.name) {
+      username.value = payload.username
+    }
+    if (payload.email) {
+      userEmail.value = payload.email
+    }
+  }
 
   const onLogin = (user) => {
     isLoggedIn.value = true;
     username.value = user
+    setUser(user)
+    console.log({user: user})
     router.push("/dashboard")
   };
 
@@ -29,6 +39,7 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   return {
+    setUser,
     isLoggedIn,
     onLogin,
     onLogout,
