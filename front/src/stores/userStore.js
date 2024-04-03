@@ -1,17 +1,35 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import axios from 'axios'
+import { useAuthStore } from './authStore'
 
 export const useUserStore = defineStore('userStore', () => {
 
-  const allUserRelatedAssets = ref(null)
-  const allUserProjects = ref(null)
-  const allUserTasks = ref([])
-  const allUserNotes = ref([])
-  const allUserDocuments = ref([])
-  const allUserLinks = ref([])
-  const userName = ref('Jane Doe')
-  const userEmail = ref('doe.doe.doe@example.com')
+  const authStore = useAuthStore()
+  // const {isLoggedIn} = storeToRefs(authStore)
+
+  watch(() => authStore.isLoggedIn, async () => {
+    fetchAllUserRelatedAssets()
+  })
+
+  const user = ref({
+    allUserRelatedAssets: null,
+    allUserProjects: null,
+    allUserTasks: [],
+    allUserNotes: [],
+    allUserDocuments: [],
+    allUserLinks: [], 
+    userName: '',
+    userEmail: ''
+  })
+  // const allUserRelatedAssets = ref(null)
+  // const allUserProjects = ref(null)
+  // const allUserTasks = ref([])
+  // const allUserNotes = ref([])
+  // const allUserDocuments = ref([])
+  // const allUserLinks = ref([])
+  // const userName = ref('Jane Doe')
+  // const userEmail = ref('doe.doe.doe@example.com')
 
   const notDevelopedYetHahaha = ref(null)
 
@@ -20,10 +38,10 @@ export const useUserStore = defineStore('userStore', () => {
       `https://api.dicebear.com/8.x/adventurer/svg?seed=Salem`
   )
 
-  const isFieldFocusRegistered = ref(false)
+  // const isFieldFocusRegistered = ref(false)
 
-  const clients = ref([])
-  const history = ref([])
+  // const clients = ref([])
+  // const history = ref([])
 
 const emptyPlaceholder = ref([
   {emptyyyyy: "al loro amiga, que això està buit"}
@@ -40,22 +58,26 @@ const emptyPlaceholder = ref([
 
   async function fetchAllUserRelatedAssets(){
     try {
-      const axiosGet = await axios("api/workers", {
+      const response = await axios("api/workers", {
         headers: {
           Authorization: localStorage.token
         }
       }) 
-      userName.value = axiosGet.data.user.username
-      allUserRelatedAssets.value = axiosGet.data
-      allUserProjects.value = axiosGet.data.user.Projects
-      allUserTasks.value = axiosGet.data.user.Tasks
-      allUserNotes.value = axiosGet.data.user.Notes
-      allUserDocuments.value = axiosGet.data.user.Documents
-      allUserLinks.value = axiosGet.data.user.Links
+      user.userName.value = response.data.user.username
+      user.allUserRelatedAssets.value = response.data
+      user.allUserProjects.value = response.data.user.Projects
+      user.allUserTasks.value = response.data.user.Tasks
+      user.allUserNotes.value = response.data.user.Notes
+      user.allUserDocuments.value = response.data.user.Documents
+      user.allUserLinks.value = response.data.user.Links
     } catch (error) {
       console.log(error);
     }
     
+  }
+
+  function $reset(){
+
   }
 
   function fetchSampleClients() {
@@ -81,22 +103,23 @@ const emptyPlaceholder = ref([
   }
 
   return {
-    userName,
-    userEmail,
-    allUserProjects,
-    allUserTasks,
-    allUserNotes,
-    allUserDocuments,
-    allUserLinks,
+    // userName,
+    // userEmail,
+    // allUserProjects,
+    // allUserTasks,
+    // allUserNotes,
+    // allUserDocuments,
+    // allUserLinks,
+    user,
     userAvatar,
     notDevelopedYetHahaha,
     isFieldFocusRegistered,
-    clients,
+    // clients,
     emptyPlaceholder,
     history,
     setUser,
-    fetchSampleClients,
-    fetchSampleHistory,
-    fetchAllUserRelatedAssets
+    // fetchSampleClients,
+    // fetchSampleHistory,
+    // fetchAllUserRelatedAssets
   }
 })

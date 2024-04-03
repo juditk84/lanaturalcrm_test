@@ -9,15 +9,9 @@ import AllProjects from '@/views/Projectes/AllProjects.vue'
 
 import { useAuthStore } from '@/stores/authStore'
 
+
 const routes = [
-  {
-    meta: {
-      title: 'Select style'
-    },
-    path: '/',
-    name: 'style',
-    component: Style
-  },
+
   {
     // Document title tag
     // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
@@ -134,7 +128,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 
   const authStore = useAuthStore();
-
+  
   if (to.name !== 'login' && !authStore.isLoggedIn) next({ name: 'login' })
   else next()
 

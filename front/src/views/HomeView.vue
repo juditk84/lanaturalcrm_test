@@ -23,8 +23,12 @@ import CardBoxClient from '@/components/CardBoxClient.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import SectionBannerStarOnGitHub from '@/components/SectionBannerStarOnGitHub.vue'
-
+import { useUserStore } from '@/stores/userStore'
+import { storeToRefs } from 'pinia'
 const chartData = ref(null)
+
+const userStore = useUserStore;
+const {user} = storeToRefs(userStore)
 
 const fillChartData = () => {
   chartData.value = chartConfig.sampleChartData()
@@ -39,11 +43,17 @@ const mainStore = useMainStore()
 const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
 
 const transactionBarItems = computed(() => mainStore.history)
+
+function checkName() {
+  console.log(user)
+}
 </script>
 
 <template>
   <LayoutAuthenticated>
     <SectionMain>
+
+      <button @click="checkName"> click me</button>
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
         <BaseButton
           href="https://github.com/justboil/admin-one-vue-tailwind"
@@ -55,7 +65,7 @@ const transactionBarItems = computed(() => mainStore.history)
           small
         />
       </SectionTitleLineWithButton>
-
+      
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
         <CardBoxWidget
           trend="12%"
@@ -110,7 +120,7 @@ const transactionBarItems = computed(() => mainStore.history)
         </div>
       </div>
 
-      <SectionBannerStarOnGitHub class="mt-6 mb-6" />
+      <!-- <SectionBannerStarOnGitHub class="mt-6 mb-6" /> -->
 
       <SectionTitleLineWithButton :icon="mdiChartPie" title="Trends overview">
         <BaseButton :icon="mdiReload" color="whiteDark" @click="fillChartData" />
