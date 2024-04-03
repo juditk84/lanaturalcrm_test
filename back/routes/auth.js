@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const models = require("../models");
 const { v4: uuidv4 } = require('uuid');
-
+const userShouldExist = require('../guards/userShouldExist')
 const supersecret = process.env.SUPER_SECRET;
 
 router.post("/register", async (req, res) => {
@@ -15,7 +15,7 @@ router.post("/register", async (req, res) => {
   try {
       const hash = await bcrypt.hash(password, saltRounds);
       const newUser = await models.Worker.create({id: uuidv4(), username: username, password: hash})
-      res.status(200).send({ message: `${username} was created!` }); 
+      res.status(200).send({ message: `${username} was created!`, user: newUser }); 
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
@@ -23,7 +23,7 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
-
+  
   try {
     const results = await models.Worker.findOne({
       where: {
@@ -38,7 +38,7 @@ router.post("/login", async (req, res) => {
 
       if (!correctPassword) throw new Error("Incorrect password");
       var token = jwt.sign({ user_id }, supersecret);
-      res.send({ user: user} );
+      res.send({ message: "Login successful", token});
     } else {
       throw new Error("User does not exist");
     }

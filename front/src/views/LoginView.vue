@@ -20,40 +20,45 @@ const form = reactive({
   remember: true
 })
 
+const router = useRouter()
 let authStore = useAuthStore()
-// let mainStore = useMainStore()
+let mainStore = useMainStore()
 
 const submit = async (event) => {
 
   const credentials = {username: form.login, password: form.pass}
 
-  if(event.submitter.innerText === "Login"){
+  // if(event.submitter.innerText === "Login"){
     try {
-      const { data } = await axios("api/inici/login", {
-        method: "POST",
-        data: credentials,
-      })
-      document.cookie = "Token=" + data.token + ";httponly";
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("username", form.login);
-      authStore.onLogin(form.login);
+      // const { data } = await axios("api/inici/login", {
+      //   method: "POST",
+      //   body: credentials,
+      // })
+      // document.cookie = "Token=" + data.token + ";httponly";
+      // localStorage.setItem("token", data.token);
+      // localStorage.setItem("username", form.login);
+      authStore.login(credentials);
       // mainStore.fetchAllUserRelatedAssets();
+      // router.push('/dashboard')
+      // console.log("line 42")
     } catch (error) {
       console.log(error);
     }
-  }
-  else if(event.submitter.innerText === "Register"){
-    try {
-          const { data } = await axios("api/inici/register", {
-            method: "POST",
-            data: credentials,
-          })
-          console.log(data)
+  // }
+  // else if(event.submitter.innerText === "Register"){
+  //   try {
+  //         const { data } = await axios("api/inici/register", {
+  //           method: "POST",
+  //           data: credentials,
+  //         })
+  //         console.log(data)
           
-        } catch (err) {
-          return err
-        }
-  } 
+  //       } catch (err) {
+  //         return err
+  //       }
+  // }
+   
+    
 }
 
 </script>
@@ -86,7 +91,7 @@ const submit = async (event) => {
         <template #footer>
           <BaseButtons>
             <BaseButton type="submit" color="info" label="Login" />
-            <BaseButton type="submit" color="info" label="Register" />
+            <!-- <BaseButton type="submit" color="info" label="Register" /> -->
             <BaseButton to="/dashboard" color="info" outline label="Back" />
           </BaseButtons>
         </template>
