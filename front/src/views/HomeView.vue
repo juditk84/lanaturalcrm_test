@@ -44,16 +44,13 @@ const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
 
 const transactionBarItems = computed(() => mainStore.history)
 
-function checkName() {
-  console.log(user)
-}
 </script>
 
 <template>
   <LayoutAuthenticated>
     <SectionMain>
 
-      <button @click="checkName"> click me</button>
+    
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
         <BaseButton
           href="https://github.com/justboil/admin-one-vue-tailwind"

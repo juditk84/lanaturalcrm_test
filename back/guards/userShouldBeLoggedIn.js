@@ -18,15 +18,15 @@ async function userShouldBeLoggedIn(req, res, next) {
           where: {
             id: decoded.user_id,
           },
-          attributes: ["username", "id"],
+          attributes: {exclude: ["password", "id"]},
           include: [
             {
               model: models.Project,
               through: models.Projects_Assigned_To_Workers,
-              attributes: { exclude: ["workerId", "memberId", "createdAt", "updatedAt", "projectTypeId"] },
+              attributes: { exclude: ["workerId", "memberId", "projectTypeId"] },
               include: [
-                {model: models.Note, attributes: { exclude: ["id", "workerId", "createdAt", "updatedAt"]}}, /// notes linked to project (commentableId de la nota is projectId)
-                {model: models.Member, attributes: { exclude: ["id", "createdAt", "updatedAt"]}},
+                {model: models.Note, attributes: { exclude: ["id", "workerId"]}}, /// notes linked to project (commentableId de la nota is projectId)
+                {model: models.Member, attributes: { exclude: ["id"]}},
                 models.Estimate,
                 models.Transaction, 
                 { model: models.ProjectType, attributes: ["type"] }]   
