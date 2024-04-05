@@ -35,7 +35,8 @@ const authStore = useAuthStore()
           Authorization: sessionStorage.refreshToken
         }
       }) 
-    userName.value = response.data.user.firstname
+      console.log(response.data)
+      console.log("hello")
       
     } catch (error) {
       console.log(error);

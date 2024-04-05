@@ -7,8 +7,8 @@ import axios from 'axios'
 
 export const useAuthStore = defineStore('auth', () => {
   const router = useRouter();
-  const isLoggedIn = ref(false)
-  const username = ref(!!sessionStorage.getItem("username"))
+  const isLoggedIn = ref(!!sessionStorage.getItem("refreshToken"))
+  const username = ref(sessionStorage.getItem("username"))
 
 
   async function getRefreshToken() {
