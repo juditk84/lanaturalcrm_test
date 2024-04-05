@@ -1,4 +1,5 @@
 var express = require('express');
+var compression = require('compression')
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -13,6 +14,7 @@ var authRouter = require("./routes/auth");
 
 var app = express();
 
+app.use(compression());
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());

@@ -13,19 +13,7 @@ import TableAllProjects from '@/components/TableAllProjects.vue'
 const projectesStore = useProjectesStore();
 
 onMounted(() => { grabAllProjectsFromStore() })
-
-const allProjects = ref(null)
-
-async function grabAllProjectsFromStore(){
-  await projectesStore.fetchProjects();
-
-  allProjects.value = projectesStore.allProjects
-  // console.log(allProjects)
-  // allProjects.value = projectesStore.allProjects.map(projecte => { console.log(projecte) });
-  // console.log(allProjects.value)
- 
-}
-
+async function grabAllProjectsFromStore(){await projectesStore.fetchProjects()}
 
 </script>
 
@@ -35,7 +23,7 @@ async function grabAllProjectsFromStore(){
       <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Projectes" main>
         
       </SectionTitleLineWithButton>
-      <TableAllProjects :all-projects="allProjects"/>
+      <TableAllProjects />
     </SectionMain>
 
     <SectionTitle>Custom elements</SectionTitle>

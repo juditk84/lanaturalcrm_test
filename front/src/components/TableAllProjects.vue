@@ -10,18 +10,11 @@ import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import UserAvatar from '@/components/UserAvatar.vue'
 
-
-const props = defineProps({
-  allProjects: Object
-})
-
 const mainStore = useMainStore()
 
 const projectesStore = useProjectesStore();
 
 const items = computed(() => mainStore.sampleProjectes)
-
-
 
 const isModalActive = ref(false)
 
@@ -63,13 +56,19 @@ const isModalDangerActive = ref(false)
 //   return newArr
 // }
 
+function onRowClick(){
+  console.log("row clicked!")
+  isModalActive.value = true;
+}
 
 </script>
 
 <template>
   <CardBoxModal v-model="isModalActive" title="Sample modal">
-    <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
-    <p>This is sample modal</p>
+    <b>Aquest modal hauria de mostrar dades bàsiques d'alló clicat.</b> <br>
+      
+    <p>MIND YOU potser ens cal refactor the modal content, sí? <br>
+    Hi ha un slot al component pensat per conditionally rendering stuff.</p>
   </CardBoxModal>
 
   <CardBoxModal v-model="isModalDangerActive" title="Please confirm" button="danger" has-cancel>
@@ -77,9 +76,9 @@ const isModalDangerActive = ref(false)
     <p>This is sample modal</p>
   </CardBoxModal>
 
-  <table>
+  <table class="table-auto">
     <thead>
-      <tr v-if="!props.allProjects">
+      <tr v-if="!projectesStore.allProjects">
         <th>Loading...</th>
       </tr>
       <tr v-else>
@@ -89,8 +88,7 @@ const isModalDangerActive = ref(false)
       </tr>
     </thead>
     <tbody>
-      <tr>Something</tr>
-      <tr v-for="project in props.allProjects" @click="onRowClick">
+      <tr v-for="project in projectesStore.allProjects" @click="onRowClick">
         <td v-for="value in project"> {{ value }}</td>
       </tr>
     </tbody>

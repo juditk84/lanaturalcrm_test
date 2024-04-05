@@ -12,7 +12,12 @@ export const useProjectesStore = defineStore('member', () => {
  async function fetchProjects() {
     try {
       const results = await axios('api/projectes/')
-      allProjects.value = results?.data
+      // allProjects.value = results?.data
+      allProjects.value = results?.data.map(project => { 
+                                              return {name: project.name,
+                                                worker: project.Worker.firstname,
+                                                member: project.Member.commercialName1}
+                                            })
     } catch(error) {
         alert(error.message)
     }
