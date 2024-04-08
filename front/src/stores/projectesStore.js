@@ -24,7 +24,6 @@ export const useProjectesStore = defineStore('member', () => {
   }
 
   async function fetchUserProjects() {
-    console.log(sessionStorage.getItem("refreshToken"))
     try {
       const results = await axios('api/projectes/userprojects', 
       {
@@ -37,7 +36,6 @@ export const useProjectesStore = defineStore('member', () => {
                                                 worker: project.Worker.firstname,
                                                 member: project.Member.commercialName1}
                                             })
-                                            console.log(results)
     } catch(error) {
         alert(error.message)
     }

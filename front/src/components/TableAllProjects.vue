@@ -13,6 +13,8 @@ import UserAvatar from '@/components/UserAvatar.vue'
 const mainStore = useMainStore()
 
 const projectesStore = useProjectesStore();
+const activeProject = ref();
+
 
 const items = computed(() => mainStore.sampleProjectes)
 
@@ -56,19 +58,28 @@ const isModalDangerActive = ref(false)
 //   return newArr
 // }
 
-function onRowClick(){
+function onRowClick(project){
   console.log("row clicked!")
   isModalActive.value = true;
+  activeProject.value = project
+  console.log(activeProject.value)
 }
 
 </script>
 
 <template>
-  <CardBoxModal v-model="isModalActive" title="Sample modal">
-    <b>Aquest modal hauria de mostrar dades bàsiques d'alló clicat.</b> <br>
+  <CardBoxModal v-model="isModalActive" title="Projecte">
+    <div v-if="activeProject">
+      <b>Nom: {{ activeProject.name }}</b> <br>
+      <b>Pertany a: {{ activeProject.member }}</b> <br>
+      <b>El treballa: {{ activeProject.worker }}</b> <br>
+    </div>
+    <div v-else>
+      empty modal.
+    </div>
+   
       
-    <p>MIND YOU potser ens cal refactor the modal content, sí? <br>
-    Hi ha un slot al component pensat per conditionally rendering stuff.</p>
+
   </CardBoxModal>
 
   <CardBoxModal v-model="isModalDangerActive" title="Please confirm" button="danger" has-cancel>
@@ -88,7 +99,7 @@ function onRowClick(){
       </tr>
     </thead>
     <tbody>
-      <tr v-for="project in projectesStore.allProjects" @click="onRowClick">
+      <tr v-for="project in projectesStore.allProjects" @click="() => onRowClick(project)">
         <td v-for="value in project"> {{ value }}</td>
       </tr>
     </tbody>
