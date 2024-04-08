@@ -19,47 +19,47 @@ const props = defineProps({
 const userStore = useUserStore()
 
 //the "items" logic is deprecated, we're gonna use the above approach. We need to adapt the pagination logic to this.
-const items = computed(() => userStore.emptyPlaceholder)
+// const items = computed(() => userStore.emptyPlaceholder)
 
 const isModalActive = ref(false)
 
 const isModalDangerActive = ref(false)
 
-const perPage = ref(5)
+// const perPage = ref(5)
 
-const currentPage = ref(0)
+// const currentPage = ref(0)
 
-const checkedRows = ref([])
+// const checkedRows = ref([])
 
-const itemsPaginated = computed(() =>
-  items.value.slice(perPage.value * currentPage.value, perPage.value * (currentPage.value + 1))
-)
+// const itemsPaginated = computed(() =>
+//   items.value.slice(perPage.value * currentPage.value, perPage.value * (currentPage.value + 1))
+// )
 
-const numPages = computed(() => Math.ceil(items.value.length / perPage.value))
+// const numPages = computed(() => Math.ceil(items.value.length / perPage.value))
 
-const currentPageHuman = computed(() => currentPage.value + 1)
+// const currentPageHuman = computed(() => currentPage.value + 1)
 
-const pagesList = computed(() => {
-  const pagesList = []
+// const pagesList = computed(() => {
+//   const pagesList = []
 
-  for (let i = 0; i < numPages.value; i++) {
-    pagesList.push(i)
-  }
+//   for (let i = 0; i < numPages.value; i++) {
+//     pagesList.push(i)
+//   }
 
-  return pagesList
-})
+//   return pagesList
+// })
 
-const remove = (arr, cb) => {
-  const newArr = []
+// const remove = (arr, cb) => {
+//   const newArr = []
 
-  arr.forEach((item) => {
-    if (!cb(item)) {
-      newArr.push(item)
-    }
-  })
+//   arr.forEach((item) => {
+//     if (!cb(item)) {
+//       newArr.push(item)
+//     }
+//   })
 
-  return newArr
-}
+//   return newArr
+// }
 
 function onRowClick(){
   console.log("row clicked!")
@@ -106,19 +106,6 @@ function onRowClick(){
     </tbody>
   </table>
   <div class="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800">
-    <BaseLevel>
-      <BaseButtons>
-        <BaseButton
-          v-for="page in pagesList"
-          :key="page"
-          :active="page === currentPage"
-          :label="page + 1"
-          :color="page === currentPage ? 'lightDark' : 'whiteDark'"
-          small
-          @click="currentPage = page"
-        />
-      </BaseButtons>
-      <small>Page {{ currentPageHuman }} of {{ numPages }}</small>
-    </BaseLevel>
+
   </div>
 </template>
