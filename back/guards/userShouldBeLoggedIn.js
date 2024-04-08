@@ -3,16 +3,21 @@ require("dotenv").config();
 const supersecret = process.env.SUPER_SECRET;
 const models = require("../models");
 
+// JUDIT: right now the guard send a lot of user data. I think that, for separation of concerns and clarity blabla,
+// it should only check if the user is indeed logged in.
+
 async function userShouldBeLoggedIn(req, res, next) {
   
   const token = req.headers["authorization"]?.replace(/^Bearer\s/, "");
-
   if (!token) {
+    console.log("algo va malament.")
     res.status(401).send({ message: "please provide a token" });
   } else {
     jwt.verify(token, supersecret, async function (err, decoded) {
       if (err) res.status(401).send({ message: err.message });
       else {
+
+        const userId = decoded.user_id // is this safe? It's not in the frontend, but... dunno
 
         const user = await models.Worker.findOne({
           where: {
@@ -44,9 +49,11 @@ async function userShouldBeLoggedIn(req, res, next) {
             models.Document,
             models.Link,
           ],
+        
         })
 
         req.user = user
+        req.id = userId
 
         next()
       }

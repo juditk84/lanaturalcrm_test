@@ -18,8 +18,12 @@ const props = defineProps({
 
 const userStore = useUserStore()
 
+
 //the "items" logic is deprecated, we're gonna use the above approach. We need to adapt the pagination logic to this.
-// const items = computed(() => userStore.emptyPlaceholder)
+// const items = computed(() => userStore.emptyPlaceholder). 
+
+// JUDIT: I changed a few things in the template that make the pagination useless (no base button for example).
+// If we want to go with pagination (I think we do) it needs to be fixed.
 
 const isModalActive = ref(false)
 

@@ -51,7 +51,7 @@ module.exports = {
         description: "un projecte creat per testejar desde the Juju perfil",
         projectTypeId: 2,
         memberId: "58d7c496-f5d6-402e-858e-c50db7eafcf8",
-        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // l'iris
+        workerId: "74114925-269f-4f44-89bd-6d9259847489", // la Juju
         createdAt: new Date(),
         updatedAt: new Date()
       } 

@@ -2,6 +2,7 @@
 import { reactive, ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
+import { useProjectesStore } from '@/stores/projectesStore'
 import { mdiBallotOutline, mdiAccount, mdiMail, mdiGithub } from '@mdi/js'
 import SectionMain from '@/components/SectionMain.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
@@ -13,6 +14,7 @@ import ModalForTechnicalNotes from '@/components/ModalForTechnicalNotes.vue'
 
 const route = useRoute();
 const userStore = useUserStore()
+const projectesStore = useProjectesStore()
 
 const tableContent = ref(null);
 
@@ -45,8 +47,9 @@ async function grabContentFromStoreBasedOnRoute(){
     userStore.notDevelopedYetHahaha ? tableContent.value = userStore.notDevelopedYetHahaha : tableContent.value = userStore.emptyPlaceholder
   }
   else if(route.params.asideMenuCategoria === "projectes"){  // this is the one that works for now jsjsjsj
-    await userStore.fetchAllUserRelatedAssets() // hauria de ser a projectsStore.blablabla
-    tableContent.value = userStore.allUserProjects
+    // await userStore.fetchAllUserRelatedAssets() // hauria de ser a projectsStore.blablabla
+    await projectesStore.fetchUserProjects()
+    tableContent.value = projectesStore.allUserProjects
   }
   else if(route.params.asideMenuCategoria === "reunions"){
     userStore.notDevelopedYetHahaha ? tableContent.value = userStore.notDevelopedYetHahaha : tableContent.value = userStore.emptyPlaceholder

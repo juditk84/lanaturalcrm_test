@@ -3,6 +3,7 @@ var router = express.Router();
 const models = require('../models');
 const { v4: uuidv4 } = require('uuid')
 const uppercaseFirst = str => `${str[0].toUpperCase()}${str.substr(1)}`
+const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn'); 
 
 router.get('/', async (req, res, next) => {
 
@@ -23,6 +24,41 @@ router.get('/', async (req, res, next) => {
 
       })
       res.status(200).send(allProjects)
+  } catch (err) {
+    res.status(500).send({message: "no s'ha trobat cap projecte, revisa les dades oi"})
+  }
+})
+
+// JUDIT: Probablement l'endpoint més macarra de l'univers, but if it works it works:
+router.get('/userprojects', userShouldBeLoggedIn, async (req, res) => {
+
+
+  try {
+  
+      const userProjects = await models.Worker.findAll({
+        where: {
+          id: req.id,
+        },
+        attributes: [],
+        include: [
+          {
+            model: models.Project,
+            attributes: ["name"],
+            include: [
+              {
+                model: models.Member,
+                attributes: ["commercialName1"],
+              },
+              {
+                model: models.Worker,
+                attributes: ["firstname"]
+              }
+            ]
+          }
+        ],
+
+      })
+      res.status(200).send(userProjects[0].Projects)
   } catch (err) {
     res.status(500).send({message: "no s'ha trobat cap projecte, revisa les dades oi"})
   }

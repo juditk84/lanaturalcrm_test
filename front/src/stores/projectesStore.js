@@ -8,11 +8,11 @@ export const useProjectesStore = defineStore('member', () => {
   // (all projects, individual project, user projects <maybe>...)
 
   const allProjects = ref(null)
+  const allUserProjects = ref(null)
 
  async function fetchProjects() {
     try {
       const results = await axios('api/projectes/')
-      // allProjects.value = results?.data
       allProjects.value = results?.data.map(project => { 
                                               return {name: project.name,
                                                 worker: project.Worker.firstname,
@@ -23,8 +23,30 @@ export const useProjectesStore = defineStore('member', () => {
     }
   }
 
+  async function fetchUserProjects() {
+    console.log(sessionStorage.getItem("refreshToken"))
+    try {
+      const results = await axios('api/projectes/userprojects', 
+      {
+        headers: {   
+        Authorization: "Bearer " + sessionStorage.getItem("refreshToken")
+      }
+      })
+      allUserProjects.value = results?.data.map(project => { 
+                                              return {name: project.name,
+                                                worker: project.Worker.firstname,
+                                                member: project.Member.commercialName1}
+                                            })
+                                            console.log(results)
+    } catch(error) {
+        alert(error.message)
+    }
+  }
+
   return {
     allProjects,
-    fetchProjects
+    allUserProjects,
+    fetchProjects,
+    fetchUserProjects
   }
 })
