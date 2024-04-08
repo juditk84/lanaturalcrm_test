@@ -28,7 +28,7 @@ export const useProjectesStore = defineStore('member', () => {
       const results = await axios('api/projectes/userprojects', 
       {
         headers: {   
-        Authorization: "Bearer " + sessionStorage.getItem("refreshToken")
+        Authorization: "Bearer " + sessionStorage.refreshToken
       }
       })
       allUserProjects.value = results?.data.map(project => { 

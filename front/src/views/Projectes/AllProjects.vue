@@ -1,6 +1,5 @@
 <script setup>
-import { reactive, ref, onMounted, computed, isProxy, toRaw } from 'vue'
-import { useRoute } from 'vue-router'
+import { onMounted } from 'vue'
 import { useProjectesStore } from '@/stores/projectesStore'
 import { mdiBallotOutline, mdiAccount, mdiMail, mdiGithub } from '@mdi/js'
 import SectionMain from '@/components/SectionMain.vue'

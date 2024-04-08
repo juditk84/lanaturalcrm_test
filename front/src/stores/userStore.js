@@ -4,12 +4,13 @@ import axios from 'axios'
 import { useAuthStore } from './authStore'
 
 export const useUserStore = defineStore('userStore', () => {
-const userName = ref("")
+const userName = ref(null)
 const authStore = useAuthStore()
   // const {isLoggedIn} = storeToRefs(authStore)
 
   watch(() => authStore.isLoggedIn, async () => {
     fetchAllUserRelatedAssets()
+    userName.value = sessionStorage.username
   })
 
 
@@ -36,8 +37,6 @@ const authStore = useAuthStore()
         }
       }) 
       console.log(response.data)
-      console.log("hello")
-      
     } catch (error) {
       console.log(error);
     }
