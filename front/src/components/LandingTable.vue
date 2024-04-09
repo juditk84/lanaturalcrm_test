@@ -1,22 +1,24 @@
 <script setup>
-import { computed, ref, watch, watchEffect, onBeforeMount, onUpdated, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref } from 'vue'
 import { useUserStore } from '@/stores/userStore'
-import { mdiEye, mdiTrashCan } from '@mdi/js'
+import { useProjectesStore } from '@/stores/projectesStore'
 import CardBoxModal from '@/components/CardBoxModal.vue'
-import TableCheckboxCell from '@/components/TableCheckboxCell.vue'
-import BaseLevel from '@/components/BaseLevel.vue'
-import BaseButtons from '@/components/BaseButtons.vue'
-import BaseButton from '@/components/BaseButton.vue'
-import UserAvatar from '@/components/UserAvatar.vue'
-import axios from 'axios'
+
+// IMPORTANT: El que ens interessa rebre a la taula és únicament la versió "ordenada" (only a few fields,
+// que sigui bonic i clicable i ya). Però volem conservar la resta de metadades perque cada row de la table
+// sigui el més navegable possible. Still working on that, but it's a messy shit.
+
+// Idealment passaria tot el jaleo a la taula i després faria MAP al template per mostrar només el que vull.
+// Haven't been able to do that yet tho.
 
 const props = defineProps({
   checkable: Boolean,
-  tableContent: Object
+  benOrdenadet: Object
 })
 
-const userStore = useUserStore()
+const userStore = useUserStore();
+const projectesStore = useProjectesStore();
+
 
 
 //the "items" logic is deprecated, we're gonna use the above approach. We need to adapt the pagination logic to this.
@@ -65,10 +67,17 @@ const isModalDangerActive = ref(false)
 //   return newArr
 // }
 
-function onRowClick(){
+// JUDIT: this is gonna be  difficult one: whatever the row is, when you click a specific cell it should
+// open a Modal with information related to the specific cell you clicked.
+
+function onRowClick(value, element){
   console.log("row clicked!")
+  console.log(`${value} in ${element.name} clicked`)
+  console.log(element)
   isModalActive.value = true;
 }
+
+
 
 </script>
 
@@ -96,16 +105,17 @@ function onRowClick(){
   </div>
   <table>
     <thead>
-      <tr v-if="!props.tableContent">
+      <tr v-if="!props.benOrdenadet">
         <th>Loading...</th>
       </tr>
       <tr v-else>
-        <th v-for="(value, key) in props.tableContent[0]">{{ key }}</th>
+        
+        <th v-for="(value, key) in props.benOrdenadet[0]">{{ key }}</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="element in props.tableContent" @click="onRowClick">
-        <td v-for="value in element"> {{ value }}</td>
+      <tr v-for="element in props.benOrdenadet">
+        <td v-for="value in element"><button @click="() => onRowClick(value, element)">{{ value }}</button></td>
       </tr>
     </tbody>
   </table>

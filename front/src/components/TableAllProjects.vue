@@ -10,6 +10,9 @@ import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import UserAvatar from '@/components/UserAvatar.vue'
 
+// IMPORTANT: En aquest exemple, estem fent que tota la fila sigui clicable, just to play around and see
+// what option suits us better. 
+
 const mainStore = useMainStore()
 
 const projectesStore = useProjectesStore();
@@ -71,7 +74,7 @@ function onRowClick(project){
   <CardBoxModal v-model="isModalActive" title="Projecte">
     <div v-if="activeProject">
       <b>Nom: {{ activeProject.name }}</b> <br>
-      <b>Pertany a: {{ activeProject.member }}</b> <br>
+      <b>Encarregat per: {{ activeProject.member }}</b> <br>
       <b>El treballa: {{ activeProject.worker }}</b> <br>
     </div>
     <div v-else>
@@ -99,8 +102,8 @@ function onRowClick(project){
       </tr>
     </thead>
     <tbody>
-      <tr v-for="project in projectesStore.allProjects" @click="() => onRowClick(project)">
-        <td v-for="value in project"> {{ value }}</td>
+      <tr v-for="project in projectesStore.allProjects" @click="() => onRowClick(project)" >
+        <td v-for="value in project">{{ value }}</td>
       </tr>
     </tbody>
   </table>

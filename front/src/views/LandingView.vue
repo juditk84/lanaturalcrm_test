@@ -1,8 +1,9 @@
 <script setup>
-import { reactive, ref, onMounted, watch } from 'vue'
+import { reactive, ref, onMounted, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { useProjectesStore } from '@/stores/projectesStore'
+import { useMemberStore } from '@/stores/memberStore'
 import { mdiBallotOutline, mdiAccount, mdiMail, mdiGithub } from '@mdi/js'
 import SectionMain from '@/components/SectionMain.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
@@ -13,8 +14,11 @@ import LandingTable from '@/components/LandingTable.vue'
 import ModalForTechnicalNotes from '@/components/ModalForTechnicalNotes.vue'
 
 const route = useRoute();
+
+// accessing stores:
 const userStore = useUserStore()
 const projectesStore = useProjectesStore()
+const memberStore = useMemberStore()
 
 const tableContent = ref(null);
 
@@ -44,10 +48,10 @@ async function grabContentFromStoreBasedOnRoute(){
     userStore.notDevelopedYetHahaha ? tableContent.value = userStore.notDevelopedYetHahaha : tableContent.value = userStore.emptyPlaceholder
   }
   else if(route.params.asideMenuCategoria === "xarxa"){
-    userStore.notDevelopedYetHahaha ? tableContent.value = userStore.notDevelopedYetHahaha : tableContent.value = userStore.emptyPlaceholder
+    await memberStore.fetchMembers()
+    tableContent.value = memberStore.allMembers
   }
   else if(route.params.asideMenuCategoria === "projectes"){  // this is the one that works for now jsjsjsj
-    // await userStore.fetchAllUserRelatedAssets() // hauria de ser a projectsStore.blablabla
     await projectesStore.fetchUserProjects()
     tableContent.value = projectesStore.allUserProjects
   }
@@ -55,6 +59,17 @@ async function grabContentFromStoreBasedOnRoute(){
     userStore.notDevelopedYetHahaha ? tableContent.value = userStore.notDevelopedYetHahaha : tableContent.value = userStore.emptyPlaceholder
   }
 }
+
+const benOrdenadet = computed(() => {
+  if(tableContent.value !== null){
+    return tableContent.value.map(project => { 
+                                              console.log("hola")
+                                              return {name: project.name,
+                                                worker: project.Worker.firstname,
+                                                member: project.Member.commercialName1}
+                                            })
+  }
+})
 
 </script>
 
@@ -65,7 +80,7 @@ async function grabContentFromStoreBasedOnRoute(){
       <ModalForTechnicalNotes :modal-is-visible="modalIsVisible" :modal-button-name="modalButtonName" @show-modal="showModal"/>
       <h3 class="text-center">{{ route.params.asideMenuCategoria.toUpperCase() }} LANDING VIEW</h3>
       <CardBox class="h-1/3">
-        <LandingTable :table-content="tableContent"/>
+        <LandingTable :ben-ordenadet="benOrdenadet"/>
         <button name="landing_list" 
                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                 @click="showModal" >Technical Notes

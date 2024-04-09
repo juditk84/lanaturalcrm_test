@@ -31,11 +31,7 @@ export const useProjectesStore = defineStore('member', () => {
         Authorization: "Bearer " + sessionStorage.refreshToken
       }
       })
-      allUserProjects.value = results?.data.map(project => { 
-                                              return {name: project.name,
-                                                worker: project.Worker.firstname,
-                                                member: project.Member.commercialName1}
-                                            })
+      allUserProjects.value = results.data
     } catch(error) {
         alert(error.message)
     }

@@ -43,17 +43,22 @@ router.get('/userprojects', userShouldBeLoggedIn, async (req, res) => {
         include: [
           {
             model: models.Project,
-            attributes: ["name"],
+            // attributes: {            we'll add the ID too for now. 
+            //   exclude: ["id"],
+            // },
             include: [
               {
                 model: models.Member,
-                attributes: ["commercialName1"],
+                attributes: ["id", "commercialName1"],
               },
               {
                 model: models.Worker,
-                attributes: ["firstname"]
+                  attributes: {
+                    exclude: ["id", "password"]
+                  }
               }
-            ]
+            ],
+        through: {attributes: []} 
           }
         ],
 

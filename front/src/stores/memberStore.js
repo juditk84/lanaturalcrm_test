@@ -4,25 +4,22 @@ import axios from 'axios'
 
 export const useMemberStore = defineStore('member', () => {
 
-  const members = ref([])
+  const allMembers = ref([])
   const fetchedMember = ref(null);
 
 
  async function fetchMembers() {
     try {
-      const results = await axios('api/members/')
-      members.value = results?.data
+      const results = await axios('api/xarxa/')
+      allMembers.value = results?.data
     } catch(error) {
         alert(error.message)
     }
   }
 
   return {
-    members,
+    allMembers,
     fetchedMember,
     fetchMembers
-  },
-  {
-    persist: true,
   }
 })
