@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import axios from 'axios'
 
-export const useProjectesStore = defineStore('member', () => {
+export const useProjectesStore = defineStore('projecteStore', () => {
 
   // this store should handle the fetch logic and the relevant state regarding PROJECTS.
   // (all projects, individual project, user projects <maybe>...)
