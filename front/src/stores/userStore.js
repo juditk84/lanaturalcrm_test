@@ -9,12 +9,10 @@ const authStore = useAuthStore()
   // const {isLoggedIn} = storeToRefs(authStore)
 
   watch(() => authStore.isLoggedIn, async () => {
-    fetchAllUserRelatedAssets()
+    console.log("userStore fetching user stuff")
+    await fetchAllUserRelatedAssets()
     userName.value = sessionStorage.username
   })
-
-
-
 
   // const notDevelopedYetHahaha = ref(null)
 
@@ -37,6 +35,7 @@ const authStore = useAuthStore()
         }
       }) 
       console.log(response.data)
+      console.log("all ok!")
     } catch (error) {
       console.log(error);
     }
