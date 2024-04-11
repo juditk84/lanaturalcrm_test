@@ -65,8 +65,8 @@ const benOrdenadet = computed(() => {
     if(route.params.asideMenuCategoria === "projectes"){
       return tableContent.value.map(project => {
                                               return {name: project.name,
-                                                worker: project.Worker.firstname,
-                                                member: project.Member.commercialName1}
+                                                worker: project.Worker?.firstname,
+                                                member: project.Member?.commercialName1}
                                               })
     }
     else if(route.params.asideMenuCategoria === "xarxa"){

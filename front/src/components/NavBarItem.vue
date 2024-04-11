@@ -44,7 +44,7 @@ const componentClass = computed(() => {
   return base
 })
 
-const itemLabel = computed(() =>
+const userNameLabel = computed(() =>
   sessionStorage.username
 )
 
@@ -108,7 +108,7 @@ onBeforeUnmount(() => {
       <span
         class="px-2 transition-colors"
         :class="{ 'lg:hidden': item.isDesktopNoLabel && item.icon }"
-        >{{ item.label }} </span
+        >{{ props.item.isCurrentUser ? userNameLabel : props.item.label }} </span 
       >
       <BaseIcon
         v-if="item.menu"
