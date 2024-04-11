@@ -11,9 +11,9 @@ import PillTag from '@/components/PillTag.vue'
 
 const mainStore = useMainStore()
 const userStore = useUserStore()
-const userName = computed(() => userStore.userName)
-
+const userName = computed(() => sessionStorage.getItem("username"))
 const userSwitchVal = ref(false)
+
 </script>
 
 <template>

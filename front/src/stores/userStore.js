@@ -5,6 +5,7 @@ import { useAuthStore } from './authStore'
 
 export const useUserStore = defineStore('userStore', () => {
 const userName = ref(null)
+const user = ref(null)
 // const authStore = useAuthStore()
   // const {isLoggedIn} = storeToRefs(authStore)
 
@@ -35,38 +36,14 @@ const userName = ref(null)
         }
       }) 
       console.log(response.data)
-      
+      user.value = await response.data
+    
     } catch (error) {
       console.log(error);
     }
     
   }
 
-  // function $reset(){
-  //   user.value = null
-  // }
-
-  // function fetchSampleClients() {
-  //   axios
-  //     .get(`data-sources/clients.json?v=3`)
-  //     .then((result) => {
-  //       clients.value = result?.data?.data
-  //     })
-  //     .catch((error) => {
-  //       alert(error.message)
-  //     })
-  // }
-
-  // function fetchSampleHistory() {
-  //   axios
-  //     .get(`data-sources/history.json`)
-  //     .then((result) => {
-  //       history.value = result?.data?.data
-  //     })
-  //     .catch((error) => {
-  //       alert(error.message)
-  //     })
-  // }
 
   return {
     // userName,
@@ -78,6 +55,7 @@ const userName = ref(null)
     // allUserLinks,
     // user,
     userName,
+    user,
     userAvatar,
     // notDevelopedYetHahaha,
     // isFieldFocusRegistered,
