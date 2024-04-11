@@ -19,7 +19,7 @@ async function userShouldBeLoggedIn(req, res, next) {
       if (err) res.status(401).send({ message: err.message });
       else {
 
-        // const userId = decoded.user_id // is this safe? It's not in the frontend, but... dunno
+        const userId = decoded.user_id // is this safe? It's not in the frontend, but... dunno
 
         const user = await models.Worker.findOne({
           where: {
@@ -55,7 +55,7 @@ async function userShouldBeLoggedIn(req, res, next) {
         })
 
         req.user = user
-        // req.id = userId
+        req.id = userId
 
         next()
       }
