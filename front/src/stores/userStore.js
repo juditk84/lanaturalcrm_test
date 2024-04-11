@@ -5,14 +5,14 @@ import { useAuthStore } from './authStore'
 
 export const useUserStore = defineStore('userStore', () => {
 const userName = ref(null)
-const authStore = useAuthStore()
+// const authStore = useAuthStore()
   // const {isLoggedIn} = storeToRefs(authStore)
 
-  watch(() => authStore.isLoggedIn, async () => {
-    console.log("userStore fetching user stuff")
-    await fetchAllUserRelatedAssets()
-    userName.value = sessionStorage.username
-  })
+  // watch(() => authStore.isLoggedIn, async () => {
+  //   console.log("userStore fetching user stuff")
+  //   await fetchAllUserRelatedAssets()
+  //   userName.value = sessionStorage.username
+  // })
 
   // const notDevelopedYetHahaha = ref(null)
 
@@ -26,16 +26,16 @@ const authStore = useAuthStore()
 //   {emptyyyyy: "al loro amiga, que això està buit"}
 // ])
 
-  async function fetchAllUserRelatedAssets(){
-    
+  async function fetchAllUserRelatedAssets(token){
+
     try {
       const response = await axios("api/workers", {
         headers: {
-          Authorization: sessionStorage.refreshToken
+          Authorization: token
         }
       }) 
       console.log(response.data)
-      console.log("all ok!")
+      
     } catch (error) {
       console.log(error);
     }

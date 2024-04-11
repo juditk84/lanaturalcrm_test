@@ -108,7 +108,7 @@ onBeforeUnmount(() => {
       <span
         class="px-2 transition-colors"
         :class="{ 'lg:hidden': item.isDesktopNoLabel && item.icon }"
-        >{{ itemLabel }} </span
+        >{{ item.label }} </span
       >
       <BaseIcon
         v-if="item.menu"

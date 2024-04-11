@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import { useUserStore } from './userStore'
 
 
 
@@ -9,7 +10,7 @@ export const useAuthStore = defineStore('auth', () => {
   const router = useRouter();
   const isLoggedIn = ref(!!sessionStorage.getItem("refreshToken"))
   const username = ref(sessionStorage.getItem("username"))
-
+  const userStore = useUserStore()
 
   async function getRefreshToken() {
     return sessionStorage.getItem("refreshToken")
@@ -38,28 +39,28 @@ export const useAuthStore = defineStore('auth', () => {
         method: "POST",
         data: credentials,
       })
-     
-      isLoggedIn.value = true
-     
+      isLoggedIn.value = true /// maybe no cal isLoggedIn?
       const refreshToken = await data.token
       setRefreshToken(refreshToken)
       setUsername(credentials.username)
-      router.push("dashboard")
-
+      userStore.fetchAllUserRelatedAssets(refreshToken)
+      router.push("dashboard")    
     } catch (error) {
       console.log(error);
     }
   };
 
   const onLogout = () => {
-    console.log("username before log out: ", username.value)
+   try {
     username.value = null;
     isLoggedIn.value = false;
     sessionStorage.removeItem("refreshToken");
     sessionStorage.removeItem("username");
-    console.log("isLoggedIn? " + isLoggedIn)
-    console.log("username after logout: ", username.value)
     router.push("/login")
+    console.log("logged out")
+   } catch (err) {
+    console.log(err)
+   }
   };
 
   return {
