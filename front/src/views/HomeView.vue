@@ -27,27 +27,21 @@ import { useUserStore } from '@/stores/userStore'
 import { storeToRefs } from 'pinia'
 const chartData = ref(null)
 
-const userStore = useUserStore;
-const userNotes = computed(() => userStore?.user)
+const userStore = useUserStore();
+const user = userStore.user
+
+onMounted(() => console.log(user))
+
+function printUser() {
+  console.log(userStore.user)
+}
+
 // const user = computed(() => userStore.user)
 
 // const fillChartData = () => {
 //   chartData.value = chartConfig.sampleChartData()
 // }
 
-onMounted(() => {
-  // fillChartData()
-  // console.log(user)
-})
-
-// onMounted(() => { console.log(userStore) })
-
-watch(() => userStore.fetchAllUserAssets, () => {
-  printUser()
-})
-async function printUser() {
-  console.log(userNotes)
-}
 // const mainStore = useMainStore()
 
 // const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
