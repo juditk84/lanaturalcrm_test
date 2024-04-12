@@ -18,6 +18,7 @@ const mainStore = useMainStore()
 const projectesStore = useProjectesStore();
 const activeProject = ref();
 
+const viewButton = mdiEye
 
 const items = computed(() => mainStore.sampleProjectes)
 
@@ -61,13 +62,18 @@ const isModalDangerActive = ref(false)
 //   return newArr
 // }
 
-function onRowClick(project){
-  console.log("row clicked!")
-  isModalActive.value = true;
+function onRowClick(event, project){
+  console.log(event.target.name)
+  if(event.target.name !== "rowButton"){
+    isModalActive.value = true;
   activeProject.value = project
-  console.log(activeProject.value)
+  }
 }
 
+function onRowButtonClick(){
+  console.log("hola")
+  // add the logic to navigate to specific project page.
+}
 </script>
 
 <template>
@@ -99,12 +105,20 @@ function onRowClick(project){
         <th>Nom</th>
         <th>Responsable</th>
         <th>Client</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="project in projectesStore.allProjects" @click="() => onRowClick(project)" >
+      <tr v-for="project in projectesStore.allProjects" @click="(event) => onRowClick(event, project)" >
         <td v-for="value in project">{{ value }}</td>
+        <button name="rowButton" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" @click="(event) => onRowClick(event, project)">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 pointer-events-none">
+            <path class="pointer-events-none" stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+            <path class="pointer-events-none" stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+          </svg>
+        </button>
       </tr>
+      
     </tbody>
   </table>
 

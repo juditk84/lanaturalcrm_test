@@ -60,7 +60,7 @@ async function printUser() {
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <button @click="printUser">{{ `${userStore.user.username}, fes-me clic i et diré qui ets...`}}</button>
+      <button @click="printUser">{{ `${userStore.user?.username}, fes-me clic i et diré qui ets...`}}</button>
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
         
         <BaseButton
@@ -75,7 +75,7 @@ async function printUser() {
       </SectionTitleLineWithButton>
       
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
-        <CardBoxWidget v-for="task in userStore.user.Tasks"
+        <CardBoxWidget v-for="task in userStore.user?.Tasks"
           :trend= "task.status"
           trend-type="up"
           :color="text-emerald-500"
