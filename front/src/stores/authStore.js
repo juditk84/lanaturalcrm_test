@@ -41,6 +41,7 @@ export const useAuthStore = defineStore('auth', () => {
       })
       isLoggedIn.value = true /// maybe no cal isLoggedIn?
       const refreshToken = await data.token
+      console.log(data.response)
       setRefreshToken(refreshToken)
       setUsername(credentials.username)
       userStore.fetchAllUserRelatedAssets(refreshToken)

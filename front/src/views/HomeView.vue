@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
 import { useMainStore } from '@/stores/main'
 import {
   mdiAccountMultiple,
@@ -28,21 +28,31 @@ import { storeToRefs } from 'pinia'
 const chartData = ref(null)
 
 const userStore = useUserStore;
-const {user} = storeToRefs(userStore)
+const userNotes = computed(() => userStore?.user)
+// const user = computed(() => userStore.user)
 
-const fillChartData = () => {
-  chartData.value = chartConfig.sampleChartData()
-}
+// const fillChartData = () => {
+//   chartData.value = chartConfig.sampleChartData()
+// }
 
 onMounted(() => {
-  fillChartData()
+  // fillChartData()
+  // console.log(user)
 })
 
-const mainStore = useMainStore()
+// onMounted(() => { console.log(userStore) })
 
-const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
+watch(() => userStore.fetchAllUserAssets, () => {
+  printUser()
+})
+async function printUser() {
+  console.log(userNotes)
+}
+// const mainStore = useMainStore()
 
-const transactionBarItems = computed(() => mainStore.history)
+// const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
+
+// const transactionBarItems = computed(() => mainStore.history)
 
 </script>
 
@@ -50,7 +60,7 @@ const transactionBarItems = computed(() => mainStore.history)
   <LayoutAuthenticated>
     <SectionMain>
 
-    
+    <button @click="printUser"> XXXXX</button>
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
         <BaseButton
           href="https://github.com/justboil/admin-one-vue-tailwind"
@@ -120,7 +130,7 @@ const transactionBarItems = computed(() => mainStore.history)
       <!-- <SectionBannerStarOnGitHub class="mt-6 mb-6" /> -->
 
       <SectionTitleLineWithButton :icon="mdiChartPie" title="Trends overview">
-        <BaseButton :icon="mdiReload" color="whiteDark" @click="fillChartData" />
+        <!-- <BaseButton :icon="mdiReload" color="whiteDark" @click="fillChartData" /> -->
       </SectionTitleLineWithButton>
 
       <CardBox class="mb-6">

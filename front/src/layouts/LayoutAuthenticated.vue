@@ -6,6 +6,7 @@ import menuAside from '@/menuAside.js'
 import menuNavBar from '@/menuNavBar.js'
 import { useDarkModeStore } from '@/stores/darkMode.js'
 import { useAuthStore } from '@/stores/authStore'
+import { useUserStore } from '@/stores/userStore'
 import BaseIcon from '@/components/BaseIcon.vue'
 import FormControl from '@/components/FormControl.vue'
 import NavBar from '@/components/NavBar.vue'
@@ -18,6 +19,7 @@ const layoutAsidePadding = 'xl:pl-60'
 
 const darkModeStore = useDarkModeStore()
 const authStore = useAuthStore()
+const userStore = useUserStore()
 
 
 const router = useRouter()

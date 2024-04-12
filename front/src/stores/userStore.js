@@ -5,7 +5,7 @@ import { useAuthStore } from './authStore'
 
 export const useUserStore = defineStore('userStore', () => {
 const userName = ref(null)
-const user = ref(null)
+const user = ref({})
 // const authStore = useAuthStore()
   // const {isLoggedIn} = storeToRefs(authStore)
 
@@ -34,10 +34,9 @@ const user = ref(null)
         headers: {
           Authorization: token
         }
-      }) 
+      })
+      user.value = await response?.data?.user
       console.log(response.data)
-      user.value = await response.data
-    
     } catch (error) {
       console.log(error);
     }

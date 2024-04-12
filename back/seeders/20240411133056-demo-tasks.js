@@ -6,57 +6,71 @@ module.exports = {
 
     await queryInterface.bulkInsert('Tasks', [
       {
-        id: "08e2e87a-7e31-46e8-9abd-037bc4d931db",
+        id: "ed98e956-a686-4877-aec9-6c4c43e01d84",
         title: "facturar",
-        descripcio: "",
+        description: "",
         defaultPrice: 0.5,
-        deadline: '2024-08-10 23:34:00',
+        deadline: '2024-06-10 23:34:00',
         status: 'pendent',
         priority: 'alta',
         parentId: null,
-        projectId: "XXXXXX",
-        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
+        projectId: "837c6321-e1f3-4c25-86fe-de028bfe3529", // derrumbar sistema
+        workerId: "74114925-269f-4f44-89bd-6d9259847489", // Juju
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        id: "08e2e87a-7e31-46e8-9abd-037bc4d931db",
+        id: "ed98e956-a686-4877-aec9-6c4c43e01d85",
         title: "primer esboss",
-        descripcio: "no oblidar integrar Gats",
-        defaultPrice: 0.5,
-        deadline: '2024-08-10 23:34:00',
+        description: "no oblidar integrar Gats",
+        defaultPrice: 1,
+        deadline: '2024-08-19 23:34:00',
         status: 'en curs',
         priority: 'mitja',
         parentId: null,
-        projectId: "XXXXXX",
-        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
+        projectId: "837c6321-e1f3-4c25-86fe-de028bfe3529", // derrumbar sistema
+        workerId: "74114925-269f-4f44-89bd-6d9259847489", // Juju
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        id: "08e2e87a-7e31-46e8-9abd-037bc4d931db",
+        id: "ed98e956-a686-4877-aec9-6c4c43e01d86",
         title: "respondre al client",
-        descripcio: "ens ha trucat perquè vol noticies",
-        defaultPrice: 0.5,
-        deadline: '2024-08-10 23:34:00',
+        description: "ens ha trucat perquè vol noticies",
+        defaultPrice: 2,
+        deadline: '2024-08-06 23:34:00',
         status: 'pendent',
         priority: 'baixa',
         parentId: null,
-        projectId: "XXXXXX",
+        projectId: "837c6321-e1f3-4c25-86fe-de028bfe3149", // CRM
         workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        id: "08e2e87a-7e31-46e8-9abd-037bc4d931db",
+        id: "ed98e956-a686-4877-aec9-6c4c43e01d87",
         title: "imprimir disseny",
-        descripcio: "",
-        defaultPrice: 0.5,
-        deadline: '2024-08-10 23:34:00',
+        description: "",
+        defaultPrice: 3,
+        deadline: '2024-07-10 23:34:00',
         status: 'futur',
         priority: 'alta',
         parentId: null,
-        projectId: "XXXXXX",
+        projectId: "837c6321-e1f3-4c25-86fe-de028bfe3529", // derrumbar sistema
+        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: "ed98e956-a686-4877-aec9-6c4c43e01d88",
+        title: "conferir amb gats",
+        description: "preguntar-lis com volen que els representin",
+        defaultPrice: 3,
+        deadline: '2024-07-05 23:34:00',
+        status: 'futur',
+        priority: 'mitja',
+        parentId: "ed98e956-a686-4877-aec9-6c4c43e01d85",
+        projectId: "837c6321-e1f3-4c25-86fe-de028bfe3529", // derrumbar sistema
         workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
         createdAt: new Date(),
         updatedAt: new Date()
@@ -65,11 +79,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete('People', null, {});
   }
 };

@@ -14,7 +14,7 @@ module.exports = {
       deadline: {
         type: Sequelize.DATE
       },
-      descripcion: {
+      description: {
         type: Sequelize.STRING
       },
       defaultPrice: {

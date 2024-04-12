@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
   Task.init({
     title: DataTypes.STRING,
     deadline: DataTypes.DATE,
-    descripcion: DataTypes.STRING,
+    description: DataTypes.STRING,
     defaultPrice: DataTypes.INTEGER,
     status: DataTypes.ENUM('futur', 'pendent', 'en curs', 'tancat', 'tard')
   }, {

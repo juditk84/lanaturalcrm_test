@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useMainStore } from '@/stores/main'
 import { useUserStore} from '@/stores/userStore'
 import { mdiCheckDecagram } from '@mdi/js'
@@ -13,6 +13,11 @@ const mainStore = useMainStore()
 const userStore = useUserStore()
 const userName = computed(() => sessionStorage.getItem("username"))
 const userSwitchVal = ref(false)
+// const username = computed(() => userStore.value.user.username)
+
+async function printUser() {
+  if (userStore) console.log(userStore)
+}
 
 </script>
 
@@ -34,6 +39,7 @@ const userSwitchVal = ref(false)
           Howdy, <b>{{ userName }}</b
           >!
         </h1>
+        <button @click="printUser"> XXXXX </button>
         <p>Last login <b>12 mins ago</b> from <b>127.0.0.1</b></p>
         <div class="flex justify-center md:block">
           <PillTag label="Verified" color="info" :icon="mdiCheckDecagram" />
