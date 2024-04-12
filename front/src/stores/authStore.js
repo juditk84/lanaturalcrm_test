@@ -66,7 +66,6 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   return {
-    // setUser,
     isLoggedIn,
     onLogout,
     username,
@@ -75,4 +74,4 @@ export const useAuthStore = defineStore('auth', () => {
     setRefreshToken,
     handleLogin
   }
-})
+}, {persist: true})

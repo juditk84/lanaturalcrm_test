@@ -19,7 +19,6 @@ const layoutAsidePadding = 'xl:pl-60'
 
 const darkModeStore = useDarkModeStore()
 const authStore = useAuthStore()
-const userStore = useUserStore()
 
 
 const router = useRouter()

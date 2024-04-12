@@ -24,24 +24,22 @@ import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import SectionBannerStarOnGitHub from '@/components/SectionBannerStarOnGitHub.vue'
 import { useUserStore } from '@/stores/userStore'
+import { useMemberStore } from '@/stores/memberStore'
 import { storeToRefs } from 'pinia'
 
 
 const chartData = ref(null)
 
 const userStore = useUserStore();
-const userNotes = ref(null)
-const userDocs = ref(null)
-const userLinks = ref(null)
-const user = userStore?.user
 
-const fillChartData = () => {
-  chartData.value = chartConfig.sampleChartData()
+
+const fillData = () => {
+
 }
 
 onMounted(() => {
-  // fillChartData()
-  console.log(user)
+  fillData()
+  // console.log(pinboard)
 })
 
 // onMounted(() => { console.log(userStore) })
@@ -62,14 +60,14 @@ async function printUser() {
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <button @click="printUser"> XXXXX</button>
+      <button @click="printUser">{{ `${userStore.user.username}, fes-me clic i et diré qui ets...`}}</button>
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
         
         <BaseButton
-          href="https://github.com/justboil/admin-one-vue-tailwind"
+          to="TOBEDEFINED"
           target="_blank"
           :icon="mdiGithub"
-          label="Star on GitHub"
+          label="Veure més"
           color="contrast"
           rounded-full
           small
@@ -77,32 +75,16 @@ async function printUser() {
       </SectionTitleLineWithButton>
       
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
-        <CardBoxWidget
-          trend="12%"
+        <CardBoxWidget v-for="task in userStore.user.Tasks"
+          :trend= "task.status"
           trend-type="up"
-          color="text-emerald-500"
-          :icon="mdiAccountMultiple"
-          :number="512"
-          label="Clients"
+          :color="text-emerald-500"
+          :trendType="task.title"
+          :date="task.deadline"
+          :label="task.description"
+          :title="task.title"
         />
-        <CardBoxWidget
-          trend="12%"
-          trend-type="down"
-          color="text-blue-500"
-          :icon="mdiCartOutline"
-          :number="7770"
-          prefix="$"
-          label="Sales"
-        />
-        <CardBoxWidget
-          trend="Overflow"
-          trend-type="alert"
-          color="text-red-500"
-          :icon="mdiChartTimelineVariant"
-          :number="256"
-          suffix="%"
-          label="Performance"
-        />
+
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
