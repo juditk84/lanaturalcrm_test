@@ -24,26 +24,32 @@ import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import SectionBannerStarOnGitHub from '@/components/SectionBannerStarOnGitHub.vue'
 import { useUserStore } from '@/stores/userStore'
-import { storeToRefs } from 'pinia'
+
+
 const chartData = ref(null)
 
 const userStore = useUserStore();
-const user = userStore.user
-
-onMounted(() => console.log(user))
-
-function printUser() {
-  console.log(userStore.user)
-}
-
-// const user = computed(() => userStore.user)
+const userNotes = computed(() => userStore.user.Notes)
+const user = computed(() => userStore.user)
 
 // const fillChartData = () => {
 //   chartData.value = chartConfig.sampleChartData()
 // }
 
-// const mainStore = useMainStore()
+onMounted(() => {
+  // fillChartData()
+  // console.log(user)
+})
 
+// onMounted(() => { console.log(userStore) })
+
+// watch(() => userStore.fetchAllUserAssets, () => {
+//   printUser()
+// })
+async function printUser() {
+  console.log(userNotes.value)
+}
+// const mainStore = useMainStore()
 // const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
 
 // const transactionBarItems = computed(() => mainStore.history)
