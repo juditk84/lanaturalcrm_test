@@ -24,21 +24,24 @@ import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import SectionBannerStarOnGitHub from '@/components/SectionBannerStarOnGitHub.vue'
 import { useUserStore } from '@/stores/userStore'
+import { storeToRefs } from 'pinia'
 
 
 const chartData = ref(null)
 
 const userStore = useUserStore();
-const userNotes = computed(() => userStore.user.Notes)
-const user = computed(() => userStore.user)
+const userNotes = ref(null)
+const userDocs = ref(null)
+const userLinks = ref(null)
+const user = userStore?.user
 
-// const fillChartData = () => {
-//   chartData.value = chartConfig.sampleChartData()
-// }
+const fillChartData = () => {
+  chartData.value = chartConfig.sampleChartData()
+}
 
 onMounted(() => {
   // fillChartData()
-  // console.log(user)
+  console.log(user)
 })
 
 // onMounted(() => { console.log(userStore) })
@@ -47,7 +50,7 @@ onMounted(() => {
 //   printUser()
 // })
 async function printUser() {
-  console.log(userNotes.value)
+  console.log(userStore.user)
 }
 // const mainStore = useMainStore()
 // const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
@@ -59,9 +62,9 @@ async function printUser() {
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-
-    <button @click="printUser"> XXXXX</button>
+      <button @click="printUser"> XXXXX</button>
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
+        
         <BaseButton
           href="https://github.com/justboil/admin-one-vue-tailwind"
           target="_blank"

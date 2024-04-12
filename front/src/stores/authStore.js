@@ -57,6 +57,7 @@ export const useAuthStore = defineStore('auth', () => {
     isLoggedIn.value = false;
     sessionStorage.removeItem("refreshToken");
     sessionStorage.removeItem("username");
+    userStore.$reset
     router.push("/login")
     console.log("logged out")
    } catch (err) {
