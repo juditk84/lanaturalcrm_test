@@ -8,7 +8,8 @@ import {
   mdiMonitorCellphone,
   mdiReload,
   mdiGithub,
-  mdiChartPie
+  mdiChartPie,
+mdiChartLineVariant
 } from '@mdi/js'
 import * as chartConfig from '@/components/Charts/chart.config.js'
 import LineChart from '@/components/Charts/LineChart.vue'
@@ -49,6 +50,14 @@ onMounted(() => {
 // })
 async function printUser() {
   console.log(userStore.user)
+  for (const el of userStore.user.Tasks) {
+    console.log("UTC?")
+    console.log(el.deadline)
+
+    const date = new Date()
+    console.log("new Date(): ")
+    console.log(date)
+  }
 }
 // const mainStore = useMainStore()
 // const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
@@ -60,13 +69,13 @@ async function printUser() {
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <button @click="printUser">{{ `${userStore.user?.username}, fes-me clic i et diré qui ets...`}}</button>
+      
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
-        
+        <button @click="printUser">{{ `${userStore.user?.username}, fes-me clic i et diré qui ets...`}}</button>
         <BaseButton
           to="TOBEDEFINED"
           target="_blank"
-          :icon="mdiGithub"
+          :icon="mdiChartLineVariant"
           label="Veure més"
           color="contrast"
           rounded-full
@@ -77,9 +86,9 @@ async function printUser() {
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
         <CardBoxWidget v-for="task in userStore.user?.Tasks"
           :trend= "task.status"
-          trend-type="up"
+          :trend-type="task.status"
           :color="text-emerald-500"
-          :trendType="task.title"
+          :trendType="task.status"
           :date="task.deadline"
           :label="task.description"
           :title="task.title"

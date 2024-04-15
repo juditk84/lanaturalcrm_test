@@ -54,15 +54,7 @@ defineProps({
   }
 })
 
-function statusColor(status){
-  const statuses = [
-    {'futur': 'blue'},
-    {'pendent': 'yellow'},
-    {'tancat': 'grey'},
-    {'en curs' : 'green'},
-    {'tard' : 'red'}
-  ]
-}
+
 </script>
 
 <template>
