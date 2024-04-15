@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
 
   try {
       const allProjects = await models.Project.findAll({
-        attributes: ["name", "start_date", "end_date"],
+        attributes: ["id", "name", "start_date", "end_date"],
         include: [
           {
             model: models.Member,

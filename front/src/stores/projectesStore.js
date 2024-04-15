@@ -20,7 +20,9 @@ export const useProjectesStore = defineStore('projecteStore', () => {
     try {
       const results = await axios('api/projectes/')
       allProjects.value = results?.data.map(project => { 
-                                              return {name: project.name,
+                                              return {
+                                                id: project.id,
+                                                name: project.name,
                                                 worker: project.Worker.firstname,
                                                 member: project.Member.commercialName1}
                                             })
@@ -45,8 +47,6 @@ export const useProjectesStore = defineStore('projecteStore', () => {
 
   async function fetchSpecificProject() {
     try {
-
-      
       const results = await axios(`api/projectes/${minifier.toUUID(route.params.project_id)}`, 
       {
         headers: {   
