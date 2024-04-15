@@ -50,11 +50,13 @@ async function userShouldBeLoggedIn(req, res, next) {
             models.Link,
             
           ],
+          
         
         })
+        const id = decoded.user_id
 
         req.user = user
-
+        req.id = id
         next()
       }
     });

@@ -37,7 +37,6 @@ router.get('/', async (req, res, next) => {
 // JUDIT: Probablement l'endpoint més macarra de l'univers, but if it works it works:
 router.get('/userprojects', userShouldBeLoggedIn, async (req, res) => {
 
-
   try {
   
       const userProjects = await models.Worker.findAll({
