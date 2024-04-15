@@ -6,6 +6,7 @@ import RegisterView from '@/views/RegisterView.vue'
 import AllMembers from '@/views/Xarxa/AllMembers.vue'
 import AddMember from '@/views/Xarxa/AddMember.vue'
 import AllProjects from '@/views/Projectes/AllProjects.vue'
+import SpecificProject from '@/views/Projectes/SpecificProject.vue'
 
 import { useAuthStore } from '@/stores/authStore'
 
@@ -53,6 +54,14 @@ const routes = [
     path: '/projectes/tots',
     name: 'Projectes',
     component: AllProjects
+  },
+  {
+    meta: {
+      title: 'Un Projecte'
+    },
+    path: '/projectes/:project_id',
+    name: 'un sol projecte',
+    component: SpecificProject
   },
   {
     meta: {

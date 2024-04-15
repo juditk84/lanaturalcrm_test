@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
+import shortUUID from 'short-uuid'
 
 export const useProjectesStore = defineStore('projecteStore', () => {
 
@@ -9,6 +11,10 @@ export const useProjectesStore = defineStore('projecteStore', () => {
 
   const allProjects = ref(null)
   const allUserProjects = ref(null)
+  const specificProject = ref(null)
+  const minifier = shortUUID();
+
+  const route = useRoute()
 
  async function fetchProjects() {
     try {
@@ -37,10 +43,28 @@ export const useProjectesStore = defineStore('projecteStore', () => {
     }
   }
 
+  async function fetchSpecificProject() {
+    try {
+
+      
+      const results = await axios(`api/projectes/${minifier.toUUID(route.params.project_id)}`, 
+      {
+        headers: {   
+        Authorization: "Bearer " + sessionStorage.refreshToken
+      }
+      })
+      specificProject.value = results.data
+    } catch(error) {
+        alert(error.message)
+    }
+  }
+
   return {
     allProjects,
     allUserProjects,
+    specificProject,
     fetchProjects,
-    fetchUserProjects
+    fetchUserProjects,
+    fetchSpecificProject
   }
 })

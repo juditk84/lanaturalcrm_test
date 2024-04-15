@@ -24,6 +24,7 @@
     "nodemon": "^3.0.3",
     "pinia-plugin-persistedstate": "^3.2.1",
     "sequelize": "^6.37.1",
+    "short-uuid": "^4.2.2",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
