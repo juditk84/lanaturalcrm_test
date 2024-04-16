@@ -11,7 +11,7 @@ module.exports = {
         text: "note 1, linked to worker",
         commentableType: "worker",
         commentableId: "74114925-269f-4f44-89bd-6d9259847489", // ets la judit 
-        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
+        creatorId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -21,7 +21,7 @@ module.exports = {
         text: "note 2, linked to project",
         commentableType: "project",
         commentableId: "837c6321-e1f3-4c25-86fe-de028bfe3529", // project linked to iris
-        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc iris
+        creatorId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc iris
         createdAt: new Date(),
         updatedAt: new Date()
       }, 
@@ -31,7 +31,7 @@ module.exports = {
         text: "note 3, linked to project",
         commentableType: "project",
         commentableId: "837c6321-e1f3-4c25-86fe-de028bfe3529", // project linked to iris
-        workerId: "74114925-269f-4f44-89bd-6d9259847489", // ets la judit
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489", // ets la judit
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -41,7 +41,7 @@ module.exports = {
         text: "note 4, linked to iris",
         commentableType: "worker",
         commentableId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris 
-        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
+        creatorId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -51,7 +51,7 @@ module.exports = {
         text: "note 5, linked to juju",
         commentableType: "worker",
         commentableId: "74114925-269f-4f44-89bd-6d9259847489", // ets la Juju
-        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
+        creatorId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -61,7 +61,7 @@ module.exports = {
         text: "si et sort aquesta nota amora, ha funcionat el polimorfi",
         commentableType: "project",
         commentableId: "837c6321-e1f3-4c25-86fe-de028bfe3222", // projecte temps de qualitat, assignat a Juju
-        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
+        creatorId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
         createdAt: new Date(),
         updatedAt: new Date()
       },

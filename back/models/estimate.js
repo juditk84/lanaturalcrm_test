@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       Estimate.belongsTo(models.Project, {foreignKey: "projectId"})
 
       // as creator
-      Estimate.belongsTo(models.Worker, {as: "creator", foreignKey: 'workerId'})
+      Estimate.belongsTo(models.Worker, {as: "creator", foreignKey: 'creatorId'})
 
     }
   }

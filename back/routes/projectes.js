@@ -93,12 +93,9 @@ router.get('/:project_id', userShouldBeLoggedIn, async (req, res, next) => {
             attributes: {
               exclude: ["id", "password"]
             },
-            include: [
-              {
-                model: models.Task,
-                where: { projectId: req.params.project_id}
-                }
-                ],
+          },
+          {
+            model: models.Task
           }
         ],
       })

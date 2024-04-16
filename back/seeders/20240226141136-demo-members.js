@@ -19,6 +19,7 @@ module.exports = {
         country: "SPAIN",
         phoneNumber: "937339421",
         memberType: 'entity',
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -33,6 +34,7 @@ module.exports = {
         country: "SPAIN",
         phoneNumber: "932178166",
         memberType: 'entity',
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -47,6 +49,7 @@ module.exports = {
         country: "SPAIN",
         phoneNumber: "935556677",
         memberType: 'entity',
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -61,6 +64,7 @@ module.exports = {
         country: "SPAIN",
         phoneNumber: "937357722",
         memberType: 'entity',
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -75,6 +79,7 @@ module.exports = {
         country: "SPAIN",
         phoneNumber: "937357722",
         memberType: 'entity',
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -89,6 +94,7 @@ module.exports = {
         country: "SPAIN",
         phoneNumber: "937357722",
         memberType: 'entity',
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -103,6 +109,7 @@ module.exports = {
         country: "SPAIN",
         phoneNumber: "93700700",
         memberType: 'entity',
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -117,6 +124,7 @@ module.exports = {
         country: "SPAIN",
         phoneNumber: "93100100",
         memberType: 'entity',
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -131,6 +139,7 @@ module.exports = {
         country: "SPAIN",
         phoneNumber: "93333444",
         memberType: 'entity',
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489",
         createdAt: new Date(),
         updatedAt: new Date()
       },

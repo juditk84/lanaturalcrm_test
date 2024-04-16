@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       Link.belongsTo(models.Worker, { foreignKey: 'commentableId', constraints: false }); // as a link left for user self
 
       // as creator
-      Link.belongsTo(models.Worker, {as: "creator", foreignKey: 'workerId'})
+      Link.belongsTo(models.Worker, {as: "creator", foreignKey: 'creatorId'})
     }
   }
   Link.init({
