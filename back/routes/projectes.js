@@ -91,24 +91,21 @@ router.get('/:project_id', userShouldBeLoggedIn, async (req, res, next) => {
           {
             model: models.Worker,
             attributes: {
-              exclude: ["id"]
+              exclude: ["id", "password"]
             },
-          },
-          {
-            model: models.Task,
-            where: {
-              projectId: req.params.project_id
-            },
-            // through: {attributes: []} 
-          },
-
+            include: [
+              {
+                model: models.Task,
+                where: { projectId: req.params.project_id}
+                }
+                ],
+          }
         ],
-
       })
 
       const minifiedUUID = translator.fromUUID(req.params.project_id)
 
-      res.status(200).send({projectObject: oneSpecificProject, minifiedUUID: minifiedUUID})
+      res.status(200).send({project: oneSpecificProject, minifiedUUID: minifiedUUID})
   } catch (err) {
     res.status(500).send({message: "no s'ha trobat cap projecte, revisa les dades oi"})
   }
