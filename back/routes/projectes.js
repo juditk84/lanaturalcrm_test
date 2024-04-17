@@ -95,14 +95,14 @@ router.get('/:project_id', userShouldBeLoggedIn, async (req, res, next) => {
             },
           },
           {
-            model: models.Task
+            model: models.Task,
           }
         ],
       })
 
       const minifiedUUID = translator.fromUUID(req.params.project_id)
 
-      res.status(200).send({project: oneSpecificProject, minifiedUUID: minifiedUUID})
+      res.status(200).send(oneSpecificProject)
   } catch (err) {
     res.status(500).send({message: "no s'ha trobat cap projecte, revisa les dades oi"})
   }
