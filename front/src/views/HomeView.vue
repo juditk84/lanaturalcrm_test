@@ -27,9 +27,10 @@ import SectionBannerStarOnGitHub from '@/components/SectionBannerStarOnGitHub.vu
 import { useUserStore } from '@/stores/userStore'
 import { useMemberStore } from '@/stores/memberStore'
 import { storeToRefs } from 'pinia'
+import { parse, format } from '@formkit/tempo'
+import DashboardProjects from './Dashboards/DashboardProjects.vue'
 
 
-const chartData = ref(null)
 
 const userStore = useUserStore();
 
@@ -51,12 +52,7 @@ onMounted(() => {
 async function printUser() {
   console.log(userStore.user)
   for (const el of userStore.user.Tasks) {
-    console.log("UTC?")
-    console.log(el.deadline)
-
-    const date = new Date()
-    console.log("new Date(): ")
-    console.log(date)
+    console.log(format(el.deadline, "full", "ca"))
   }
 }
 // const mainStore = useMainStore()
@@ -95,7 +91,7 @@ async function printUser() {
         />
 
       </div>
-
+      <DashboardProjects/>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div class="flex flex-col justify-between">
           <CardBoxTransaction

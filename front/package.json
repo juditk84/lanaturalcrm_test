@@ -9,6 +9,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@formkit/tempo": "^0.0.19",
     "@mdi/js": "^7.0.96",
     "axios": "^1.5.0",
     "chart.js": "^4.4.0",

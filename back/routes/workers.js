@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const models = require('../models');
 const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn'); 
+const short = require('short-uuid')
+const translator = short()
 
 router.get("/", userShouldBeLoggedIn, async (req, res) => {
     const { user } = req

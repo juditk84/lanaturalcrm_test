@@ -13,9 +13,9 @@ defineProps({
   checkable: Boolean
 })
 
-const mainStore = useMainStore()
+const userStore = useUserStore()
 
-const items = computed(() => mainStore.clients)
+const items = computed(() => userStore.user.Projects)
 
 const isModalActive = ref(false)
 
@@ -68,7 +68,7 @@ const checked = (isChecked, client) => {
 
 <template>
   <CardBoxModal v-model="isModalActive" title="Sample modal">
-    <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
+    <p>Lorem ipsum dolor sit amet <b>ahellot</b></p>
     <p>This is sample modal</p>
   </CardBoxModal>
 
@@ -82,11 +82,10 @@ const checked = (isChecked, client) => {
       <tr>
         <th v-if="checkable" />
         <th />
-        <th>Name</th>
-        <th>Company</th>
-        <th>City</th>
-        <th>Progress</th>
-        <th>Created</th>
+        <th>Prioritat</th>
+        <th>Nom</th>
+        <th>Membre</th>
+        <th>Creat</th>
         <th />
       </tr>
     </thead>
