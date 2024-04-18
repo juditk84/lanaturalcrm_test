@@ -7,11 +7,13 @@ import TableCheckboxCell from '@/components/TableCheckboxCell.vue'
 import BaseLevel from '@/components/BaseLevel.vue'
 import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
+import {format, parse} from '@formkit/tempo'
 // import UserAvatar from '@/components/UserAvatar.vue'
 
 defineProps({
   checkable: Boolean
 })
+
 
 const userStore = useUserStore()
 
@@ -82,36 +84,35 @@ const checked = (isChecked, client) => {
       <tr>
         <th v-if="checkable" />
         <th />
-        <th>Prioritat</th>
         <th>Nom</th>
         <th>Membre</th>
-        <th>Creat</th>
+        <th>Tipus</th>
+        <th>Entrega</th>
         <th />
       </tr>
     </thead>
     <tbody>
-      <tr v-for="client in itemsPaginated" :key="client.id">
+      <tr v-for="item in itemsPaginated" :key="item.createdAt">
         <TableCheckboxCell v-if="checkable" @checked="checked($event, client)" />
         <td class="border-b-0 lg:w-6 before:hidden">
           <!-- <UserAvatar :username="client.name" class="w-24 h-24 mx-auto lg:w-6 lg:h-6" /> -->
         </td>
-        <td data-label="Name">
-          {{ client.name }}
+        <td data-label="Nom">
+          {{ item.name }}
         </td>
-        <td data-label="Company">
-          {{ client.company }}
+        <td data-label="Membre">
+          {{ item.Member.commercialName1 || item.Member.firstname }}
         </td>
-        <td data-label="City">
-          {{ client.city }}
+ 
+        <td data-label="Tipus" class="lg:w-32">
+        
+            {{ item.ProjectType.type }}
+
         </td>
-        <td data-label="Progress" class="lg:w-32">
-          <progress class="flex w-2/5 self-center lg:w-full" max="100" :value="client.progress">
-            {{ client.progress }}
-          </progress>
-        </td>
-        <td data-label="Created" class="lg:w-1 whitespace-nowrap">
-          <small class="text-gray-500 dark:text-slate-400" :title="client.created">{{
-            client.created
+        <td data-label="Entrega" class="lg:w-1 whitespace-nowrap">
+          <small class="text-gray-500 dark:text-slate-400" :title="item.createdAt">
+          {{
+            format(item.deadline, "full", "ca")
           }}</small>
         </td>
         <td class="before:hidden lg:w-1 whitespace-nowrap">
