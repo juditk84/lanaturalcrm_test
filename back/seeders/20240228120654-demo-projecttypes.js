@@ -30,6 +30,11 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        type: "IT",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     
     
     ], {});

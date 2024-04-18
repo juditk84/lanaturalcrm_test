@@ -1,15 +1,18 @@
 <script setup>
-import { reactive, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { onMounted } from 'vue'
+import { useProjectesStore } from '@/stores/projectesStore'
 import { mdiBallotOutline, mdiAccount, mdiMail, mdiGithub } from '@mdi/js'
 import SectionMain from '@/components/SectionMain.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import CardBox from '@/components/CardBox.vue'
-import TableSampleProjectes from '@/components/TableSampleProjectes.vue'
+import TableAllProjects from '@/components/TableAllProjects.vue'
 
-const route = useRoute();
+const projectesStore = useProjectesStore();
+
+onMounted(() => { grabAllProjectsFromStore() })
+async function grabAllProjectsFromStore(){await projectesStore.fetchProjects()}
 
 </script>
 
@@ -19,7 +22,7 @@ const route = useRoute();
       <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Projectes" main>
         
       </SectionTitleLineWithButton>
-      <TableSampleProjectes checkable />
+      <TableAllProjects />
     </SectionMain>
 
     <SectionTitle>Custom elements</SectionTitle>
@@ -27,8 +30,6 @@ const route = useRoute();
        
       </CardBox>
     <SectionMain>
-
-      <SectionTitle>The user Id in the frontend nooooo: {{ route.params.asideMenuCategoria }}</SectionTitle>
 
     </SectionMain>
   </LayoutAuthenticated>

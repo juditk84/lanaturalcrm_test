@@ -91,7 +91,50 @@ module.exports = {
         memberType: 'entity',
         createdAt: new Date(),
         updatedAt: new Date()
-      }])
+      },
+      {
+        id: "e226996f-5d4d-4bf2-9969-739e62e6d12a",
+        commercialName1: 'AJUNTAMENT DE TERRASSA',
+        email: 'terrassa@terrassa.cat',
+        officialId: "Z01234567B",
+        address: "Carrer Raval de Montserrat, 30",
+        city: "TERRASSA",
+        postcode: "08221",
+        country: "SPAIN",
+        phoneNumber: "93700700",
+        memberType: 'entity',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: "147890f6-ef1c-4dad-9cbc-a11306d737bf",
+        commercialName1: 'Associació d\'Ex-Presos del Franquisme',
+        email: 'expresos@franquisme.cat',
+        officialId: "Z0000001B",
+        address: "Carrer Franco Ha Muerto, 76",
+        city: "TERRASSA",
+        postcode: "08221",
+        country: "SPAIN",
+        phoneNumber: "93100100",
+        memberType: 'entity',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: "38093f50-3409-4677-904d-8428c0e11ab7",
+        commercialName1: 'La Natural Coopmunicació',
+        email: 'lanatural@coop.cat',
+        officialId: "Z9998887B",
+        address: "Carrer de la Coopmunicació, 500", // és un carrer llarg apparently xD
+        city: "TERRASSA",
+        postcode: "08221",
+        country: "SPAIN",
+        phoneNumber: "93333444",
+        memberType: 'entity',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+    ])
   },
 
   async down (queryInterface, Sequelize) {

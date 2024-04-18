@@ -1,5 +1,7 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
+import { useMemberStore } from '@/stores/memberStore'
+import TableAllXarxa from '@/components/TableAllXarxa.vue'
 import { mdiBallotOutline, mdiAccount, mdiMail, mdiGithub } from '@mdi/js'
 import SectionMain from '@/components/SectionMain.vue'
 import CardBox from '@/components/CardBox.vue'
@@ -16,17 +18,29 @@ import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.
 import NotificationBarInCard from '@/components/NotificationBarInCard.vue'
 import ViewMembers from '@/components/ViewMembers.vue'
 
+// JUDIT: love how simple this component is ^^
+
+const memberStore = useMemberStore()
+
+onMounted(() => { grabAllMembersFromStore() })
+async function grabAllMembersFromStore(){await memberStore.fetchMembers()}
+
 </script>
 
 <template>
   <LayoutAuthenticated>
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Xarxa" main>
-        hola hola hola
+        
       </SectionTitleLineWithButton>
+      <TableAllXarxa />
+    </SectionMain>
 
-
- <BaseDivider/>
+    <SectionTitle>Custom elements</SectionTitle>
+    <CardBox class="mb-6" has-table>
+       
+      </CardBox>
+    <SectionMain>
 
     </SectionMain>
   </LayoutAuthenticated>

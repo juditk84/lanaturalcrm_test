@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       Project.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'project'}});
 
       // as creator
-      Project.belongsTo(models.Worker, {as: "creator", foreignKey: 'workerId'})
+      Project.belongsTo(models.Worker, {foreignKey: 'workerId'})
     }
   }
   Project.init({

@@ -22,7 +22,7 @@ import { ref } from "vue"
 
 export default [
   {
-    to: '/global/landingview',            
+    to: '/global/',            
     icon: mdiDatabaseCogOutline,
     label: 'Espai Global',
     menu: [
@@ -37,7 +37,7 @@ export default [
     ]
   },
   {
-    to: '/user/landingview',            
+    to: '/user/',            
     icon: mdiAccountStar,
     label: 'Espai Usuària',
     menu: [
@@ -52,7 +52,7 @@ export default [
     ]
   },
   {
-    to: '/xarxa/landingview',            
+    to: '/xarxa/',            
     icon: mdiAccountGroup,
     label: 'Xarxa',
     menu: [
@@ -67,7 +67,7 @@ export default [
     ]
   },
   {
-    to: '/projectes/landingview',
+    to: '/projectes/',
     label: 'Projectes',
     icon: mdiCardMultiple,
     menu: [
@@ -82,7 +82,7 @@ export default [
     ]
   },
   {
-    to: '/reunions/landingview',
+    to: '/reunions/',
     label: 'Reunions',
     icon: mdiClockStarFourPoints,
     menu: [

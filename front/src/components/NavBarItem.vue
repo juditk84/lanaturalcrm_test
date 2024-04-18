@@ -2,15 +2,10 @@
 import { mdiChevronUp, mdiChevronDown } from '@mdi/js'
 import { RouterLink } from 'vue-router'
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
-import { useMainStore } from '@/stores/main.js'
-import { useAuthStore } from '@/stores/authStore'
 import BaseIcon from '@/components/BaseIcon.vue'
 import UserAvatarCurrentUser from '@/components/UserAvatarCurrentUser.vue'
 import NavBarMenuList from '@/components/NavBarMenuList.vue'
 import BaseDivider from '@/components/BaseDivider.vue'
-
-
-const authStore = useAuthStore();
 
 const props = defineProps({
   item: {
@@ -49,8 +44,8 @@ const componentClass = computed(() => {
   return base
 })
 
-const itemLabel = computed(() =>
-  props.item.isCurrentUser ? authStore.username : props.item.label
+const userNameLabel = computed(() =>
+  sessionStorage.username
 )
 
 const isDropdownActive = ref(false)
@@ -113,7 +108,7 @@ onBeforeUnmount(() => {
       <span
         class="px-2 transition-colors"
         :class="{ 'lg:hidden': item.isDesktopNoLabel && item.icon }"
-        >{{ itemLabel }}</span
+        >{{ props.item.isCurrentUser ? userNameLabel : props.item.label }} </span 
       >
       <BaseIcon
         v-if="item.menu"

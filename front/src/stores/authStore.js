@@ -1,37 +1,77 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
+import { useUserStore } from './userStore'
+
+
 
 export const useAuthStore = defineStore('auth', () => {
-
-
   const router = useRouter();
-  const isLoggedIn = ref(!!document.cookie)
-  // const isLoggedIn = ref(!!localStorage.getItem("token"))
-  const username = ref(localStorage.getItem("username"))
+  const isLoggedIn = ref(!!sessionStorage.getItem("refreshToken"))
+  const username = ref(sessionStorage.getItem("username"))
+  const userStore = useUserStore()
+
+  async function getRefreshToken() {
+    return sessionStorage.getItem("refreshToken")
+  }
+  
+  async function setRefreshToken(token) {
+    try {
+      sessionStorage.setItem("refreshToken", token)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  async function setUsername(username) {
+    try {
+      sessionStorage.setItem("username", username)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
 
-  const onLogin = (user) => {
-    isLoggedIn.value = true;
-    username.value = user
-    router.push("/dashboard")
+  const handleLogin = async (credentials) => {
+    try {
+      const { data } = await axios("api/inici/login", {
+        method: "POST",
+        data: credentials,
+      })
+      isLoggedIn.value = true /// maybe no cal isLoggedIn?
+      const refreshToken = await data.token
+      console.log(data.response)
+      setRefreshToken(refreshToken)
+      setUsername(credentials.username)
+      userStore.fetchAllUserRelatedAssets(refreshToken)
+      router.push("dashboard")    
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onLogout = () => {
-    console.log("username before log out: ", username.value)
+   try {
     username.value = null;
     isLoggedIn.value = false;
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("character");
-    console.log("username after logout: ", username.value)
+    sessionStorage.removeItem("refreshToken");
+    sessionStorage.removeItem("username");
+    userStore.$reset
     router.push("/login")
+    console.log("logged out")
+   } catch (err) {
+    console.log(err)
+   }
   };
 
   return {
     isLoggedIn,
-    onLogin,
     onLogout,
     username,
+    setUsername,
+    getRefreshToken,
+    setRefreshToken,
+    handleLogin
   }
-})
+}, {persist: true})

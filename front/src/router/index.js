@@ -6,18 +6,13 @@ import RegisterView from '@/views/RegisterView.vue'
 import AllMembers from '@/views/Xarxa/AllMembers.vue'
 import AddMember from '@/views/Xarxa/AddMember.vue'
 import AllProjects from '@/views/Projectes/AllProjects.vue'
+import SpecificProject from '@/views/Projectes/SpecificProject.vue'
 
 import { useAuthStore } from '@/stores/authStore'
 
+
 const routes = [
-  {
-    meta: {
-      title: 'Select style'
-    },
-    path: '/',
-    name: 'style',
-    component: Style
-  },
+
   {
     // Document title tag
     // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
@@ -32,7 +27,7 @@ const routes = [
     meta: {
       title: 'Landing Hub'
     },
-    path: '/:asideMenuCategoria/landingview',
+    path: '/:asideMenuCategoria/',
     name: 'Landing Hub',
     component: LandingView
   },
@@ -59,6 +54,14 @@ const routes = [
     path: '/projectes/tots',
     name: 'Projectes',
     component: AllProjects
+  },
+  {
+    meta: {
+      title: 'Un Projecte'
+    },
+    path: '/projectes/:project_id',
+    name: 'un sol projecte',
+    component: SpecificProject
   },
   {
     meta: {
@@ -134,8 +137,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 
   const authStore = useAuthStore();
-
-  if (to.name !== 'login' && !authStore.isLoggedIn) next({ name: 'login' })
+  
+  if (to.name !== 'login' && !sessionStorage.getItem("refreshToken")) next({ name: 'login' })
   else next()
 
 })

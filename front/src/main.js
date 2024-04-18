@@ -5,7 +5,7 @@ import App from './App.vue'
 import router from './router'
 import { useMainStore } from '@/stores/main.js'
 import { useAuthStore } from '@/stores/authStore.js'
-import { useMemberStore } from '@/stores/memberStore.js'
+
 
 import './css/main.css'
 
@@ -30,7 +30,6 @@ mainStore.fetchSampleHistory()
 
 // const darkModeStore = useDarkModeStore(pinia)
 
-console.log("app mounted.")
 // if (
 //   (!localStorage['darkMode'] && window.matchMedia('(prefers-color-scheme: dark)').matches) ||
 //   localStorage['darkMode'] === '1'
