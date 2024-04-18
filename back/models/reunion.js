@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       Reunion.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'reunion'}});
 
       // as creator
-      Reunion.belongsTo(models.Worker, {as: "creator", foreignKey: 'workerId'})
+      Reunion.belongsTo(models.Worker, {as: "creator", foreignKey: 'creatorId'})
     }
   }
   Reunion.init({

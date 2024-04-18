@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       Transaction.belongsTo(models.Project, {foreignKey: "projectId", allowNull: true});
 
       // as creator
-      Transaction.belongsTo(models.Worker, {as: "creator", foreignKey: 'workerId'})
+      Transaction.belongsTo(models.Worker, {as: "creator", foreignKey: 'creatorId'})
 
       // commentables
       Transaction.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'transaction'}});

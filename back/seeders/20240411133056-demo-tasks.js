@@ -15,7 +15,7 @@ module.exports = {
         priority: 'alta',
         parentId: null,
         projectId: "837c6321-e1f3-4c25-86fe-de028bfe3529", // derrumbar sistema
-        workerId: "74114925-269f-4f44-89bd-6d9259847489", // Juju
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489", // Juju
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -29,7 +29,7 @@ module.exports = {
         priority: 'mitja',
         parentId: null,
         projectId: "837c6321-e1f3-4c25-86fe-de028bfe3529", // derrumbar sistema
-        workerId: "74114925-269f-4f44-89bd-6d9259847489", // Juju
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489", // Juju
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -43,7 +43,7 @@ module.exports = {
         priority: 'baixa',
         parentId: null,
         projectId: "837c6321-e1f3-4c25-86fe-de028bfe3149", // CRM
-        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
+        creatorId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -57,7 +57,7 @@ module.exports = {
         priority: 'alta',
         parentId: null,
         projectId: "837c6321-e1f3-4c25-86fe-de028bfe3529", // derrumbar sistema
-        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
+        creatorId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -71,7 +71,7 @@ module.exports = {
         priority: 'mitja',
         parentId: "ed98e956-a686-4877-aec9-6c4c43e01d85",
         projectId: "837c6321-e1f3-4c25-86fe-de028bfe3529", // derrumbar sistema
-        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
+        creatorId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -85,7 +85,7 @@ module.exports = {
         priority: 'alta',
         parentId: "ed98e956-a686-4877-aec9-6c4c43e01d85",
         projectId: "837c6321-e1f3-4c25-86fe-de028bfe3529", // derrumbar sistema
-        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
+        creatorId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // soc l'iris
         createdAt: new Date(),
         updatedAt: new Date()
       }

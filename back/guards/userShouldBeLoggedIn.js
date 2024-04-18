@@ -51,12 +51,14 @@ async function userShouldBeLoggedIn(req, res, next) {
             {model: models.Link, attributes: { exclude: ["id"]}},
             
           ],
+          
         
         })
        
-        
-        req.user = user
+                const id = decoded.user_id
 
+        req.user = user
+        req.id = id
         next()
       }
     });

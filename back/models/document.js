@@ -26,10 +26,10 @@ module.exports = (sequelize, DataTypes) => {
       Document.belongsTo(models.Task, { foreignKey: 'commentableId', constraints: false });
       Document.belongsTo(models.Transaction, { foreignKey: 'commentableId', constraints: false });
       Document.belongsTo(models.Worker, { foreignKey: 'commentableId', constraints: false });
-      Document.belongsTo(models.Worker, { foreignKey: 'workerId', constraints: false}); // as a document left to user self
+      Document.belongsTo(models.Worker, { foreignKey: 'creatorId', constraints: false}); // as a document left to user self JUDIT: cuidado amb això, ho he hagut de canviar a creatorId.
 
       // as creator
-      Document.belongsTo(models.Worker, {as: "creator", foreignKey: 'workerId'})
+      Document.belongsTo(models.Worker, {as: "creator", foreignKey: 'creatorId'})
 
     }}
 

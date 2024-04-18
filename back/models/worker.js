@@ -10,16 +10,16 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Worker.hasMany(models.Document, {foreignKey: 'workerId' });
-      Worker.hasMany(models.Estimate, {foreignKey: 'workerId' });
-      Worker.hasMany(models.Link, {foreignKey: 'workerId' });
-      Worker.hasMany(models.Member, {foreignKey: 'workerId' });
-      Worker.hasMany(models.Note, {foreignKey: 'workerId'});
-      Worker.hasMany(models.Project, {foreignKey: 'workerId' });
-      Worker.hasMany(models.Reunion, {foreignKey: 'workerId' });
-      Worker.hasMany(models.Task, {foreignKey: 'workerId' });
-      Worker.hasMany(models.Transaction, {foreignKey: 'workerId' });
-      Worker.hasMany(models.Document, {foreignKey: 'workerId' });
+      Worker.hasMany(models.Document, {foreignKey: 'creatorId' });
+      Worker.hasMany(models.Estimate, {foreignKey: 'creatorId' });
+      Worker.hasMany(models.Link, {foreignKey: 'creatorId' });
+      Worker.hasMany(models.Member, {foreignKey: 'creatorId' });
+      Worker.hasMany(models.Note, {foreignKey: 'creatorId'});
+      Worker.hasMany(models.Project, {foreignKey: 'creatorId' });
+      Worker.hasMany(models.Reunion, {foreignKey: 'creatorId' });
+      Worker.hasMany(models.Task, {foreignKey: 'creatorId' });
+      Worker.hasMany(models.Transaction, {foreignKey: 'creatorId' });
+      Worker.hasMany(models.Document, {foreignKey: 'creatorId' });
 
       Worker.belongsToMany(models.Project, {through: "Projects_Assigned_To_Workers"})
       Worker.belongsToMany(models.Task, {through: "Tasks_Assigned_To_Workers"})

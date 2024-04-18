@@ -18,9 +18,9 @@ module.exports = (sequelize, DataTypes) => {
       Task.hasMany(models.Task, {as: "subTasks", foreignKey: "parentId"})
 
       // assigned tasks to worker
-      Task.belongsToMany(models.Worker, {through: "Tasks_By_Worker"})
+      Task.belongsToMany(models.Worker, {through: "Tasks_Assigned_To_Workers"})
 
-      // tasks by project
+      // tasks by project type:
       Task.belongsToMany(models.ProjectType, {through: "Tasks_By_ProjectType"})
 
       // commentables
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       Task.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'task'}});
 
       // as creator
-      Task.belongsTo(models.Worker, {as: "creator", foreignKey: 'workerId'})
+      Task.belongsTo(models.Worker, {as: "creator", foreignKey: 'creatorId'})
     }
   }
   Task.init({

@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
 
   try {
       const allProjects = await models.Project.findAll({
-        attributes: ["name", "start_date", "end_date"],
+        attributes: ["id", "name", "start_date", "end_date"],
         include: [
           {
             model: models.Member,
@@ -36,7 +36,6 @@ router.get('/', async (req, res, next) => {
 
 // JUDIT: Probablement l'endpoint més macarra de l'univers, but if it works it works:
 router.get('/userprojects', userShouldBeLoggedIn, async (req, res) => {
-
 
   try {
   
@@ -92,24 +91,27 @@ router.get('/:project_id', userShouldBeLoggedIn, async (req, res, next) => {
           {
             model: models.Worker,
             attributes: {
-              exclude: ["id"]
+              exclude: ["id", "password"]
             },
           },
           {
             model: models.Task,
-            where: {
-              projectId: req.params.project_id
-            },
-            // through: {attributes: []} 
-          },
-
+            include: [
+              {
+                model: models.Worker, 
+                through: {
+                  model: models.Tasks_Assigned_To_Workers,
+                  attributes: []
+                }
+              }
+            ]
+          }
         ],
-
       })
 
       const minifiedUUID = translator.fromUUID(req.params.project_id)
 
-      res.status(200).send({projectObject: oneSpecificProject, minifiedUUID: minifiedUUID})
+      res.status(200).send(oneSpecificProject)
   } catch (err) {
     res.status(500).send({message: "no s'ha trobat cap projecte, revisa les dades oi"})
   }

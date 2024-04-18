@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useMainStore } from '@/stores/main'
 import { useProjectesStore } from '@/stores/projectesStore'
 import { mdiEye, mdiTrashCan } from '@mdi/js'
@@ -10,10 +11,19 @@ import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import UserAvatar from '@/components/UserAvatar.vue'
 
+// I don't like it here, to refactor:
+import shortUUID from 'short-uuid'
+
 // IMPORTANT: En aquest exemple, estem fent que tota la fila sigui clicable, just to play around and see
 // what option suits us better. 
 
+// EDIT: afegit un botó a part de la línia que porta a la url de cada projecte
+
 const mainStore = useMainStore()
+const router = useRouter()
+
+// I don't like it here, to refactor:
+const minifier = shortUUID()
 
 const projectesStore = useProjectesStore();
 const activeProject = ref();
@@ -63,10 +73,10 @@ const isModalDangerActive = ref(false)
 // }
 
 function onRowClick(event, project){
-  console.log(event.target.name)
   if(event.target.name !== "rowButton"){
     isModalActive.value = true;
   activeProject.value = project
+  router.push(`/projectes/${minifier.fromUUID(project.id)}`)
   }
 }
 

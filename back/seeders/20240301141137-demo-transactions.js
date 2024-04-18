@@ -19,6 +19,7 @@ module.exports = {
         categoryId: 2,
         tipusIVAId: 1,
         projectId: "837c6321-e1f3-4c25-86fe-de028bfe3149",
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -33,6 +34,7 @@ module.exports = {
         categoryId: 2,
         tipusIVAId: 1,
         projectId: "837c6321-e1f3-4c25-86fe-de028bfe3149",
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489",
         createdAt: new Date(),
         updatedAt: new Date()
       }])
