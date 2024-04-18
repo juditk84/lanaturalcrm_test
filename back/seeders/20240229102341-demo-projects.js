@@ -15,7 +15,7 @@ module.exports = {
         description: "creació d'un CRM per la gestió de la cooperativa La Natural. Subvenció projecte BRUIXIT",
         projectTypeId: 6,
         memberId: "03e65ded-5e8e-4796-b770-25bf96f12ae1",
-        workerId: "74114925-269f-4f44-89bd-6d9259847489", // la Juju
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489", // la Juju
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -27,7 +27,7 @@ module.exports = {
         description: "portem molts anys, aixó va per llarg",
         projectTypeId: 2,
         memberId: "d9f281b8-d231-464d-a119-62621af6b33f",
-        workerId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // la Iris
+        creatorId: "94b5c901-57a1-41cf-a81c-45a3b3fcb3dc", // la Iris
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -39,7 +39,7 @@ module.exports = {
         description: "Disseny gràfic per la campanya de promoció dels Bibos i els Blets a Terrassa.",
         projectTypeId: 1,
         memberId: "58d7c496-f5d6-402e-858e-c50db7eafcf8",
-        workerId: "9074884e-c8ab-4632-88de-cc7bf21b2364", // l'Elena
+        creatorId: "9074884e-c8ab-4632-88de-cc7bf21b2364", // l'Elena
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -51,7 +51,7 @@ module.exports = {
         description: "Gestió de la comunicació i perfils de xarxes socials de l'associació d'ex-presos polítics del franquisme",
         projectTypeId: 3,
         memberId: "147890f6-ef1c-4dad-9cbc-a11306d737bf", // ex-presos
-        workerId: "46c4f6ca-026a-4581-bcf1-af5b7eeb0dab", // la Francina
+        creatorId: "46c4f6ca-026a-4581-bcf1-af5b7eeb0dab", // la Francina
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -63,7 +63,7 @@ module.exports = {
         description: "Projecte per encabir tot alló que té a veure amb la gestió de La Natural, sobretot facturació i subvencions.",
         projectTypeId: 5,
         memberId: "38093f50-3409-4677-904d-8428c0e11ab7", // La Natural
-        workerId: "83482ffe-63d1-403c-83d5-a70dd01ae597", // l'Ana Belén'
+        creatorId: "83482ffe-63d1-403c-83d5-a70dd01ae597", // l'Ana Belén'
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -75,7 +75,7 @@ module.exports = {
         description: "Apanyar l'excel del Departament de Suport a l'Empresa, que està quite mangled.",
         projectTypeId: 5,
         memberId: "e226996f-5d4d-4bf2-9969-739e62e6d12a", // Ajuntament de Terrassa
-        workerId: "74114925-269f-4f44-89bd-6d9259847489", // l'Ana Belén'
+        creatorId: "74114925-269f-4f44-89bd-6d9259847489", // l'Ana Belén'
         createdAt: new Date(),
         updatedAt: new Date()
       },

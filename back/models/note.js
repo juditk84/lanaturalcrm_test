@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       Note.belongsTo(models.Worker, { foreignKey: 'commentableId', constraints: false }); // notes left to user self
 
       // as creator
-      Note.belongsTo(models.Worker, {as: "creator", foreignKey: 'workerId'})
+      Note.belongsTo(models.Worker, {as: "creator", foreignKey: 'creatorId'})
 
       // notes can have subnotes
       Note.belongsTo(models.Member, {as: "Parent", foreignKey: "parentId", allowNull: true});

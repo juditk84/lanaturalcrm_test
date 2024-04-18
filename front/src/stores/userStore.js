@@ -20,7 +20,7 @@ const user = ref(null)
         }
       })
       user.value = await response?.data?.user
-      console.log(user.value)
+      console.log("the user store in all its glory: ", user.value)
     } catch (error) {
       console.log(error);
     }   
