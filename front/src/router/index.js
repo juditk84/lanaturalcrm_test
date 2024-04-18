@@ -27,7 +27,7 @@ const routes = [
     meta: {
       title: 'Landing Hub'
     },
-    path: '/:asideMenuCategoria/landingview',
+    path: '/:asideMenuCategoria/',
     name: 'Landing Hub',
     component: LandingView
   },

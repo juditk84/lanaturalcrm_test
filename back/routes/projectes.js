@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
 
   try {
       const allProjects = await models.Project.findAll({
-        attributes: ["name", "start_date", "end_date"],
+        attributes: ["id", "name", "start_date", "end_date"],
         include: [
           {
             model: models.Member,
@@ -36,7 +36,6 @@ router.get('/', async (req, res, next) => {
 
 // JUDIT: Probablement l'endpoint més macarra de l'univers, but if it works it works:
 router.get('/userprojects', userShouldBeLoggedIn, async (req, res) => {
-
 
   try {
   

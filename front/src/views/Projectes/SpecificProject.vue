@@ -12,7 +12,6 @@ const projectesStore = useProjectesStore();
 onMounted(() => { grabSpecificProjectFromStore() })
 async function grabSpecificProjectFromStore(){await projectesStore.fetchSpecificProject()}
 
-
 </script>
 
 <template>
