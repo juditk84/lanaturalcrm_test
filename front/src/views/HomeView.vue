@@ -8,7 +8,8 @@ import {
   mdiMonitorCellphone,
   mdiReload,
   mdiGithub,
-  mdiChartPie
+  mdiChartPie,
+mdiChartLineVariant
 } from '@mdi/js'
 import * as chartConfig from '@/components/Charts/chart.config.js'
 import LineChart from '@/components/Charts/LineChart.vue'
@@ -26,9 +27,10 @@ import SectionBannerStarOnGitHub from '@/components/SectionBannerStarOnGitHub.vu
 import { useUserStore } from '@/stores/userStore'
 import { useMemberStore } from '@/stores/memberStore'
 import { storeToRefs } from 'pinia'
+import { parse, format } from '@formkit/tempo'
+import DashboardProjects from './Dashboards/DashboardProjects.vue'
 
 
-const chartData = ref(null)
 
 const userStore = useUserStore();
 
@@ -49,6 +51,9 @@ onMounted(() => {
 // })
 async function printUser() {
   console.log(userStore.user)
+  for (const el of userStore.user.Tasks) {
+    console.log(format(el.deadline, "full", "ca"))
+  }
 }
 // const mainStore = useMainStore()
 // const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
@@ -60,13 +65,13 @@ async function printUser() {
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <button @click="printUser">{{ `${userStore.user?.username}, fes-me clic i et diré qui ets...`}}</button>
+      
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
-        
+        <button @click="printUser">{{ `${userStore.user?.username}, fes-me clic i et diré qui ets...`}}</button>
         <BaseButton
           to="TOBEDEFINED"
           target="_blank"
-          :icon="mdiGithub"
+          :icon="mdiChartLineVariant"
           label="Veure més"
           color="contrast"
           rounded-full
@@ -77,16 +82,16 @@ async function printUser() {
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
         <CardBoxWidget v-for="task in userStore.user?.Tasks"
           :trend= "task.status"
-          trend-type="up"
+          :trend-type="task.status"
           :color="text-emerald-500"
-          :trendType="task.title"
+          :trendType="task.status"
           :date="task.deadline"
           :label="task.description"
           :title="task.title"
         />
 
       </div>
-
+      <DashboardProjects/>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div class="flex flex-col justify-between">
           <CardBoxTransaction

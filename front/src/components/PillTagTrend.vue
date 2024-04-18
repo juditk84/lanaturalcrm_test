@@ -16,26 +16,39 @@ const props = defineProps({
 })
 
 const trendStyle = computed(() => {
-  if (props.trendType === 'up') {
+  if (props.trendType === 'futur') {
     return {
       icon: mdiChevronUp,
-      style: 'success'
+      style: 'light'
     }
   }
 
-  if (props.trendType === 'down') {
+  if (props.trendType === 'tard') {
     return {
       icon: mdiChevronDown,
-      style: 'danger'
-    }
-  }
-
-  if (props.trendType === 'alert') {
-    return {
-      icon: mdiAlertCircleOutline,
       style: 'warning'
     }
   }
+
+  if (props.trendType === 'en curs') {
+    return {
+      icon: mdiAlertCircleOutline,
+      style: 'info'
+    }
+  }
+
+  if (props.trendType === 'tancat') {
+    return {
+      icon: mdiAlertCircleOutline,
+      style: 'white'
+    }
+  }
+  if (props.trendType === 'pendent') {
+    return {
+      icon: mdiAlertCircleOutline,
+      style: 'contrast'
+    }
+  }  
 
   return {
     style: 'info'

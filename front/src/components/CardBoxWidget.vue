@@ -41,7 +41,7 @@ defineProps({
     default: null
   }, 
   date: {
-    type: Date,
+    type: String,
     default: null
   },
   status: {
@@ -54,15 +54,7 @@ defineProps({
   }
 })
 
-function statusColor(status){
-  const statuses = [
-    {'futur': 'blue'},
-    {'pendent': 'yellow'},
-    {'tancat': 'grey'},
-    {'en curs' : 'green'},
-    {'tard' : 'red'}
-  ]
-}
+
 </script>
 
 <template>
@@ -77,6 +69,7 @@ function statusColor(status){
         <h3 class="text-lg leading-tight text-gray-500 dark:text-slate-400">
           {{ label }}
         </h3>
+        <h6> {{ date  }}</h6>
         <!-- <h1 class="text-3xl leading-tight font-semibold">
           <NumberDynamic :value="number" :prefix="prefix" :suffix="suffix" />
          
