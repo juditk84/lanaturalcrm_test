@@ -9,6 +9,7 @@ const user = ref(null)
 
 
   const $reset = () => {user.value = null}
+  
   const userAvatar = computed(  
     () =>
       `https://api.dicebear.com/8.x/adventurer/svg?seed=Salem`

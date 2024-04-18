@@ -83,7 +83,6 @@ async function printUser() {
         <CardBoxWidget v-for="task in userStore.user?.Tasks"
           :trend= "task.status"
           :trend-type="task.status"
-          :color="text-emerald-500"
           :trendType="task.status"
           :date="task.deadline"
           :label="task.description"
@@ -94,7 +93,7 @@ async function printUser() {
       <DashboardProjects/>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div class="flex flex-col justify-between">
-          <CardBoxTransaction
+          <!-- <CardBoxTransaction
             v-for="(transaction, index) in transactionBarItems"
             :key="index"
             :amount="transaction.amount"
@@ -103,9 +102,9 @@ async function printUser() {
             :type="transaction.type"
             :name="transaction.name"
             :account="transaction.account"
-          />
+          /> -->
         </div>
-        <div class="flex flex-col justify-between">
+        <!-- <div class="flex flex-col justify-between">
           <CardBoxClient
             v-for="client in clientBarItems"
             :key="client.id"
@@ -114,7 +113,7 @@ async function printUser() {
             :date="client.created"
             :progress="client.progress"
           />
-        </div>
+        </div> -->
       </div>
 
       <!-- <SectionBannerStarOnGitHub class="mt-6 mb-6" /> -->
@@ -123,11 +122,11 @@ async function printUser() {
         <!-- <BaseButton :icon="mdiReload" color="whiteDark" @click="fillChartData" /> -->
       </SectionTitleLineWithButton>
 
-      <CardBox class="mb-6">
+      <!-- <CardBox class="mb-6">
         <div v-if="chartData">
           <line-chart :data="chartData" class="h-96" />
         </div>
-      </CardBox>
+      </CardBox> -->
 
       <SectionTitleLineWithButton :icon="mdiAccountMultiple" title="Clients" />
 

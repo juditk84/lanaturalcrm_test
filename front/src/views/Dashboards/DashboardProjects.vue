@@ -15,7 +15,7 @@ defineProps({
 
 const userStore = useUserStore()
 
-const items = computed(() => userStore.user.Projects)
+const items = computed(() => userStore?.user?.Projects)
 
 const isModalActive = ref(false)
 
@@ -28,10 +28,10 @@ const currentPage = ref(0)
 const checkedRows = ref([])
 
 const itemsPaginated = computed(() =>
-  items.value.slice(perPage.value * currentPage.value, perPage.value * (currentPage.value + 1))
+  items.value && items.value.slice(perPage.value * currentPage.value, perPage.value * (currentPage.value + 1))
 )
 
-const numPages = computed(() => Math.ceil(items.value.length / perPage.value))
+const numPages = computed(() => Math.ceil(items?.value?.length / perPage.value))
 
 const currentPageHuman = computed(() => currentPage.value + 1)
 
@@ -93,7 +93,7 @@ const checked = (isChecked, client) => {
       <tr v-for="client in itemsPaginated" :key="client.id">
         <TableCheckboxCell v-if="checkable" @checked="checked($event, client)" />
         <td class="border-b-0 lg:w-6 before:hidden">
-          <UserAvatar :username="client.name" class="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
+          <!-- <UserAvatar :username="client.name" class="w-24 h-24 mx-auto lg:w-6 lg:h-6" /> -->
         </td>
         <td data-label="Name">
           {{ client.name }}
