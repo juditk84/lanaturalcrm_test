@@ -96,6 +96,15 @@ router.get('/:project_id', userShouldBeLoggedIn, async (req, res, next) => {
           },
           {
             model: models.Task,
+            include: [
+              {
+                model: models.Worker, 
+                through: {
+                  model: models.Tasks_Assigned_To_Workers,
+                  attributes: []
+                }
+              }
+            ]
           }
         ],
       })
