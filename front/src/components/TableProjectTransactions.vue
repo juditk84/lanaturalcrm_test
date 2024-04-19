@@ -87,6 +87,7 @@ function printTasks(){
     <p>This is sample modal</p>
   </CardBoxModal>
 
+
   <SectionMain>
     <b>{{ props.title }}</b>
   <table>

@@ -28,8 +28,10 @@ return projectesStore.specificProject?.Transactions.filter(transaction => transa
 
 <template>
   <LayoutAuthenticated>
-    <SectionMain>
-      <SectionTitleLineWithButton :title="projectesStore.specificProject?.name" main>
+    <SectionTitle>Dades Bàsiques</SectionTitle>
+    <SectionMain class=" rounded-2xl">
+      <CardBox>
+      <SectionTitleLineWithButton :title="projectesStore?.specificProject?.name" main>
         {{ projectesStore.specificProject?.Member.commercialName1 }}
       </SectionTitleLineWithButton>
       <div v-if="!projectesStore.specificProject">
@@ -38,27 +40,29 @@ return projectesStore.specificProject?.Transactions.filter(transaction => transa
       <div v-else>
         {{projectesStore.specificProject.description}}
       </div>
-      
+    </CardBox>
     </SectionMain>
-    
-    <SectionMain>
-      <h3><b>Tasques</b></h3>
+
+    <SectionTitle>Tasques</SectionTitle>
+    <SectionMain v-if="projectesStore.specificProject?.Tasks">
       <CardBox has-table>
         <TableProjectTasks />
       </CardBox>
     </SectionMain>
-    
-    <!-- <SectionMain>
-      <SectionTitle>Balanç Econòmic</SectionTitle>
-      <div class="grid grid-cols-2 gap-4">
-        <CardBox  v-if="!projectExpenses"> loading... </CardBox>
-        <CardBox  v-else>{{ projectExpenses }} </CardBox>
-        <CardBox v-if="!projectIncome">loading...</CardBox>
-        <CardBox v-else>{{ projectIncome }}</CardBox>
-    </div> -->
-    <!-- </SectionMain> -->
-    <TableProjectTransactions title="Despeses" :expenses="projectExpenses"/>
-    <TableProjectTransactions title= "Ingressos" :income="projectIncome"/>
+    <SectionMain v-else>
+      <div class="text-center text-xl font-light">Sense tasques.</div>
+    </SectionMain>
+
+   <SectionTitle>Balanç Econòmic</SectionTitle>
+   <SectionMain v-if="projectesStore.specificProject?.Transactions[0]">
+    <CardBox has-table>
+        <TableProjectTransactions title="Despeses" :expenses="projectExpenses"/>
+        <TableProjectTransactions title= "Ingressos" :income="projectIncome"/>
+      </CardBox>
+   </SectionMain>
+    <SectionMain v-else>
+      <div class="text-center text-xl font-light">Sense moviments.</div>
+  </SectionMain>
   </LayoutAuthenticated>
 </template>
 
