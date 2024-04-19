@@ -16,21 +16,14 @@ export const useProjectesStore = defineStore('projecteStore', () => {
 
   const route = useRoute()
 
- async function fetchProjects() {
-    try {
-      const results = await axios('api/projectes/')
-      // allProjects.value = results?.data.map(project => { 
-      //                                         return {
-      //                                           id: project.id,
-      //                                           name: project.name,
-      //                                           worker: project.Worker.firstname,
-      //                                           member: project.Member.commercialName1}
-      //                                       })
-      allProjects.value = results.data
-    } catch(error) {
-        alert(error.message)
+  async function fetchProjects() {
+      try {
+        const results = await axios('api/projectes/')
+        allProjects.value = results.data
+      } catch(error) {
+          alert(error.message)
+      }
     }
-  }
 
   async function fetchUserProjects() {
     try {

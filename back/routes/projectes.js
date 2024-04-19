@@ -105,6 +105,16 @@ router.get('/:project_id', userShouldBeLoggedIn, async (req, res, next) => {
                 }
               }
             ]
+          },
+          {
+            model: models.Transaction,
+            include: [
+              {
+                model: models.Member,
+                attributes: ["id", "commercialName1"]
+              }
+              
+              ]
           }
         ],
       })
