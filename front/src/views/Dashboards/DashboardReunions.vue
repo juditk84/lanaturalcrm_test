@@ -27,7 +27,7 @@ import { useUserStore } from '@/stores/userStore'
 import { useMemberStore } from '@/stores/memberStore'
 import { storeToRefs } from 'pinia'
 import { parse, format } from '@formkit/tempo'
-import DashboardProjects from './Dashboards/DashboardProjects.vue'
+import DashboardProjects from './DashboardProjects.vue'
 
 
 
@@ -122,27 +122,6 @@ async function printUser() {
         </div> -->
       </div>
 
-      <!-- <SectionBannerStarOnGitHub class="mt-6 mb-6" /> -->
-
-      <!-- <SectionTitleLineWithButton :icon="mdiChartPie" title="Trends overview"> -->
-        <!-- <BaseButton :icon="mdiReload" color="whiteDark" @click="fillChartData" /> -->
-      <!-- </SectionTitleLineWithButton> -->
-
-      <!-- <CardBox class="mb-6">
-        <div v-if="chartData">
-          <line-chart :data="chartData" class="h-96" />
-        </div>
-      </CardBox> -->
-
-      <!-- <SectionTitleLineWithButton :icon="mdiAccountMultiple" title="Clients" /> -->
-
-      <!-- <NotificationBar color="info" :icon="mdiMonitorCellphone"> -->
-        <!-- <b>Responsive table.</b> Collapses on mobile -->
-      <!-- </NotificationBar> -->
-
-      <!-- <CardBox has-table> -->
-        <!-- <TableSampleClients /> -->
-      <!-- </CardBox> -->
     </SectionMain>
   </LayoutAuthenticated>
 </template>
