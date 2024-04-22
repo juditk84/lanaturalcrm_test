@@ -9,6 +9,7 @@ import BaseLevel from '@/components/BaseLevel.vue'
 import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import UserAvatar from '@/components/UserAvatar.vue'
+import {format, parse} from '@formkit/tempo'
 
 defineProps({
   checkable: Boolean
@@ -118,7 +119,7 @@ function printTasks(){
         </td>
         <td data-label="Data finalitz." class="lg:w-1 whitespace-nowrap">
           <small class="text-gray-500 dark:text-slate-400" :title="task.createdAt ">{{
-            task.deadline 
+            format(task.deadline, "full", "ca")
           }}</small>
         </td>
         <td class="before:hidden lg:w-1 whitespace-nowrap">

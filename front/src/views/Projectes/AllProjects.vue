@@ -18,19 +18,15 @@ async function grabAllProjectsFromStore(){await projectesStore.fetchProjects()}
 
 <template>
   <LayoutAuthenticated>
+   
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Projectes" main>
-        
-      </SectionTitleLineWithButton>
-      <TableAllProjects />
-    </SectionMain>
-
-    <SectionTitle>Custom elements</SectionTitle>
-    <CardBox class="mb-6" has-table>
-       
+      <CardBox>
+        <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Projectes" main>
+          
+        </SectionTitleLineWithButton>
+        <TableAllProjects />
       </CardBox>
-    <SectionMain>
-
     </SectionMain>
+
   </LayoutAuthenticated>
 </template>

@@ -9,7 +9,12 @@ import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.
 import TableProjectTasks from '@/components/TableProjectTasks.vue'
 import TableProjectTransactions from '@/components/TableProjectTransactions.vue'
 import { useProjectesStore } from '@/stores/projectesStore'
+import { useDarkModeStore } from '@/stores/darkMode'
 
+import { Calendar, DatePicker } from 'v-calendar';
+import 'v-calendar/style.css';
+
+const darkModeStore = useDarkModeStore()
 const projectesStore = useProjectesStore();
 
 onMounted(() => { grabSpecificProjectFromStore() })
@@ -24,10 +29,26 @@ const projectIncome = computed(() => {
 return projectesStore.specificProject?.Transactions.filter(transaction => transaction.base > 0)
 })
 
+const calendarActive = ref(false)
+
+const titleForCalendarOrTableSection = computed(() => {
+  if(calendarActive){
+    return "Calendari"
+  }
+  return "Llista"
+
+})
+
+function calendarOrListSwitch(){
+  calendarActive.value = !calendarActive.value
+}
+
 </script>
 
 <template>
   <LayoutAuthenticated>
+   
+  
     <SectionTitle>Dades Bàsiques</SectionTitle>
     <SectionMain class=" rounded-2xl">
       <CardBox>
@@ -44,9 +65,25 @@ return projectesStore.specificProject?.Transactions.filter(transaction => transa
     </SectionMain>
 
     <SectionTitle>Tasques</SectionTitle>
-    <SectionMain v-if="projectesStore.specificProject?.Tasks">
+    
+    <SectionMain v-if="projectesStore.specificProject?.Tasks[0]">
       <CardBox has-table>
-        <TableProjectTasks />
+        <div class="grid grid-cols-2 gap-4">
+          {{ calendarActive === true ? "Calendari" : "Llista" }}
+          <button @click="calendarOrListSwitch" 
+          class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+          {{ calendarActive ? "anar a Llista" : "anar a Calendari" }}
+          </button>
+        </div>
+        
+        <div v-if="calendarActive">
+          <!-- <Calendar expanded :is-dark="darkModeStore.isEnabled && true" /> -->
+          <DatePicker expanded :is-dark="darkModeStore.isEnabled && true" />
+        </div>
+        <div v-else>
+
+          <TableProjectTasks />
+        </div>
       </CardBox>
     </SectionMain>
     <SectionMain v-else>
