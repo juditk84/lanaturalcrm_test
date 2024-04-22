@@ -34,12 +34,13 @@ const componentClass = computed(() => [
 ])
 
 const hasDropdown = computed(() => !!props.item.menu)
-
+const dropItDown = () => {
+  if(hasDropdown) isDropdownActive.value = !isDropdownActive.value
+}
 const menuClick = (event) => {
+  
   emit('menu-click', event, props.item)
-  if (hasDropdown.value) {
-    isDropdownActive.value = !isDropdownActive.value
-  }
+  // if (hasDropdown && !isDropdownActive.value) isDropdownActive.value = !isDropdownActive.value
 }
 </script>
 
@@ -53,14 +54,13 @@ const menuClick = (event) => {
       :target="item.target ?? null"
       class="flex cursor-pointer"
       :class="componentClass"
-      :menu-click="menuClick"
-      @click="menuClick"
+     
     >
       <BaseIcon
         v-if="item.icon"
         :path="item.icon"
         class="flex-none"
-        :class="[vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : '']"
+        :class="[vSlot && vSlot.isExactActive ? '' : asideMenuItemActiveStyle]"
         w="w-16"
         :size="18"
       />
@@ -70,6 +70,8 @@ const menuClick = (event) => {
           { 'pr-12': !hasDropdown },
           vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : ''
         ]"
+         :menu-click="menuClick" 
+      @click="menuClick"
         >{{ item.label }}</span
       >
       <BaseIcon
@@ -78,6 +80,7 @@ const menuClick = (event) => {
         class="flex-none"
         :class="[vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : '']"
         w="w-12"
+        @click="dropItDown"
       />
     </component>
     <AsideMenuList
