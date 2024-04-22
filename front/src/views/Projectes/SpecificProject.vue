@@ -44,15 +44,10 @@ function calendarOrListSwitch(){
 }
 
 const taskDates = computed(() => {
-  return projectesStore.specificProject.Tasks.map(task => [task.startDate, task.deadline])
+  return projectesStore.specificProject.Tasks.map(task => {return {highlight: task.color, dates: [[task.startDate, task.deadline]]}})
 })
 
-const attributes = ref([
-  {
-    highlight: true,
-    dates: taskDates,  
-  },
-]);
+const attributes = ref(taskDates);
 
 </script>
 
@@ -77,10 +72,8 @@ const attributes = ref([
     </SectionMain>
 
     <SectionTitle>Tasques</SectionTitle>
-    
     <SectionMain v-if="projectesStore.specificProject?.Tasks[0]">
       <CardBox has-table>
-        {{ taskDates && taskDates }}
         <div class="grid grid-cols-2 gap-4">
           {{ calendarActive === true ? "Calendari" : "Llista" }}
           <button @click="calendarOrListSwitch" 
