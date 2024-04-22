@@ -43,6 +43,17 @@ function calendarOrListSwitch(){
   calendarActive.value = !calendarActive.value
 }
 
+const taskDates = computed(() => {
+  return projectesStore.specificProject.Tasks.map(task => [task.startDate, task.deadline])
+})
+
+const attributes = ref([
+  {
+    highlight: true,
+    dates: taskDates,  
+  },
+]);
+
 </script>
 
 <template>
@@ -52,6 +63,7 @@ function calendarOrListSwitch(){
     <SectionTitle>Dades Bàsiques</SectionTitle>
     <SectionMain class=" rounded-2xl">
       <CardBox>
+        
       <SectionTitleLineWithButton :title="projectesStore?.specificProject?.name" main>
         {{ projectesStore.specificProject?.Member.commercialName1 }}
       </SectionTitleLineWithButton>
@@ -68,6 +80,7 @@ function calendarOrListSwitch(){
     
     <SectionMain v-if="projectesStore.specificProject?.Tasks[0]">
       <CardBox has-table>
+        {{ taskDates && taskDates }}
         <div class="grid grid-cols-2 gap-4">
           {{ calendarActive === true ? "Calendari" : "Llista" }}
           <button @click="calendarOrListSwitch" 
@@ -76,9 +89,9 @@ function calendarOrListSwitch(){
           </button>
         </div>
         
-        <div v-if="calendarActive">
+        <div  v-if="calendarActive">
           <!-- <Calendar expanded :is-dark="darkModeStore.isEnabled && true" /> -->
-          <DatePicker expanded :is-dark="darkModeStore.isEnabled && true" />
+          <Calendar :attributes="attributes" class="hover:-translate-y-1 hover:scale-105 duration-300" expanded :is-dark="darkModeStore.isEnabled && true" />
         </div>
         <div v-else>
 
