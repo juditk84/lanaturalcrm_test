@@ -22,7 +22,7 @@ import { ref } from "vue"
 
 export default [
   {
-    to: '/global/',            
+    to: '/dashboard/global',            
     icon: mdiDatabaseCogOutline,
     label: 'Espai Global',
     menu: [
@@ -37,7 +37,7 @@ export default [
     ]
   },
   {
-    to: '/user/',            
+    to: '/dashboard',            
     icon: mdiAccountStar,
     label: 'Espai Usuària',
     menu: [
@@ -45,14 +45,14 @@ export default [
         to: '/profile',
         label: 'El meu perfil'
       },
-      {
-        // to: '/missatges',
-        label: 'Els meus missatges'
-      }
+      // {
+      //   // to: '/missatges',
+      //   label: 'Els meus missatges'
+      // }
     ]
   },
   {
-    to: '/xarxa/',            
+    to: '/dashboard/xarxa',            
     icon: mdiAccountGroup,
     label: 'Xarxa',
     menu: [
@@ -61,13 +61,13 @@ export default [
         label: 'Veure-ho tot'
       },
       {
-        to: '/xarxa/afegirmembre',
+        to: '/xarxa/afegir',
         label: 'Afegir membre'
       }
     ]
   },
   {
-    to: '/projectes/',
+    to: '/dashboard/projectes',
     label: 'Projectes',
     icon: mdiCardMultiple,
     menu: [
@@ -82,18 +82,18 @@ export default [
     ]
   },
   {
-    to: '/reunions/',
+    to: '/dashboard/reunions',
     label: 'Reunions',
     icon: mdiClockStarFourPoints,
     menu: [
       {
-        to: '/reunions',
+        to: '/reunions/totes',
         label: 'Totes les reunions'
       },
-      {
-        to: '/reunions',
-        label: 'propera Natural Focus'
-      }
+      // {
+      //   to: '/reunions',
+      //   label: 'propera Natural Focus'
+      // }
     ]
   },
   {

@@ -39,36 +39,36 @@ export default [
     menu: [
       {
         icon: mdiAccount,
-        label: 'My Profile',
+        label: 'El meu perfil',
         to: '/profile'
       },
       {
         icon: mdiCogOutline,
-        label: 'Settings'
+        label: 'Parametres'
       },
       {
         icon: mdiEmail,
-        label: 'Messages'
+        label: 'Missatges'
       },
       {
         isDivider: true
       },
       {
         icon: mdiLogout,
-        label: 'Log Out',
+        label: 'Desconectar',
         isLogout: true
       }
     ]
   },
   {
     icon: mdiThemeLightDark,
-    label: 'Light/Dark',
+    label: 'Llum/Foscor',
     isDesktopNoLabel: true,
     isToggleLightDark: true
   },
   {
     icon: mdiLogout,
-    label: 'Log out',
+    label: 'Desconectar',
     isDesktopNoLabel: true,
     isLogout: true
   }

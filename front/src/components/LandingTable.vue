@@ -93,7 +93,7 @@ function onRowClick(value, element){
     <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
     <p>This is sample modal</p>
   </CardBoxModal>
-  <div>
+  <!-- <div>
 
    Selecciona el tipus de membres que vols visualitzar: <select name="categoria_membre" id="">
 
@@ -102,7 +102,7 @@ function onRowClick(value, element){
 
     </select>
 
-  </div>
+  </div> -->
   <table>
     <thead>
       <tr v-if="!props.benOrdenadet">
