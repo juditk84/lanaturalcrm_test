@@ -143,6 +143,21 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        id: "1e271fc4-4718-43ee-9d80-849915fbbf6b",
+        commercialName1: 'Copisteria Turbo Manoli',
+        email: 'hello@lasermanoli.cat',
+        officialId: "A5554443J",
+        address: "Carrer de la Maldat Pura, s/n", 
+        city: "SABADELL",
+        postcode: "08192",
+        country: "SPAIN",
+        phoneNumber: "937773333",
+        memberType: 'entity',
+        creatorId: "83482ffe-63d1-403c-83d5-a70dd01ae597",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ])
   },
 

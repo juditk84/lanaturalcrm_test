@@ -4,6 +4,7 @@ import { onMounted, onUnmounted, ref, computed} from 'vue'
 import SectionMain from '@/components/SectionMain.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 import CardBox from '@/components/CardBox.vue'
+import CardBoxComponentHeader from '@/components/CardBoxComponentHeader.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import TableProjectTasks from '@/components/TableProjectTasks.vue'
@@ -21,14 +22,6 @@ onMounted(() => { grabSpecificProjectFromStore() })
 onUnmounted(() => projectesStore.specificProject.value = null)
 async function grabSpecificProjectFromStore(){await projectesStore.fetchSpecificProject()}
 
-const projectExpenses = computed(() => {
-  return projectesStore.specificProject?.Transactions.filter(transaction => transaction.base < 0)
-})
-
-const projectIncome = computed(() => {
-return projectesStore.specificProject?.Transactions.filter(transaction => transaction.base > 0)
-})
-
 const calendarActive = ref(false)
 
 const titleForCalendarOrTableSection = computed(() => {
@@ -44,7 +37,7 @@ function calendarOrListSwitch(){
 }
 
 const taskDates = computed(() => {
-  return projectesStore.specificProject.Tasks.map(task => {return {highlight: task.color, dates: [[task.startDate, task.deadline]]}})
+  return projectesStore.specificProject.Tasks.map(task => {return {highlight: task.Workers[0].color, dates: [[task.startDate, task.deadline]]}})
 })
 
 const attributes = ref(taskDates);
@@ -74,23 +67,29 @@ const attributes = ref(taskDates);
     <SectionTitle>Tasques</SectionTitle>
     <SectionMain v-if="projectesStore.specificProject?.Tasks[0]">
       <CardBox has-table>
-        <div class="grid grid-cols-2 gap-4">
-          {{ calendarActive === true ? "Calendari" : "Llista" }}
-          <button @click="calendarOrListSwitch" 
-          class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-          {{ calendarActive ? "anar a Llista" : "anar a Calendari" }}
+        
+        <div class="grid grid-cols-12 gap-4">
+
+          <CardBoxComponentHeader class="col-span-11" :title="calendarActive === true ? 'Calendari' : 'Llista'"/>
+
+          <button @click="calendarOrListSwitch" class="col-span-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex content-center items-center">
+
+            <svg v-if="!calendarActive" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+            </svg>
+
+            <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+            </svg>
+
           </button>
+
         </div>
         
-        <div  v-if="calendarActive">
-          <!-- <Calendar expanded :is-dark="darkModeStore.isEnabled && true" /> -->
-          <Calendar :attributes="attributes" class="hover:-translate-y-1 hover:scale-105 duration-300" expanded :is-dark="darkModeStore.isEnabled && true" />
-        </div>
-        <div v-else>
-
-          <TableProjectTasks />
-        </div>
-      </CardBox>
+          <Calendar v-if="calendarActive" :attributes="attributes" class="hover:-translate-y-1 hover:scale-105 duration-300" expanded :is-dark="darkModeStore.isEnabled && true" />
+          <TableProjectTasks v-else/>
+      
+        </CardBox>
     </SectionMain>
     <SectionMain v-else>
       <div class="text-center text-xl font-light">Sense tasques.</div>
@@ -99,9 +98,8 @@ const attributes = ref(taskDates);
    <SectionTitle>Balanç Econòmic</SectionTitle>
    <SectionMain v-if="projectesStore.specificProject?.Transactions[0]">
     <CardBox has-table>
-        <TableProjectTransactions title="Despeses" :expenses="projectExpenses"/>
-        <TableProjectTransactions title= "Ingressos" :income="projectIncome"/>
-      </CardBox>
+        <TableProjectTransactions category="transactions"/>
+    </CardBox>
    </SectionMain>
     <SectionMain v-else>
       <div class="text-center text-xl font-light">Sense moviments.</div>

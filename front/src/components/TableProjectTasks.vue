@@ -90,7 +90,7 @@ function printTasks(){
         <th />
         <th>Nom</th>
         <th>Descripció</th>
-        <th>Encarregada</th>
+        <th>Assignada a</th>
         <th>Progrés</th>
         <th>Data finalitz.</th>
         <th />
@@ -109,8 +109,8 @@ function printTasks(){
         <td data-label="Descripció">
           {{ task.description }}
         </td>
-        <td data-label="Progrés">
-          [name instead of ID]
+        <td data-label="Assignada a">
+          {{ task.Workers[0].firstname }}
         </td>
         <td data-label="Progrés" class="lg:w-32">
           <progress class="flex w-2/5 self-center lg:w-full" max="100" :value="60">

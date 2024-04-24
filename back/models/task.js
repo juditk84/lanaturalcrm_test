@@ -34,7 +34,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   Task.init({
     title: DataTypes.STRING,
-    color: DataTypes.STRING,
     startDate: DataTypes.DATE,
     deadline: DataTypes.DATE,
     description: DataTypes.STRING,

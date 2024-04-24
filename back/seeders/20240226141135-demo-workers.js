@@ -19,6 +19,7 @@ module.exports = {
         email: "judit.calero84@gmail.com",
         username: "Judit",
         password: "$2b$10$IF2j7SrHWntEfa7fOs4IQ.EHrp1f5YHsbEB39tluHuBn22WylfzkO",
+        color: "red",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -33,6 +34,7 @@ module.exports = {
         email: "someirismail@gmail.com",
         username: "Iris",
         password: "$2b$10$qMB7jIbA.9jGKquBC5Ki7O25Pnmf2ePfPsu2BpKWlxN6nXxxkPcne",
+        color: "green",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -47,6 +49,7 @@ module.exports = {
         email: "someelenamail@gmail.com",
         username: "Elena",
         password: "$2b$10$rRxQS8ERFR09bzLF.wRh6uWd0NWCYLFIKQm.vO71d59bR0xmXCfYO",
+        color: "pink",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -61,6 +64,7 @@ module.exports = {
         email: "someanabelenmail@gmail.com",
         username: "Ana Belén",
         password: "$2b$10$Az2M0jJ.DxcEs/rOxIDKIuH2Q.hcMxgYAwbQwf0bZx7H5lH7EgVZy",
+        color: "cyan",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -75,6 +79,7 @@ module.exports = {
         email: "someanabelenmail@gmail.com",
         username: "Laura",
         password: "$2b$10$BXyz7HGGFJUgU3m/eZSwpeJtOqu1T76SXtSVkGkSRT8DAyOr4s1.W",
+        color: "pink",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -89,6 +94,7 @@ module.exports = {
         email: "someanabelenmail@gmail.com",
         username: "Irene",
         password: "$2b$10$kcF5xhP9Ip4Nii6x2/J0Bulylfg.dCWTXIUidc5ynwXUZFj/QZQG6",
+        color: "blue",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -103,6 +109,7 @@ module.exports = {
         email: "somefrancinamail@gmail.com",
         username: "Francina",
         password: "$2b$10$1OXD/Ann5blvJQ7ohV6jdu9CYsgtYJR1oIhq8f1uopydE03Wb2gTO",
+        color: "magenta",
         createdAt: new Date(),
         updatedAt: new Date()
       },

@@ -13,15 +13,19 @@ import SectionMain from '@/components/SectionMain.vue'
 
 const props = defineProps({
   checkable: Boolean,
-  expenses: Object,
-  income: Object,
-  title: String
+  title: String,
+  category: String
 })
 
 const mainStore = useMainStore();
 const projectesStore = useProjectesStore();
 
-const items = computed(() => props.expenses ? props.expenses : props.income)
+const items = computed(() => {
+  if(props.category === "transactions"){
+    return projectesStore.specificProject?.Transactions
+  }
+
+})
 
 const isModalActive = ref(false)
 
@@ -71,9 +75,6 @@ const checked = (isChecked, client) => {
   }
 }
 
-function printTasks(){
-  console.log(items)
-}
 </script>
 
 <template>
@@ -87,9 +88,8 @@ function printTasks(){
     <p>This is sample modal</p>
   </CardBoxModal>
 
-
   <SectionMain>
-    <b>{{ props.title }}</b>
+    <b>Moviments</b>
   <table>
     <thead>
       <tr>
@@ -103,12 +103,9 @@ function printTasks(){
       </tr>
     </thead>
     <tbody>
-      <tr v-for="transaction in itemsPaginated" :key="transaction.id">
+      <tr v-for="transaction in itemsPaginated" :key="transaction.id" :class="transaction.base >= 0 ? '!bg-lime-200 hover:!bg-lime-300' : '!bg-rose-200 hover:!bg-rose-300'">
 
-        <TableCheckboxCell v-if="props.checkable" @checked="checked($event, task)" />
-        <td class="border-b-0 lg:w-6 before:hidden">
-          <!-- <UserAvatar :username="task.title" class="w-24 h-24 mx-auto lg:w-6 lg:h-6" /> -->
-        </td>
+        <td></td>
         <td data-label="Nom">
           {{ transaction.transactionRef }}
         </td>

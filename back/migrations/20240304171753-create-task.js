@@ -11,9 +11,6 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
-      color: {
-        type: Sequelize.STRING
-      },
       startDate: {
         type: Sequelize.DATE
       },
