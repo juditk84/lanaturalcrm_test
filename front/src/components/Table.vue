@@ -1,7 +1,6 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
-import { useMainStore } from '@/stores/main'
-import { useProjectesStore } from '@/stores/projectesStore'
+import { computed, ref } from 'vue'
+
 import { mdiEye, mdiTrashCan } from '@mdi/js'
 import CardBoxModal from '@/components/CardBoxModal.vue'
 import TableCheckboxCell from '@/components/TableCheckboxCell.vue'
@@ -10,17 +9,19 @@ import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import UserAvatar from '@/components/UserAvatar.vue'
 import SectionMain from '@/components/SectionMain.vue'
+import { useRouter } from 'vue-router'
+import shortUUID from 'short-uuid'
 
 const props = defineProps({
   checkable: Boolean,
-  title: String,
+  content: Object,
   tableContent: Object,
   tableHeaders: Array,
   tableTitle: String
 })
 
-const mainStore = useMainStore();
-const projectesStore = useProjectesStore();
+const router = useRouter()
+const minifier = shortUUID()
 
 const items = computed(() => props?.tableContent)
 
@@ -72,6 +73,10 @@ const checked = (isChecked, client) => {
   }
 }
 
+function onRowClick(event, index){
+  router.push(`/projectes/${minifier.fromUUID(props.content[index].id)}`)
+  }
+
 </script>
 
 <template>
@@ -95,13 +100,13 @@ const checked = (isChecked, client) => {
     </thead>
     <tbody>
       <tr v-for="element, index in itemsPaginated" :key="index" :class="element.base ? element.base >= 0 ? '!bg-lime-200 hover:!bg-lime-300' : '!bg-rose-200 hover:!bg-rose-300' : ''">
-
+        
         <td v-for="subelement in element">{{ subelement }}</td>
 
-        
         <td class="before:hidden lg:w-1 whitespace-nowrap">
+          
           <BaseButtons type="justify-start lg:justify-end" no-wrap>
-            <BaseButton color="info" :icon="mdiEye" small @click="isModalActive = true" />
+            <BaseButton color="info" :icon="mdiEye" small @click="(event) => onRowClick(event, index)" />
             <BaseButton
               color="danger"
               :icon="mdiTrashCan"
@@ -109,7 +114,9 @@ const checked = (isChecked, client) => {
               @click="isModalDangerActive = true"
             />
           </BaseButtons>
+
         </td>
+
       </tr>
     </tbody>
   </table>
