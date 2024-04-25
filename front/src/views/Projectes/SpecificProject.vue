@@ -98,7 +98,7 @@ const attributes = ref(taskDates);
    <SectionTitle>Balanç Econòmic</SectionTitle>
    <SectionMain v-if="projectesStore.specificProject?.Transactions[0]">
     <CardBox has-table>
-        <TableProjectTransactions category="transactions"/>
+        <TableProjectTransactions content="aquí el contingut" tableHeaders="aquí els table headers" category="transactions"/>
     </CardBox>
    </SectionMain>
     <SectionMain v-else>

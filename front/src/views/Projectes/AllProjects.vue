@@ -8,6 +8,7 @@ import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import CardBox from '@/components/CardBox.vue'
 import TableAllProjects from '@/components/TableAllProjects.vue'
+import Table from '@/components/Table.vue'
 
 const projectesStore = useProjectesStore();
 
@@ -24,7 +25,7 @@ async function grabAllProjectsFromStore(){await projectesStore.fetchProjects()}
         <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Projectes" main>
           
         </SectionTitleLineWithButton>
-        <TableAllProjects />
+        <Table :table-content="projectesStore.allProjects?.tableContent" :table-headers="projectesStore.allProjects?.tableHeaders" table-title="Tots els projectes"/>
       </CardBox>
     </SectionMain>
 

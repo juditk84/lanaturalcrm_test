@@ -1,6 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { computed, onMounted, ref } from 'vue'
 import { useMainStore } from '@/stores/main'
 import { useProjectesStore } from '@/stores/projectesStore'
 import { mdiEye, mdiTrashCan } from '@mdi/js'
@@ -10,38 +9,26 @@ import BaseLevel from '@/components/BaseLevel.vue'
 import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import UserAvatar from '@/components/UserAvatar.vue'
-import {format, parse} from '@formkit/tempo'
+import SectionMain from '@/components/SectionMain.vue'
 
-// I don't like it here, to refactor:
-import shortUUID from 'short-uuid'
+const props = defineProps({
+  checkable: Boolean,
+  title: String,
+  tableContent: Object,
+  tableHeaders: Array,
+  tableTitle: String
+})
 
-const mainStore = useMainStore()
-const router = useRouter()
-
-// I don't like it here, to refactor:
-const minifier = shortUUID()
-
+const mainStore = useMainStore();
 const projectesStore = useProjectesStore();
-const activeProject = ref();
 
-const viewButton = mdiEye
-
-const items = computed(() => projectesStore.allProjects.content)
+const items = computed(() => props?.tableContent)
 
 const isModalActive = ref(false)
 
 const isModalDangerActive = ref(false)
 
-
-function onRowClick(event, project){
-  if(event.target.name !== "rowButton"){
-    isModalActive.value = true;
-  activeProject.value = project
-  router.push(`/projectes/${minifier.fromUUID(project.id)}`)
-  }
-}
-
-const perPage = ref(10)
+const perPage = ref(5)
 
 const currentPage = ref(0)
 
@@ -85,24 +72,12 @@ const checked = (isChecked, client) => {
   }
 }
 
-function printTasks(){
-  console.log(items)
-}
 </script>
 
 <template>
-  <CardBoxModal v-model="isModalActive" title="Projecte">
-    <div v-if="activeProject">
-      <b>Nom: {{ activeProject.name }}</b> <br>
-      <b>Encarregat per: {{ activeProject.member }}</b> <br>
-      <b>El treballa: {{ activeProject.worker }}</b> <br>
-    </div>
-    <div v-else>
-      empty modal.
-    </div>
-   
-      
-
+  <CardBoxModal v-model="isModalActive" title="Sample modal">
+    <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
+    <p>This is sample modal</p>
   </CardBoxModal>
 
   <CardBoxModal v-model="isModalDangerActive" title="Please confirm" button="danger" has-cancel>
@@ -110,50 +85,23 @@ function printTasks(){
     <p>This is sample modal</p>
   </CardBoxModal>
 
+  <SectionMain>
+    <b>{{ props.tableTitle }}</b>
   <table>
     <thead>
       <tr>
-        <!-- <th v-if="checkable" /> -->
-        <th />
-        <th>Nom</th>
-        <th>Client</th>
-        <th>Responsable</th>
-        <th>Progrés</th>
-        <th>Data finalitz.</th>
-        <th />
+        <th v-for="header in props.tableHeaders">{{ header }}</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="project in itemsPaginated" :key="project.id">
+      <tr v-for="element, index in itemsPaginated" :key="index" :class="element.base ? element.base >= 0 ? '!bg-lime-200 hover:!bg-lime-300' : '!bg-rose-200 hover:!bg-rose-300' : ''">
 
-        <!-- <TableCheckboxCell v-if="checkable" @checked="checked($event, project)" /> -->
-        <td class="border-b-0 lg:w-6 before:hidden">
-          <UserAvatar :username="project.name" class="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
-        </td>
-        <td data-label="Nom">
-          {{ project.name }}
-        </td>
-        <td data-label="Client">
-          {{ project.Member.commercialName1 }}
-        </td>
-        <td data-label="Responsable">
-          {{ project.Worker.firstname }}
-        </td>
-        <td data-label="Progrés" class="lg:w-32">
-          <progress class="flex w-2/5 self-center lg:w-full" max="100" :value="60">
-            [Barra de progrés]
-          </progress>
-        </td>
-        <td data-label="Data finalitz." class="lg:w-1 whitespace-nowrap">
-          <small class="text-gray-500 dark:text-slate-400" :title="project.createdAt ">
-            {{
-            format(project.end_date, "full", "ca")
-          }}
-          </small>
-        </td>
+        <td v-for="subelement in element">{{ subelement }}</td>
+
+        
         <td class="before:hidden lg:w-1 whitespace-nowrap">
           <BaseButtons type="justify-start lg:justify-end" no-wrap>
-            <BaseButton color="info" :icon="mdiEye" small @click="(event) => onRowClick(event, project)" />
+            <BaseButton color="info" :icon="mdiEye" small @click="isModalActive = true" />
             <BaseButton
               color="danger"
               :icon="mdiTrashCan"
@@ -181,5 +129,5 @@ function printTasks(){
       <small>Page {{ currentPageHuman }} of {{ numPages }}</small>
     </BaseLevel>
   </div>
-
+</SectionMain>
 </template>

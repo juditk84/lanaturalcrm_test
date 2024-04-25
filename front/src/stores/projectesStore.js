@@ -12,6 +12,8 @@ export const useProjectesStore = defineStore('projecteStore', () => {
   const allProjects = ref(null)
   const allUserProjects = ref(null)
   const specificProject = ref(null)
+
+
   const minifier = shortUUID();
 
   const route = useRoute()
@@ -19,7 +21,18 @@ export const useProjectesStore = defineStore('projecteStore', () => {
   async function fetchProjects() {
       try {
         const results = await axios('api/projectes/')
-        allProjects.value = results.data
+        allProjects.value = { content: results.data,
+                              tableContent: results.data.map(project => {
+                                return {
+                                  Nom: project.name,
+                                  Client: project.Member.commercialName1,
+                                  Responsable: project.Worker.firstname,
+                                  Progrés: "indefinit",
+                                  DataFinalització: project.end_date
+                                }
+                              }),
+                              tableHeaders: ["Nom", "Client", "Responsable", "Progrés", "Data finalitz."]
+                            }
       } catch(error) {
           alert(error.message)
       }
