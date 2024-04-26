@@ -88,7 +88,12 @@ const attributes = ref(taskDates);
         </div>
         
           <Calendar v-if="calendarActive" :attributes="attributes" class="hover:-translate-y-1 hover:scale-105 duration-300" expanded :is-dark="darkModeStore.isEnabled && true" />
-          <TableProjectTasks v-else/>
+
+          <Table :content="projectesStore.specificProjectTasks.content"
+               :table-content="projectesStore.specificProjectTasks.tableContent"
+               :table-headers="projectesStore.specificProjectTasks.tableHeaders"
+               table-title="Tasques"
+               />
       
         </CardBox>
     </SectionMain>
