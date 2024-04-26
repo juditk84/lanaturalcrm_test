@@ -121,7 +121,6 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 
   const authStore = useAuthStore();
-  console.log(router)
   if (to.name !== 'login' && !sessionStorage.getItem("refreshToken")) next({ name: 'login' })
   else next()
 

@@ -66,7 +66,7 @@ const attributes = ref(taskDates);
     </SectionMain>
 
     <SectionTitle>Tasques</SectionTitle>
-    <SectionMain v-if="projectesStore.specificProject?.Tasks[0]">
+    <SectionMain v-if="projectesStore.specificProjectTasks">
       <CardBox has-table>
         
         <div class="grid grid-cols-12 gap-4">
@@ -102,7 +102,7 @@ const attributes = ref(taskDates);
     </SectionMain>
 
    <SectionTitle>Balanç Econòmic</SectionTitle>
-   <SectionMain v-if="projectesStore.specificProject?.Transactions[0]">
+   <SectionMain v-if="projectesStore.specificProjectTransactions">
     <CardBox has-table>
       
         <Table :content="projectesStore.specificProjectTransactions.content"
