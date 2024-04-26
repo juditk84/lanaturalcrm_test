@@ -13,6 +13,7 @@ export const useProjectesStore = defineStore('projecteStore', () => {
   const allUserProjects = ref(null)
   const specificProject = ref(null)
 
+  const specificProjectTransactions = ref(null) // ull! Aquí estem subdividint el fetch en més refs, queda per aclarir que és best practice.
 
   const minifier = shortUUID();
 
@@ -61,6 +62,19 @@ export const useProjectesStore = defineStore('projecteStore', () => {
       }
       })
       specificProject.value = results.data
+      specificProjectTransactions.value = { // ojito amiga amb les factures, l'import ara mateix és NOMÉS LA BASE.
+                                            content: results.data.Transactions,
+                                            tableContent: results.data.Transactions.map(transaction => {
+                                              return {
+                                                referència: transaction.transactionRef,
+                                                import: transaction.base,
+                                                proveïdor: transaction.Member.commercialName1,
+                                                tipus: transaction.transactionType
+                                              }
+                                            }),
+                                            tableHeaders: ["Referència", "Import", "Proveïdor", "Tipus", ]
+                                          }
+
     } catch(error) {
         alert(error.message)
     }
@@ -70,6 +84,7 @@ export const useProjectesStore = defineStore('projecteStore', () => {
     allProjects,
     allUserProjects,
     specificProject,
+    specificProjectTransactions,
     fetchProjects,
     fetchUserProjects,
     fetchSpecificProject

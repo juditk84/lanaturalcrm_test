@@ -8,6 +8,7 @@ import CardBoxComponentHeader from '@/components/CardBoxComponentHeader.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import TableProjectTasks from '@/components/TableProjectTasks.vue'
+import Table from '@/components/Table.vue'
 import TableProjectTransactions from '@/components/TableProjectTransactions.vue'
 import { useProjectesStore } from '@/stores/projectesStore'
 import { useDarkModeStore } from '@/stores/darkMode'
@@ -98,7 +99,13 @@ const attributes = ref(taskDates);
    <SectionTitle>Balanç Econòmic</SectionTitle>
    <SectionMain v-if="projectesStore.specificProject?.Transactions[0]">
     <CardBox has-table>
-        <TableProjectTransactions content="aquí el contingut" tableHeaders="aquí els table headers" category="transactions"/>
+      
+        <Table :content="projectesStore.specificProjectTransactions.content"
+               :table-content="projectesStore.specificProjectTransactions.tableContent"
+               :table-headers="projectesStore.specificProjectTransactions.tableHeaders"
+               table-title="Moviments"
+               />
+
     </CardBox>
    </SectionMain>
     <SectionMain v-else>

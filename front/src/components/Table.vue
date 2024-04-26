@@ -77,6 +77,17 @@ function onRowClick(event, index){
   router.push(`/projectes/${minifier.fromUUID(props.content[index].id)}`)
   }
 
+const setClassIfTransactions = (element) => {
+
+      if(element.import){
+        if(element.import >= 0){
+          return '!bg-lime-200 hover:!bg-lime-300'
+        }
+        return '!bg-rose-200 hover:!bg-rose-300'
+      }
+      return ''
+}
+
 </script>
 
 <template>
@@ -99,7 +110,7 @@ function onRowClick(event, index){
       </tr>
     </thead>
     <tbody>
-      <tr v-for="element, index in itemsPaginated" :key="index" :class="element.base ? element.base >= 0 ? '!bg-lime-200 hover:!bg-lime-300' : '!bg-rose-200 hover:!bg-rose-300' : ''">
+      <tr v-for="element, index in itemsPaginated" :key="index" :class="setClassIfTransactions(element)">
         
         <td v-for="subelement in element">{{ subelement }}</td>
 
