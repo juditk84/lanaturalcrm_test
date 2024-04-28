@@ -1,6 +1,5 @@
 <script setup>
 import { computed, ref } from 'vue'
-
 import { mdiEye, mdiTrashCan } from '@mdi/js'
 import CardBoxModal from '@/components/CardBoxModal.vue'
 import TableCheckboxCell from '@/components/TableCheckboxCell.vue'
@@ -15,6 +14,7 @@ import shortUUID from 'short-uuid'
 const props = defineProps({
   checkable: Boolean,
   content: Object,
+  tableCategory: String,
   tableContent: Object,
   tableHeaders: Array,
   tableTitle: String
@@ -74,7 +74,7 @@ const checked = (isChecked, client) => {
 }
 
 function onRowClick(event, index){
-  router.push(`/projectes/${minifier.fromUUID(props.content[index].id)}`)
+  router.push(`/${props.tableCategory}/${minifier.fromUUID(props.content[index].id)}`)
   }
 
 const setClassIfTransactions = (element) => {
