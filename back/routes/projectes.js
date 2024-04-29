@@ -28,8 +28,6 @@ router.get('/', async (req, res, next) => {
 
       })
 
-
-
       res.status(200).send(allProjects)
   } catch (err) {
     res.status(500).send({message: "no s'ha trobat cap projecte, revisa les dades oi"})

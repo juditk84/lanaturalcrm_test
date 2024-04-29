@@ -46,7 +46,7 @@ onMounted(() => {
 
 async function printUser() {
   console.log(userStore.user)
-  console.log(tasks)
+  console.log(userStore.userNotes)
 }
 
 </script>
@@ -67,7 +67,7 @@ async function printUser() {
             small
           />
       </SectionTitleLineWithButton>
-      <!-- <NoteBox v-for="note in userStore.Notes" 
+      <!-- <NoteBox v-for="note in userStore.notes" 
           :title="note.title"
           :label="note.text"
           :children="0"
@@ -75,7 +75,7 @@ async function printUser() {
         />  -->
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-4 mb-6">
      
-        <TaskCardBox v-for="task in userStore.user?.Tasks"
+        <TaskCardBox v-for="task in userStore.tasks"
           :trend= "task.status"
           :trend-type="task.status"
           :trendType="task.status"
