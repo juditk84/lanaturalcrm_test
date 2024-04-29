@@ -49,7 +49,7 @@ async function userShouldExist(req, res, next) {
   //         include: [
   //           {
   //             model: models.Project,
-  //             through: models.Projects_Assigned_To_Workers,
+  //             through: models.Projects_Assigned_To_Workers, // this taula has been deleted
   //             attributes: { exclude: ["workerId", "memberId", "createdAt", "updatedAt", "projectTypeId"] },
   //             include: [
   //               {model: models.Note, attributes: { exclude: ["id", "workerId", "createdAt", "updatedAt"]}}, /// notes linked to project (commentableId de la nota is projectId)

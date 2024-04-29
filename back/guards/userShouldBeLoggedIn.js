@@ -24,41 +24,11 @@ async function userShouldBeLoggedIn(req, res, next) {
           where: {
             id: decoded.user_id,
           },
-          attributes: {exclude: ["password", "id"]},
-          include: [
-            {
-              model: models.Project,
-              through: models.Projects_Assigned_To_Workers,
-              attributes: { exclude: ["id", "workerId", "memberId", "projectTypeId"] },
-              include: [
-                {model: models.Note, attributes: { exclude: ["id", "workerId"]}}, /// notes linked to project (commentableId de la nota is projectId)
-                {model: models.Member, attributes: { exclude: ["id"]}},
-                models.Estimate,
-                models.Transaction, 
-                { model: models.ProjectType, attributes: ["type"] }]   
-            },
-            {
-              model: models.Task,
-              through: models.Tasks_Assigned_To_Workers
-            },
-            {
-              model: models.Reunion,
-              through: models.Workers_Invited_To_Reunions
-            },
-            // **** commentables associated with user-self (pinboard?)
-            {model: models.Note, attributes: { exclude: ["id"]}},
-            {model: models.Document, attributes: { exclude: ["id"]}},
-            {model: models.Link, attributes: { exclude: ["id"]}},
-            
-          ],
-          
-        
+          attributes: ["id", "username"] 
         })
-       
-                const id = decoded.user_id
 
         req.user = user
-        req.id = id
+
         next()
       }
     });

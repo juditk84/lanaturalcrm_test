@@ -21,11 +21,20 @@ import {
 import { ref } from "vue"
 
 export default [
-  {
-    to: '/dashboard/global',            
+  {           
+    icon: mdiAccountStar,
+    label: 'Dashboard',
+    to: '/dashboard', 
+  },
+  {       
     icon: mdiDatabaseCogOutline,
     label: 'Espai Global',
     menu: [
+      
+      {
+        to: '/dashboard/global', 
+        label: 'Dashboard'
+      },
       {
         to: '/dades',
         label: 'Visualització de dades'
@@ -36,29 +45,17 @@ export default [
       }
     ]
   },
-  {
-    to: '/dashboard',            
-    icon: mdiAccountStar,
-    label: 'Espai Usuària',
-    menu: [
-      {
-        to: '/profile',
-        label: 'El meu perfil'
-      },
-      // {
-      //   // to: '/missatges',
-      //   label: 'Els meus missatges'
-      // }
-    ]
-  },
-  {
-    to: '/dashboard/xarxa',            
+  {            
     icon: mdiAccountGroup,
     label: 'Xarxa',
     menu: [
       {
+        to: '/dashboard/xarxa', 
+        label: 'Dashboard Xarxa'
+      },
+      {
         to: '/xarxa/totis',
-        label: 'Veure-ho tot'
+        label: 'Tota la xarxa'
       },
       {
         to: '/xarxa/afegir',
@@ -67,10 +64,14 @@ export default [
     ]
   },
   {
-    to: '/dashboard/projectes',
+
     label: 'Projectes',
     icon: mdiCardMultiple,
     menu: [
+      {
+        to: '/dashboard/projectes', 
+        label: 'Dashboard Projectes'
+      },
       {
         to: '/projectes/tots',
         label: 'Tots els projectes'
@@ -82,10 +83,13 @@ export default [
     ]
   },
   {
-    to: '/dashboard/reunions',
     label: 'Reunions',
     icon: mdiClockStarFourPoints,
     menu: [
+      {
+        to: '/dashboard/reunions', 
+        label: 'Dashboard'
+      },
       {
         to: '/reunions/totes',
         label: 'Totes les reunions'

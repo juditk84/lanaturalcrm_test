@@ -12,7 +12,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       url: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        validate: {
+          isUrl: true,
+        }
       },
       description: {
         type: Sequelize.STRING

@@ -28,6 +28,7 @@ const logoutItem = computed(() => ({
 
 const menuClick = (event, item) => {
   emit('menu-click', event, item)
+  
 }
 
 const asideLgCloseClick = (event) => {

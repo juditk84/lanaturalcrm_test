@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { useAuthStore } from '@/stores/authStore'
-
+import { useUserStore } from '@/stores/userStore'
 
 const routes = [
 
@@ -121,6 +121,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 
   const authStore = useAuthStore();
+
+  const userStore = useUserStore()
+
   if (to.name !== 'login' && !sessionStorage.getItem("refreshToken")) next({ name: 'login' })
   else next()
 

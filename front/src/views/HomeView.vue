@@ -20,6 +20,7 @@ import NotificationBar from '@/components/NotificationBar.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import CardBoxTransaction from '@/components/CardBoxTransaction.vue'
 import CardBoxClient from '@/components/CardBoxClient.vue'
+import CardBoxModal from '@/components/CardBoxModal.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import SectionBannerStarOnGitHub from '@/components/SectionBannerStarOnGitHub.vue'
@@ -28,14 +29,15 @@ import { useMemberStore } from '@/stores/memberStore'
 import { storeToRefs } from 'pinia'
 import { parse, format } from '@formkit/tempo'
 import DashboardProjects from './Dashboards/DashboardProjects.vue'
-
+import TaskCardBox from '@/components/TaskCardBox.vue'
+import NoteBox from '@/components/NoteBox.vue'
 
 
 const userStore = useUserStore();
-
+const tasks = computed(() => userStore?.userTasks) 
 
 const fillData = () => {
-
+ // why nooooo :_____
 }
 
 onMounted(() => {
@@ -44,18 +46,15 @@ onMounted(() => {
 
 async function printUser() {
   console.log(userStore.user)
-  for (const el of userStore.user.Tasks) {
-    console.log(format(el.deadline, "full", "ca"))
-  }
+  console.log(tasks)
 }
-
 
 </script>
 
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      
+
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Upcoming tasques" main>
         <button @click="printUser">{{ `${userStore.user?.username}, fes-me clic i et diré qui ets...`}}</button>
           <BaseButton
@@ -68,9 +67,15 @@ async function printUser() {
             small
           />
       </SectionTitleLineWithButton>
-      
+      <!-- <NoteBox v-for="note in userStore.Notes" 
+          :title="note.title"
+          :label="note.text"
+          :children="0"
+          :color="yellow" 
+        />  -->
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-4 mb-6">
-        <CardBoxWidget v-for="task in userStore.user?.Tasks"
+     
+        <TaskCardBox v-for="task in userStore.user?.Tasks"
           :trend= "task.status"
           :trend-type="task.status"
           :trendType="task.status"
