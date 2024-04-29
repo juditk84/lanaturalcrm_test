@@ -25,7 +25,11 @@ async function grabAllProjectsFromStore(){await projectesStore.fetchProjects()}
         <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Projectes" main>
           
         </SectionTitleLineWithButton>
-        <Table table-category="projectes" :content="projectesStore.allProjects?.content" :table-content="projectesStore.allProjects?.tableContent" :table-headers="projectesStore.allProjects?.tableHeaders" table-title="Tots els projectes"/>
+        <Table table-category="projectes" 
+              :content="projectesStore.allProjects?.content" 
+              :table-content="projectesStore.allProjects?.tableContent" 
+              :table-headers="projectesStore.allProjects?.tableHeaders" 
+               table-title="Tots els projectes"/>
       </CardBox>
     </SectionMain>
 

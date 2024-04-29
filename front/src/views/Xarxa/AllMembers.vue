@@ -2,6 +2,7 @@
 import { reactive, ref, onMounted } from 'vue'
 import { useMemberStore } from '@/stores/memberStore'
 import TableAllXarxa from '@/components/TableAllXarxa.vue'
+import Table from '@/components/Table.vue'
 import { mdiBallotOutline, mdiAccount, mdiMail, mdiGithub } from '@mdi/js'
 import SectionMain from '@/components/SectionMain.vue'
 import CardBox from '@/components/CardBox.vue'
@@ -30,10 +31,16 @@ async function grabAllMembersFromStore(){await memberStore.fetchMembers()}
 <template>
   <LayoutAuthenticated>
     <SectionMain>
+      <CardBox>
       <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Xarxa" main>
         
       </SectionTitleLineWithButton>
-      <TableAllXarxa />
+      <Table table-category="xarxa" 
+            :content="memberStore.allMembers?.content" 
+            :table-content="memberStore.allMembers?.tableContent" 
+            :table-headers="memberStore.allMembers?.tableHeaders" 
+             table-title="Tots els membres"/>
+    </CardBox>
     </SectionMain>
 
     <SectionTitle>Custom elements</SectionTitle>

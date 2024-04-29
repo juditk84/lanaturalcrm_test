@@ -11,14 +11,17 @@ export const useMemberStore = defineStore('memberStore', () => {
  async function fetchMembers() {
     try {
       const results = await axios('api/xarxa/')
-      allMembers.value = results?.data.map(member => { 
-                                              return {nom: member.commercialName1,
-                                                      adreça: member.address,
-                                                      ciutat: member.city}
-      })
-      // console.log(allMembers.value)
-      // allMembers.value = results?.data
-    } catch(error) {
+      allMembers.value = {content: results.data,
+                          tableContent: results?.data.map(member => { 
+                                          return {nom: member.commercialName1,
+                                                  adreça: member.address,
+                                                  ciutat: member.city}}),
+                          tableHeaders: [
+                            { binder: "nom", label: "nom"},
+                            { binder: "adreça", label: "adreça"},
+                            { binder: "ciutat", label: "ciutat"}
+                          ]
+    }} catch(error) {
         alert(error.message)
     }
   }
