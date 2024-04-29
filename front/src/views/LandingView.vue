@@ -13,6 +13,14 @@ import CardBox from '@/components/CardBox.vue'
 import LandingTable from '@/components/LandingTable.vue'
 import ModalForTechnicalNotes from '@/components/ModalForTechnicalNotes.vue'
 
+
+
+
+/// crec que es pot delete aquest arxiu però de moment ho deixo 
+// ha sigut reemplaçat per HomeView.vue
+
+
+
 const route = useRoute();
 
 // accessing stores:
@@ -78,7 +86,7 @@ const benOrdenadet = computed(() => {
 </script>
 
 <template>
-  <LayoutAuthenticated>
+  <!-- <LayoutAuthenticated>
     
     <SectionMain class="h-fit">
       <ModalForTechnicalNotes :modal-is-visible="modalIsVisible" :modal-button-name="modalButtonName" @show-modal="showModal"/>
@@ -109,5 +117,5 @@ const benOrdenadet = computed(() => {
     </SectionMain>
 
 
-  </LayoutAuthenticated>
+  </LayoutAuthenticated> -->
 </template>

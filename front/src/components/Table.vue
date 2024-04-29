@@ -1,7 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
-import { useMainStore } from '@/stores/main'
-import { useProjectesStore } from '@/stores/projectesStore'
+import { computed, ref } from 'vue'
 import { mdiEye, mdiTrashCan } from '@mdi/js'
 import CardBoxModal from '@/components/CardBoxModal.vue'
 import TableCheckboxCell from '@/components/TableCheckboxCell.vue'
@@ -9,16 +7,24 @@ import BaseLevel from '@/components/BaseLevel.vue'
 import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import UserAvatar from '@/components/UserAvatar.vue'
-import {format, parse} from '@formkit/tempo'
+import SectionMain from '@/components/SectionMain.vue'
+import { useRouter } from 'vue-router'
+import shortUUID from 'short-uuid'
 
-defineProps({
-  checkable: Boolean
+const props = defineProps({
+  checkable: Boolean,
+  content: Object,
+  tableCategory: String,
+  tableContent: Object,
+  tableHeaders: Array,
+  tableTitle: String,
+  hasFilter: Boolean
 })
 
-const mainStore = useMainStore();
-const projectesStore = useProjectesStore();
+const router = useRouter()
+const minifier = shortUUID()
 
-const items = computed(() => projectesStore?.specificProject?.Tasks)
+const items = computed(() => props?.tableContent)
 
 const isModalActive = ref(false)
 
@@ -68,9 +74,43 @@ const checked = (isChecked, client) => {
   }
 }
 
-function printTasks(){
-  console.log(items)
+function onRowClick(event, index){
+  router.push(`/${props.tableCategory}/${minifier.fromUUID(props.content[index].id)}`)
+  }
+
+const setClassIfTransactions = (element) => {
+
+      if(element.import){
+        if(element.import >= 0){
+          return '!bg-lime-200 hover:!bg-lime-300'
+        }
+        return '!bg-rose-200 hover:!bg-rose-300'
+      }
+      return ''
 }
+
+const activeSortColumn = ref(null)
+
+function sortTheList(event, headerBinder){
+
+  // it needs styling to show the little arrow next to the word, marking what field we sortin'
+  // de moment simplement apareix un cutre asterisco.
+
+  if(activeSortColumn.value !== headerBinder){
+    items.value.sort((item1, itemNext) => typeof item1[headerBinder] === 'string' 
+                                          ? item1[headerBinder].localeCompare(itemNext[headerBinder]) 
+                                          : itemNext[headerBinder] - item1[headerBinder])
+                                          
+    activeSortColumn.value = headerBinder;
+  }
+  else{
+    items.value.reverse()
+    console.log("reversing")
+  }
+
+  
+}
+
 </script>
 
 <template>
@@ -83,48 +123,24 @@ function printTasks(){
     <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
     <p>This is sample modal</p>
   </CardBoxModal>
+
+  <SectionMain>
+    <b>{{ props.tableTitle }}</b>
   <table>
     <thead>
       <tr>
-        <!-- <th v-if="checkable" /> -->
-        <th />
-        <th>Nom</th>
-        <th>Descripció</th>
-        <th>Assignada a</th>
-        <th>Progrés</th>
-        <th>Data finalitz.</th>
-        <th />
+        <th v-for="header in props.tableHeaders" @click="(event) => sortTheList(event, header.binder)">{{ activeSortColumn === header.binder ? header.label + "*" : header.label }}</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="task in itemsPaginated" :key="task.id">
+      <tr v-for="element, index in itemsPaginated" :key="index" :class="setClassIfTransactions(element)">
+        
+        <td v-for="subelement in element">{{ subelement }}</td>
 
-        <TableCheckboxCell v-if="checkable" @checked="checked($event, task)" />
-        <td class="border-b-0 lg:w-6 before:hidden">
-          <UserAvatar :username="task.title" class="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
-        </td>
-        <td data-label="Nom">
-          {{ task.title }}
-        </td>
-        <td data-label="Descripció">
-          {{ task.description }}
-        </td>
-        <td data-label="Assignada a">
-          {{ task.Workers[0].firstname }}
-        </td>
-        <td data-label="Progrés" class="lg:w-32">
-          <progress class="flex w-2/5 self-center lg:w-full" max="100" :value="60">
-            [Barra de progrés]
-          </progress>
-        </td>
-        <td data-label="Data finalitz." class="lg:w-1 whitespace-nowrap">
-          <small class="text-gray-500 dark:text-slate-400" :title="task.createdAt ">{{
-            format(task.deadline, "full", "ca")
-          }}</small>
-        </td>
         <td class="before:hidden lg:w-1 whitespace-nowrap">
+          
           <BaseButtons type="justify-start lg:justify-end" no-wrap>
-            <BaseButton color="info" :icon="mdiEye" small @click="isModalActive = true" />
+            <BaseButton color="info" :icon="mdiEye" small @click="(event) => onRowClick(event, index)" />
             <BaseButton
               color="danger"
               :icon="mdiTrashCan"
@@ -132,7 +148,9 @@ function printTasks(){
               @click="isModalDangerActive = true"
             />
           </BaseButtons>
+
         </td>
+
       </tr>
     </tbody>
   </table>
@@ -152,4 +170,5 @@ function printTasks(){
       <small>Page {{ currentPageHuman }} of {{ numPages }}</small>
     </BaseLevel>
   </div>
+</SectionMain>
 </template>

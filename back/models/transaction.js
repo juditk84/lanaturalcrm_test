@@ -14,9 +14,12 @@ module.exports = (sequelize, DataTypes) => {
       Transaction.belongsTo(models.Transaction_Category, {foreignKey: "categoryId", allowNull: true});
       Transaction.belongsTo(models.Transaction_TipusIVA, {foreignKey: "tipusIVAId", allowNull: true});
 
-      // associated to projecte
+      // associated to Projecte
       Transaction.belongsTo(models.Project, {foreignKey: "projectId", allowNull: true});
-
+      
+      // associated to Member
+      Transaction.belongsTo(models.Member, {foreignKey: "memberId", allowNull: true});
+      
       // as creator
       Transaction.belongsTo(models.Worker, {as: "creator", foreignKey: 'creatorId'})
 
@@ -38,7 +41,8 @@ module.exports = (sequelize, DataTypes) => {
     base: DataTypes.INTEGER,
     irpf: DataTypes.INTEGER,
     status: DataTypes.ENUM("en curs", "tancada"),
-    transactionType: DataTypes.ENUM("factura", "nòmina", "subvenció")
+    transactionType: DataTypes.ENUM("factura", "nòmina", "subvenció"),
+    isRecurrent: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Transaction',

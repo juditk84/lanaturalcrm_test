@@ -26,7 +26,7 @@ const activeProject = ref();
 
 const viewButton = mdiEye
 
-const items = computed(() => projectesStore.allProjects)
+const items = computed(() => projectesStore.allProjects.content)
 
 const isModalActive = ref(false)
 

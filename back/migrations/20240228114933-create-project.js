@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         defaultValue: Sequelize.UUIDV4,
       },
+      hashed_id: {
+        type: Sequelize.STRING
+      },
       name: {
         type: Sequelize.STRING
       },

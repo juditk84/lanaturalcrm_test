@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const models = require('../models');
+require("dotenv").config();
 const short = require('short-uuid');
 const { v4: uuidv4 } = require('uuid')
 const uppercaseFirst = str => `${str[0].toUpperCase()}${str.substr(1)}`
@@ -8,8 +9,9 @@ const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn');
 
 const translator = short()
 
-router.get('/', async (req, res, next) => {
 
+router.get('/', async (req, res, next) => {
+  
   try {
       const allProjects = await models.Project.findAll({
         attributes: ["id", "name", "start_date", "end_date"],
@@ -75,6 +77,7 @@ router.get('/userprojects', userShouldBeLoggedIn, async (req, res) => {
 
 router.get('/:project_id', userShouldBeLoggedIn, async (req, res, next) => {
 
+
   try {
   
       const oneSpecificProject = await models.Project.findOne({
@@ -91,7 +94,7 @@ router.get('/:project_id', userShouldBeLoggedIn, async (req, res, next) => {
           {
             model: models.Worker,
             attributes: {
-              exclude: ["id", "password"]
+              exclude: ["password"]
             },
           },
           {
@@ -105,13 +108,25 @@ router.get('/:project_id', userShouldBeLoggedIn, async (req, res, next) => {
                 }
               }
             ]
+          },
+          {
+            model: models.Transaction,
+            include: [
+              {
+                model: models.Member,
+                attributes: ["commercialName1"]
+              }
+              
+              ]
           }
         ],
       })
 
+        res.status(200).send(oneSpecificProject)
+
       const minifiedUUID = translator.fromUUID(req.params.project_id)
 
-      res.status(200).send(oneSpecificProject)
+      
   } catch (err) {
     res.status(500).send({message: "no s'ha trobat cap projecte, revisa les dades oi"})
   }

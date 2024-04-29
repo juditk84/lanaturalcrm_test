@@ -11,7 +11,7 @@ defineProps({
     default: null
   },
   title: {
-    type: String,
+    // type: String, dona vue warning si el deixes especificar the data type.
     required: true
   },
   main: Boolean
