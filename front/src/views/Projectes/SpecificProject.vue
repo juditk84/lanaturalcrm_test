@@ -90,6 +90,7 @@ const attributes = ref(taskDates);
           <Calendar v-if="calendarActive" :attributes="attributes" class="hover:-translate-y-1 hover:scale-105 duration-300" expanded :is-dark="darkModeStore.isEnabled && true" />
 
           <Table 
+                has-filter
                 table-category="tasques"
                :content="projectesStore.specificProjectTasks.content"
                :table-content="projectesStore.specificProjectTasks.tableContent"
@@ -108,6 +109,7 @@ const attributes = ref(taskDates);
     <CardBox has-table>
       
         <Table 
+                has-filter
                 table-category="moviments"
                :content="projectesStore.specificProjectTransactions.content"
                :table-content="projectesStore.specificProjectTransactions.tableContent"

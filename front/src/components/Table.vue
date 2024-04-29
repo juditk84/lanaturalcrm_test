@@ -17,7 +17,8 @@ const props = defineProps({
   tableCategory: String,
   tableContent: Object,
   tableHeaders: Array,
-  tableTitle: String
+  tableTitle: String,
+  hasFilter: Boolean
 })
 
 const router = useRouter()
@@ -88,6 +89,28 @@ const setClassIfTransactions = (element) => {
       return ''
 }
 
+const activeSortColumn = ref(null)
+
+function sortTheList(event, headerBinder){
+
+  // it needs styling to show the little arrow next to the word, marking what field we sortin'
+  // de moment simplement apareix un cutre asterisco.
+
+  if(activeSortColumn.value !== headerBinder){
+    items.value.sort((item1, itemNext) => typeof item1[headerBinder] === 'string' 
+                                          ? item1[headerBinder].localeCompare(itemNext[headerBinder]) 
+                                          : itemNext[headerBinder] - item1[headerBinder])
+                                          
+    activeSortColumn.value = headerBinder;
+  }
+  else{
+    items.value.reverse()
+    console.log("reversing")
+  }
+
+  
+}
+
 </script>
 
 <template>
@@ -106,7 +129,7 @@ const setClassIfTransactions = (element) => {
   <table>
     <thead>
       <tr>
-        <th v-for="header in props.tableHeaders">{{ header }}</th>
+        <th v-for="header in props.tableHeaders" @click="(event) => sortTheList(event, header.binder)">{{ activeSortColumn === header.binder ? header.label + "*" : header.label }}</th>
       </tr>
     </thead>
     <tbody>

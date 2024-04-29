@@ -73,8 +73,11 @@ export const useProjectesStore = defineStore('projecteStore', () => {
                                                 tipus: transaction.transactionType
                                               }
                                             }),
-                                            tableHeaders: ["Referència", "Import", "Proveïdor", "Tipus", ]
-                                          }
+                                            tableHeaders:  [{binder: "referència", label:"Referència"}, 
+                                                            {binder: "import", label:"Import"},
+                                                            {binder: "proveïdor",label: "Proveïdor"},
+                                                            {binder: "tipus", label:"Tipus"}
+                                                           ]},
       specificProjectTasks.value = {
                                       content: results.data.Tasks,
                                       tableContent: results.data.Tasks.map(task => {
@@ -86,8 +89,12 @@ export const useProjectesStore = defineStore('projecteStore', () => {
                                           dataFinalització: task.deadline
                                         }
                                       }),
-                                      tableHeaders: ["Nom", "Descripció", "Assignada a", "Progrés", "Data finalitz."]
-                                    }
+                                      tableHeaders: [{binder: "nom", label:"Nom"}, 
+                                                     {binder: "descripció", label:"Descripció"},
+                                                     {binder: "workers",label: "Assignada a"},
+                                                     {binder: "progrés", label:"Progrés"},
+                                                     {binder: "dataFinalització", label:"Data finalitz."}]
+                                      }
     } catch(error) {
         alert(error.message)
     }
