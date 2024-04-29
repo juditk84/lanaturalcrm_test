@@ -53,20 +53,21 @@ const attributes = ref(taskDates);
     <SectionMain class=" rounded-2xl">
       <CardBox>
         
-      <SectionTitleLineWithButton :title="projectesStore?.specificProject?.name" main>
-        {{ projectesStore.specificProject?.Member.commercialName1 }}
-      </SectionTitleLineWithButton>
-      <div v-if="!projectesStore.specificProject">
-        Loading...
-      </div>
-      <div v-else>
-        {{projectesStore.specificProject.description}}
-      </div>
-    </CardBox>
+        <SectionTitleLineWithButton :title="projectesStore?.specificProject?.name" main>
+          {{ projectesStore.specificProject?.Member.commercialName1 }}
+        </SectionTitleLineWithButton>
+        <div v-if="!projectesStore.specificProject">
+          Loading...
+        </div>
+        <div v-else>
+          {{projectesStore.specificProject.description}}
+        </div>
+        
+      </CardBox>
     </SectionMain>
 
     <SectionTitle>Tasques</SectionTitle>
-    <SectionMain v-if="projectesStore.specificProjectTasks">
+    <SectionMain>
       <CardBox has-table>
         
         <div class="grid grid-cols-12 gap-4">
@@ -100,12 +101,9 @@ const attributes = ref(taskDates);
       
         </CardBox>
     </SectionMain>
-    <SectionMain v-else>
-      <div class="text-center text-xl font-light">Sense tasques.</div>
-    </SectionMain>
 
    <SectionTitle>Balanç Econòmic</SectionTitle>
-   <SectionMain v-if="projectesStore.specificProjectTransactions">
+   <SectionMain>
     <CardBox has-table>
       
         <Table 
@@ -119,9 +117,6 @@ const attributes = ref(taskDates);
 
     </CardBox>
    </SectionMain>
-    <SectionMain v-else>
-      <div class="text-center text-xl font-light">Sense moviments.</div>
-  </SectionMain>
   </LayoutAuthenticated>
 </template>
 

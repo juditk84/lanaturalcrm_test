@@ -124,7 +124,7 @@ function sortTheList(event, headerBinder){
     <p>This is sample modal</p>
   </CardBoxModal>
 
-  <SectionMain>
+  <SectionMain v-if="props.content?.length !== 0">
     <b>{{ props.tableTitle }}</b>
   <table>
     <thead>
@@ -170,5 +170,8 @@ function sortTheList(event, headerBinder){
       <small>Page {{ currentPageHuman }} of {{ numPages }}</small>
     </BaseLevel>
   </div>
+</SectionMain>
+<SectionMain v-else>
+  <div class="text-center text-xl font-light">Sense {{ props.tableTitle }}.</div>
 </SectionMain>
 </template>
