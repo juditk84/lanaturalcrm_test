@@ -27,14 +27,16 @@ router.get('/all', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
-   try {   
-      /// this should be the auth.js file
-      res.status(200).send({message: "it is not possible to post a worker, talk to your mailman"})
-  } catch (err) {
-    res.status(500).send({message: err.message})
-  }
-})
+
+// router.post('/', async (req, res, next) => {
+//    try {   
+//       /// this should be the auth.js file
+//       res.status(200).send({message: "it is not possible to post a worker, talk to your mailman"})
+//   } catch (err) {
+//     res.status(500).send({message: err.message})
+//   }
+// })
+
 
 
 module.exports = router;

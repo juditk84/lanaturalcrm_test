@@ -26,6 +26,10 @@ async function userShouldBeLoggedIn(req, res, next) {
             id: decoded.user_id,
           },
           attributes: [
+            "firstname",
+            "lastname1", 
+            "lastname2",
+            "color",
             "email",
             "username",
             "pronouns",

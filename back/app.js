@@ -11,6 +11,7 @@ var workersRouter = require('./routes/workers');
 var transactionsRouter = require('./routes/transactions');
 var projectesRouter = require('./routes/projectes');
 var authRouter = require("./routes/auth");
+var commentsRouter = require("./routes/comments");
 
 var app = express();
 
@@ -28,4 +29,6 @@ app.use('/api/inici', authRouter);
 app.use('/api/workers', workersRouter);
 app.use('/api/transactions', transactionsRouter);
 app.use('/api/projectes', projectesRouter);
+app.use('/api/comments', commentsRouter);
+
 module.exports = app;
