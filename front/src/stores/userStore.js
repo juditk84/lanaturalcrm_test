@@ -2,16 +2,18 @@ import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import { parse, format } from '@formkit/tempo'
 import axios from 'axios'
+import { useAuthStore } from './authStore'
 
 
 export const useUserStore = defineStore('userStore', () => {
 const user = ref(null)
 const userTasks = ref(null)
 const pinboard = ref(null)
-const links = ref(null)
+const userLinks = ref(null)
 const userDocs = ref(null)
 const userNotes = ref(null)
 
+const authStore = useAuthStore()
 
   const $reset = () => {user.value = null}
   
@@ -19,12 +21,27 @@ const userNotes = ref(null)
     () =>
       `https://api.dicebear.com/8.x/adventurer/svg?seed=Salem`
   )
-
+  async function addToPinboard(element, data) {
+      try {
+        const response = await axios.post(`api/comments/pinboard/${element}`,
+       {body: data},
+        {
+          headers: {
+            Authorization: sessionStorage.getItem("refreshToken")
+          }
+        })
+      return response.data
+      } catch (error) {
+        console.log(error);
+      }
+      console.log("submit button clicked")
+  }
+  
   async function fetchAllUserRelatedAssets(token){
     try {
       const response = await axios("api/workers", {
         headers: {
-          Authorization: token
+          Authorization: sessionStorage.getItem("refreshToken")
         }
       })
       user.value = await response?.data?.user
@@ -59,7 +76,7 @@ const userNotes = ref(null)
               url: doc.url
             }
           }) 
-        links.value += response?.data.user.Links
+        userLinks.value += response?.data.user.Links
           .map((link) => {
             return {
               id: link.id,
@@ -79,12 +96,13 @@ const userNotes = ref(null)
     user,
     userAvatar,
     history,
-    links,
+    links: userLinks,
     tasks: userTasks,
     docs: userDocs,
     notes: userNotes,
     pinboard,
     $reset,
-    fetchAllUserRelatedAssets
+    fetchAllUserRelatedAssets,
+    addToPinboard
   }
 }, {persist: true})

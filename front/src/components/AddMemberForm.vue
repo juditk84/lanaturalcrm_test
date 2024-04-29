@@ -22,7 +22,7 @@ let message = ref("hello")
 const selectOptions = ["entity", "contact"]
 
 const memberStore = useMemberStore();
-const fetchedMember = ref();
+
 
 
 const form = ref({
@@ -40,7 +40,7 @@ const form = ref({
   postcode: '',
   authorizationImg: false,
   phoneNumber: '',
-  memberType: '', 
+  memberType: 'contact', 
 })
 
 
@@ -93,7 +93,6 @@ const formStatusSubmit = () => {
 
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiHandshakeOutline" title="Add a member, help a member" main>
-        fetched member as stored in the memberStore: {{ fetchedMember }}
        
       </SectionTitleLineWithButton>
       <FormField label="Selecciona el tipus de membre:">

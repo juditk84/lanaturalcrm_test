@@ -7,7 +7,7 @@ import {
   mdiMonitorCellphone,
   mdiReload,
   mdiGithub,
-  mdiChartPie,
+  mdiPlus,
 mdiChartLineVariant
 } from '@mdi/js'
 import * as chartConfig from '@/components/Charts/chart.config.js'
@@ -31,10 +31,11 @@ import { parse, format } from '@formkit/tempo'
 import DashboardProjects from './Dashboards/DashboardProjects.vue'
 import TaskCardBox from '@/components/TaskCardBox.vue'
 import NoteBox from '@/components/NoteBox.vue'
+import SectionBanner from '@/components/SectionBanner.vue'
+import AddComment from '@/components/AddComment.vue'
 
-
+const isModalActive = ref(false)
 const userStore = useUserStore();
-const tasks = computed(() => userStore?.userTasks) 
 
 const fillData = () => {
  // why nooooo :_____
@@ -49,14 +50,22 @@ async function printUser() {
   console.log(userStore.userNotes)
 }
 
+
 </script>
 
 <template>
   <LayoutAuthenticated>
     <SectionMain>
 
-      <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Upcoming tasques" main>
-        <button @click="printUser">{{ `${userStore.user?.username}, fes-me clic i et diré qui ets...`}}</button>
+      <CardBoxModal v-model="isModalActive" title="Afegir algo al pinboard">
+        <AddComment :element="element"/>
+      </CardBoxModal>
+
+
+
+      <button @click="printUser">{{ `${userStore.user?.username}, fes-me clic i et diré qui ets...`}}</button>
+      <br />
+      <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Les meves tasques" main>
           <BaseButton
             to="/projectes/tots"
             target="_blank"
@@ -67,40 +76,42 @@ async function printUser() {
             small
           />
       </SectionTitleLineWithButton>
-      <!-- <NoteBox v-for="note in userStore.notes" 
-          :title="note.title"
-          :label="note.text"
-          :children="0"
-          :color="yellow" 
-        />  -->
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-4 mb-6">
+
+ 
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-4 mb-6">      
+          <TaskCardBox v-for="task in userStore.tasks"
+            :trend= "task.status"
+            :trend-type="task.status"
+            :trendType="task.status"
+            :date="task.deadline"
+            :label="task.description"
+            :title="task.title"
+          />
+        </div>
+
      
-        <TaskCardBox v-for="task in userStore.tasks"
-          :trend= "task.status"
-          :trend-type="task.status"
-          :trendType="task.status"
-          :date="task.deadline"
-          :label="task.description"
-          :title="task.title"
-        />
-
-      </div>
-
-      <div> 
-        <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Els teus projectes" main>
-          <!-- <BaseButton
-          to="TOBEDEFINED"
+      <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="El meu pinboard" main>
+           <BaseButton
           target="_blank"
           :icon="mdiChartLineVariant"
           label="Veure més"
           color="contrast"
           rounded-full
           small
-        /> -->
-        
-        </SectionTitleLineWithButton>
-        <DashboardProjects/>
+        />
+      </SectionTitleLineWithButton>
+
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6"> 
+        <NoteBox v-for="note in userStore.notes" 
+          :title="note.title"
+          :label="note.text"
+          :children="0"
+        />
+        <BaseButton :icon="mdiPlus" @click="isModalActive=true"></BaseButton>
       </div>
+    
+
+
       
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div class="flex flex-col justify-between">
