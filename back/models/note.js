@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       return `${str[0].toUpperCase()}${str.substr(1)}`;
     }
 
-    getCommentable(options) {
+    getCommentable(options) {   /// options here is: where-conditions or includes, for example
       if (!this.commentableType) return Promise.resolve(null);
       const mixinMethodName = `get${uppercaseFirst(this.commentableType)}`;
       return this[mixinMethodName](options);
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       Note.belongsTo(models.Reunion, { foreignKey: 'commentableId', constraints: false });
       Note.belongsTo(models.Task, { foreignKey: 'commentableId', constraints: false });
       Note.belongsTo(models.Transaction, { foreignKey: 'commentableId', constraints: false });
-      Note.belongsTo(models.Worker, { foreignKey: 'commentableId', constraints: false }); // notes left to user self
+      Note.belongsTo(models.Worker, { foreignKey: 'commentableId', constraints: false }); // notes left to user self (pinboard)
 
       // as creator
       Note.belongsTo(models.Worker, {as: "creator", foreignKey: 'creatorId'})

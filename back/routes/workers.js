@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
 const models = require('../models');
-const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn'); 
+const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn');
+const onlySendUserDataIfUserIsLoggedIn = require('../guards/onlySendUserDataIfUserIsLoggedIn') 
 const short = require('short-uuid')
 const translator = short()
 
-router.get("/", userShouldBeLoggedIn, async (req, res) => {
+router.get("/", onlySendUserDataIfUserIsLoggedIn, async (req, res) => {
     const { user } = req
       try {
           res.status(200).send({user: user})

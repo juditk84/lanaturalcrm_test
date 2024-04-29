@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       Worker.hasMany(models.Transaction, {foreignKey: 'creatorId' });
       Worker.hasMany(models.Document, {foreignKey: 'creatorId' });
 
-      Worker.belongsToMany(models.Project, {through: "Projects_Assigned_To_Workers"})
+    
       Worker.belongsToMany(models.Task, {through: "Tasks_Assigned_To_Workers"})
       Worker.belongsToMany(models.Reunion, {through: "Workers_Invited_To_Reunions"})
 

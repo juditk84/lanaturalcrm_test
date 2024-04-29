@@ -15,7 +15,10 @@ module.exports = {
         type: Sequelize.DATE
       },
       end_date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        validate: {
+          isAfter: new Date()
+        }
       },
       description: {
         type: Sequelize.STRING

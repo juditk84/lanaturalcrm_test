@@ -18,10 +18,16 @@ module.exports = {
         type: Sequelize.ENUM("puntual","recurrent")
       },
       date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        validate: {
+          isAfter: new Date(), 
+        }
       },
       date_recordatori: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        validate: {
+          isBefore: this.date,
+        }
       },
       createdAt: {
         allowNull: false,

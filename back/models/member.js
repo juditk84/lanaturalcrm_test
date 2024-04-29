@@ -49,6 +49,16 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Member',
+    // validate: {
+    //   nameMatchesMemberType() {
+    //     if ((this.memberType === 'entity') === (this.commercialName1 === null)) {
+    //       throw new Error('Les entitats han de tenir com a mínim un nom commercial.');
+    //     }
+    //     if ((this.memberType === 'contact') === ((this.firstname === null) === (this.firstname1 === null))) {
+    //       throw new Error('Membres de la xarxa han de tenir com a mínim un nom o un cognóm.');
+    //     }
+    //   }
+    // }
   });
   return Member;
 };
