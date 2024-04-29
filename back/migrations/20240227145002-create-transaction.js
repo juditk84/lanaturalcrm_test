@@ -33,6 +33,9 @@ module.exports = {
       transactionType: {
         type: Sequelize.ENUM("factura", "nòmina", "subvenció")
       },
+      isRecurrent: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -30,6 +30,11 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        type: "IT",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     
     
     ], {});
@@ -37,11 +42,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete('ProjectTypes', null, {})
   }
 };

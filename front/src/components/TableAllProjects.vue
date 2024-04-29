@@ -1,0 +1,185 @@
+<script setup>
+import { computed, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useMainStore } from '@/stores/main'
+import { useProjectesStore } from '@/stores/projectesStore'
+import { mdiEye, mdiTrashCan } from '@mdi/js'
+import CardBoxModal from '@/components/CardBoxModal.vue'
+import TableCheckboxCell from '@/components/TableCheckboxCell.vue'
+import BaseLevel from '@/components/BaseLevel.vue'
+import BaseButtons from '@/components/BaseButtons.vue'
+import BaseButton from '@/components/BaseButton.vue'
+import UserAvatar from '@/components/UserAvatar.vue'
+import {format, parse} from '@formkit/tempo'
+
+// I don't like it here, to refactor:
+import shortUUID from 'short-uuid'
+
+const mainStore = useMainStore()
+const router = useRouter()
+
+// I don't like it here, to refactor:
+const minifier = shortUUID()
+
+const projectesStore = useProjectesStore();
+const activeProject = ref();
+
+const viewButton = mdiEye
+
+const items = computed(() => projectesStore.allProjects.content)
+
+const isModalActive = ref(false)
+
+const isModalDangerActive = ref(false)
+
+
+function onRowClick(event, project){
+  if(event.target.name !== "rowButton"){
+    isModalActive.value = true;
+  activeProject.value = project
+  router.push(`/projectes/${minifier.fromUUID(project.id)}`)
+  }
+}
+
+const perPage = ref(10)
+
+const currentPage = ref(0)
+
+const checkedRows = ref([])
+
+const itemsPaginated = computed(() =>
+  items.value && items.value.slice(perPage.value * currentPage.value, perPage.value * (currentPage.value + 1))
+)
+
+const numPages = computed(() => items.value && Math.ceil(items.value.length / perPage.value))
+
+const currentPageHuman = computed(() => currentPage.value + 1)
+
+const pagesList = computed(() => {
+  const pagesList = []
+
+  for (let i = 0; i < numPages.value; i++) {
+    pagesList.push(i)
+  }
+
+  return pagesList
+})
+
+const remove = (arr, cb) => {
+  const newArr = []
+
+  arr.forEach((item) => {
+    if (!cb(item)) {
+      newArr.push(item)
+    }
+  })
+
+  return newArr
+}
+
+const checked = (isChecked, client) => {
+  if (isChecked) {
+    checkedRows.value.push(client)
+  } else {
+    checkedRows.value = remove(checkedRows.value, (row) => row.id === client.id)
+  }
+}
+
+function printTasks(){
+  console.log(items)
+}
+</script>
+
+<template>
+  <CardBoxModal v-model="isModalActive" title="Projecte">
+    <div v-if="activeProject">
+      <b>Nom: {{ activeProject.name }}</b> <br>
+      <b>Encarregat per: {{ activeProject.member }}</b> <br>
+      <b>El treballa: {{ activeProject.worker }}</b> <br>
+    </div>
+    <div v-else>
+      empty modal.
+    </div>
+   
+      
+
+  </CardBoxModal>
+
+  <CardBoxModal v-model="isModalDangerActive" title="Please confirm" button="danger" has-cancel>
+    <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
+    <p>This is sample modal</p>
+  </CardBoxModal>
+
+  <table>
+    <thead>
+      <tr>
+        <!-- <th v-if="checkable" /> -->
+        <th />
+        <th>Nom</th>
+        <th>Client</th>
+        <th>Responsable</th>
+        <th>Progrés</th>
+        <th>Data finalitz.</th>
+        <th />
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="project in itemsPaginated" :key="project.id">
+
+        <!-- <TableCheckboxCell v-if="checkable" @checked="checked($event, project)" /> -->
+        <td class="border-b-0 lg:w-6 before:hidden">
+          <UserAvatar :username="project.name" class="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
+        </td>
+        <td data-label="Nom">
+          {{ project.name }}
+        </td>
+        <td data-label="Client">
+          {{ project.Member.commercialName1 }}
+        </td>
+        <td data-label="Responsable">
+          {{ project.Worker.firstname }}
+        </td>
+        <td data-label="Progrés" class="lg:w-32">
+          <progress class="flex w-2/5 self-center lg:w-full" max="100" :value="60">
+            [Barra de progrés]
+          </progress>
+        </td>
+        <td data-label="Data finalitz." class="lg:w-1 whitespace-nowrap">
+          <small class="text-gray-500 dark:text-slate-400" :title="project.createdAt ">
+            {{
+            format(project.end_date, "full", "ca")
+          }}
+          </small>
+        </td>
+        <td class="before:hidden lg:w-1 whitespace-nowrap">
+          <BaseButtons type="justify-start lg:justify-end" no-wrap>
+            <BaseButton color="info" :icon="mdiEye" small @click="(event) => onRowClick(event, project)" />
+            <BaseButton
+              color="danger"
+              :icon="mdiTrashCan"
+              small
+              @click="isModalDangerActive = true"
+            />
+          </BaseButtons>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800">
+    <BaseLevel>
+      <BaseButtons>
+        <BaseButton
+          v-for="page in pagesList"
+          :key="page"
+          :active="page === currentPage"
+          :label="page + 1"
+          :color="page === currentPage ? 'lightDark' : 'whiteDark'"
+          small
+          @click="currentPage = page"
+        />
+      </BaseButtons>
+      <small>Page {{ currentPageHuman }} of {{ numPages }}</small>
+    </BaseLevel>
+  </div>
+
+</template>

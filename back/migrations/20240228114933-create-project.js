@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         defaultValue: Sequelize.UUIDV4,
       },
+      hashed_id: {
+        type: Sequelize.STRING
+      },
       name: {
         type: Sequelize.STRING
       },
@@ -15,7 +18,10 @@ module.exports = {
         type: Sequelize.DATE
       },
       end_date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        validate: {
+          isAfter: new Date()
+        }
       },
       description: {
         type: Sequelize.STRING

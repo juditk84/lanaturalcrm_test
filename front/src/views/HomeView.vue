@@ -1,6 +1,5 @@
 <script setup>
-import { computed, ref, onMounted } from 'vue'
-import { useMainStore } from '@/stores/main'
+import { computed, ref, onMounted, watch } from 'vue'
 import {
   mdiAccountMultiple,
   mdiCartOutline,
@@ -8,7 +7,8 @@ import {
   mdiMonitorCellphone,
   mdiReload,
   mdiGithub,
-  mdiChartPie
+  mdiChartPie,
+mdiChartLineVariant
 } from '@mdi/js'
 import * as chartConfig from '@/components/Charts/chart.config.js'
 import LineChart from '@/components/Charts/LineChart.vue'
@@ -20,74 +20,91 @@ import NotificationBar from '@/components/NotificationBar.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import CardBoxTransaction from '@/components/CardBoxTransaction.vue'
 import CardBoxClient from '@/components/CardBoxClient.vue'
+import CardBoxModal from '@/components/CardBoxModal.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import SectionBannerStarOnGitHub from '@/components/SectionBannerStarOnGitHub.vue'
+import { useUserStore } from '@/stores/userStore'
+import { useMemberStore } from '@/stores/memberStore'
+import { storeToRefs } from 'pinia'
+import { parse, format } from '@formkit/tempo'
+import DashboardProjects from './Dashboards/DashboardProjects.vue'
+import TaskCardBox from '@/components/TaskCardBox.vue'
+import NoteBox from '@/components/NoteBox.vue'
 
-const chartData = ref(null)
 
-const fillChartData = () => {
-  chartData.value = chartConfig.sampleChartData()
+const userStore = useUserStore();
+const tasks = computed(() => userStore?.userTasks) 
+
+const fillData = () => {
+ // why nooooo :_____
 }
 
 onMounted(() => {
-  fillChartData()
+  fillData()
 })
 
-const mainStore = useMainStore()
+async function printUser() {
+  console.log(userStore.user)
+  console.log(tasks)
+}
 
-const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
-
-const transactionBarItems = computed(() => mainStore.history)
 </script>
 
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
-        <BaseButton
-          href="https://github.com/justboil/admin-one-vue-tailwind"
+
+      <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Upcoming tasques" main>
+        <button @click="printUser">{{ `${userStore.user?.username}, fes-me clic i et diré qui ets...`}}</button>
+          <BaseButton
+            to="/projectes/tots"
+            target="_blank"
+            :icon="mdiChartLineVariant"
+            label="Veure més"
+            color="contrast"
+            rounded-full
+            small
+          />
+      </SectionTitleLineWithButton>
+      <!-- <NoteBox v-for="note in userStore.Notes" 
+          :title="note.title"
+          :label="note.text"
+          :children="0"
+          :color="yellow" 
+        />  -->
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-4 mb-6">
+     
+        <TaskCardBox v-for="task in userStore.user?.Tasks"
+          :trend= "task.status"
+          :trend-type="task.status"
+          :trendType="task.status"
+          :date="task.deadline"
+          :label="task.description"
+          :title="task.title"
+        />
+
+      </div>
+
+      <div> 
+        <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Els teus projectes" main>
+          <!-- <BaseButton
+          to="TOBEDEFINED"
           target="_blank"
-          :icon="mdiGithub"
-          label="Star on GitHub"
+          :icon="mdiChartLineVariant"
+          label="Veure més"
           color="contrast"
           rounded-full
           small
-        />
-      </SectionTitleLineWithButton>
-
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
-        <CardBoxWidget
-          trend="12%"
-          trend-type="up"
-          color="text-emerald-500"
-          :icon="mdiAccountMultiple"
-          :number="512"
-          label="Clients"
-        />
-        <CardBoxWidget
-          trend="12%"
-          trend-type="down"
-          color="text-blue-500"
-          :icon="mdiCartOutline"
-          :number="7770"
-          prefix="$"
-          label="Sales"
-        />
-        <CardBoxWidget
-          trend="Overflow"
-          trend-type="alert"
-          color="text-red-500"
-          :icon="mdiChartTimelineVariant"
-          :number="256"
-          suffix="%"
-          label="Performance"
-        />
+        /> -->
+        
+        </SectionTitleLineWithButton>
+        <DashboardProjects/>
       </div>
-
+      
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div class="flex flex-col justify-between">
-          <CardBoxTransaction
+          <!-- <CardBoxTransaction
             v-for="(transaction, index) in transactionBarItems"
             :key="index"
             :amount="transaction.amount"
@@ -96,9 +113,9 @@ const transactionBarItems = computed(() => mainStore.history)
             :type="transaction.type"
             :name="transaction.name"
             :account="transaction.account"
-          />
+          /> -->
         </div>
-        <div class="flex flex-col justify-between">
+        <!-- <div class="flex flex-col justify-between">
           <CardBoxClient
             v-for="client in clientBarItems"
             :key="client.id"
@@ -107,30 +124,30 @@ const transactionBarItems = computed(() => mainStore.history)
             :date="client.created"
             :progress="client.progress"
           />
-        </div>
+        </div> -->
       </div>
 
-      <SectionBannerStarOnGitHub class="mt-6 mb-6" />
+      <!-- <SectionBannerStarOnGitHub class="mt-6 mb-6" /> -->
 
-      <SectionTitleLineWithButton :icon="mdiChartPie" title="Trends overview">
-        <BaseButton :icon="mdiReload" color="whiteDark" @click="fillChartData" />
-      </SectionTitleLineWithButton>
+      <!-- <SectionTitleLineWithButton :icon="mdiChartPie" title="Trends overview"> -->
+        <!-- <BaseButton :icon="mdiReload" color="whiteDark" @click="fillChartData" /> -->
+      <!-- </SectionTitleLineWithButton> -->
 
-      <CardBox class="mb-6">
+      <!-- <CardBox class="mb-6">
         <div v-if="chartData">
           <line-chart :data="chartData" class="h-96" />
         </div>
-      </CardBox>
+      </CardBox> -->
 
-      <SectionTitleLineWithButton :icon="mdiAccountMultiple" title="Clients" />
+      <!-- <SectionTitleLineWithButton :icon="mdiAccountMultiple" title="Clients" /> -->
 
-      <NotificationBar color="info" :icon="mdiMonitorCellphone">
-        <b>Responsive table.</b> Collapses on mobile
-      </NotificationBar>
+      <!-- <NotificationBar color="info" :icon="mdiMonitorCellphone"> -->
+        <!-- <b>Responsive table.</b> Collapses on mobile -->
+      <!-- </NotificationBar> -->
 
-      <CardBox has-table>
-        <TableSampleClients />
-      </CardBox>
+      <!-- <CardBox has-table> -->
+        <!-- <TableSampleClients /> -->
+      <!-- </CardBox> -->
     </SectionMain>
   </LayoutAuthenticated>
 </template>

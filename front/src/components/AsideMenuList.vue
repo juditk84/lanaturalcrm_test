@@ -4,20 +4,18 @@ import { onMounted, ref } from 'vue';
 
 const props = defineProps({
   isDropdownList: Boolean,
+  activeItemLabel: String,
   menu: {
     type: Array,
     required: true
   },
 })
 
-const activeDropdownObject = ref({})
 
-// testing of props passing and emiting:
-function leaveOnlyTheActiveDropdownOpen(event, itemItself){
- 
-  console.log(itemItself.value)
-  activeDropdownObject.value = itemItself.value
+const emit = defineEmits(['menu-click'])
 
+const menuClick = (event, item) => {
+  emit('menu-click', event, item)
 }
 
 </script>
@@ -29,7 +27,8 @@ function leaveOnlyTheActiveDropdownOpen(event, itemItself){
       :key="index"
       :item="item"
       :is-dropdown-list="isDropdownList"
-      @menu-click="leaveOnlyTheActiveDropdownOpen"
+      :active-item-label="activeItemLabel"
+      @menu-click="menuClick"
 
     />
   </ul>

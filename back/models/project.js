@@ -1,7 +1,9 @@
 'use strict';
+
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Project extends Model {
     /**
@@ -10,10 +12,27 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+
+      // associated to member de la xarxa
       Project.belongsTo(models.Member, {foreignKey: "memberId", allowNull: true});
+
+      // has a project type
       Project.belongsTo(models.ProjectType);
+
+      // associated transactions & estimates
       Project.hasMany(models.Transaction, {foreignKey: "projectId", allowNull: true});
+      Project.hasOne(models.Estimate, {foreignKey: "projectId"})
+
+      // associated tasks
       Project.hasMany(models.Task)
+
+      // commentables
+      Project.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'project'}});
+      Project.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'project'}});
+      Project.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'project'}});
+
+      // as creator
+      Project.belongsTo(models.Worker, {foreignKey: 'creatorId'})
     }
   }
   Project.init({

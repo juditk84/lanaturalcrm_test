@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref, computed, watch } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
 import { mdiConsoleNetworkOutline, mdiMinus, mdiPlus } from '@mdi/js'
 import { getButtonColor } from '@/colors.js'
 import BaseIcon from '@/components/BaseIcon.vue'
@@ -9,11 +9,14 @@ import AsideMenuList from '@/components/AsideMenuList.vue'
 const props = defineProps({
   item: {
     type: Object,
-    required: true
+    required: true,
   },
-  isDropdownList: Boolean,
-
+  activeItemLabel: String
 })
+
+const route = useRoute();
+
+const isDropdownActive = ref(false)
 
 const emit = defineEmits(['menu-click'])
 
@@ -23,8 +26,6 @@ const asideMenuItemActiveStyle = computed(() =>
   hasColor.value ? '' : 'aside-menu-item-active font-bold'
 )
 
-const isDropdownActive = ref(false)
-
 const componentClass = computed(() => [
   props.isDropdownList ? 'py-3 px-6 text-sm' : 'py-3',
   hasColor.value
@@ -32,18 +33,14 @@ const componentClass = computed(() => [
     : `aside-menu-item dark:text-slate-300 dark:hover:text-white`
 ])
 
-const hasDropdown = computed(() => !!props.item.menu) // if it has dropdown, hasDropdown === true. Otherwise, === false
-
-const itemItself = ref(props.item)
-
-// extra stuff because testing of prop passing and event emitting:
+const hasDropdown = computed(() => !!props.item.menu)
+const dropItDown = () => {
+  if(hasDropdown) isDropdownActive.value = !isDropdownActive.value
+}
 const menuClick = (event) => {
-  emit('menu-click', event, isDropdownActive, itemItself)
-
-  if (hasDropdown.value) {
-
-    isDropdownActive.value = !isDropdownActive.value
-  }
+  
+  emit('menu-click', event, props.item)
+  // if (hasDropdown && !isDropdownActive.value) isDropdownActive.value = !isDropdownActive.value
 }
 </script>
 
@@ -57,16 +54,13 @@ const menuClick = (event) => {
       :target="item.target ?? null"
       class="flex cursor-pointer"
       :class="componentClass"
-      :menu-click="menuClick"
-      @click="menuClick"
-
-
+     
     >
       <BaseIcon
         v-if="item.icon"
         :path="item.icon"
         class="flex-none"
-        :class="[vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : '']"
+        :class="[vSlot && vSlot.isExactActive ? '' : asideMenuItemActiveStyle]"
         w="w-16"
         :size="18"
       />
@@ -76,6 +70,8 @@ const menuClick = (event) => {
           { 'pr-12': !hasDropdown },
           vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : ''
         ]"
+         :menu-click="menuClick" 
+      @click="menuClick"
         >{{ item.label }}</span
       >
       <BaseIcon
@@ -84,13 +80,13 @@ const menuClick = (event) => {
         class="flex-none"
         :class="[vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : '']"
         w="w-12"
+        @click="dropItDown"
       />
     </component>
     <AsideMenuList
       v-if="hasDropdown"
       :menu="item.menu"
       :class="['aside-menu-dropdown', isDropdownActive ? 'block dark:bg-slate-800/50' : 'hidden']"
-      is-dropdown-list
     />
   </li>
 </template>

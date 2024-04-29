@@ -1,20 +1,9 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import Style from '@/views/StyleView.vue'
-import Home from '@/views/HomeView.vue'
-import LandingView from '@/views/LandingView.vue'
-import AllMembers from '@/views/xarxa/AllMembers.vue'
-import AddMember from '@/views/xarxa/AddMember.vue'
-import AllProjects from '@/views/projectes/AllProjects.vue'
+import { createRouter, createWebHashHistory } from 'vue-router';
+import { useAuthStore } from '@/stores/authStore'
+import { useUserStore } from '@/stores/userStore'
 
 const routes = [
-  {
-    meta: {
-      title: 'Select style'
-    },
-    path: '/',
-    name: 'style',
-    component: Style
-  },
+
   {
     // Document title tag
     // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
@@ -23,47 +12,48 @@ const routes = [
     },
     path: '/dashboard',
     name: 'dashboard',
-    component: Home
+    component: () => import('@/views/HomeView.vue'),
+    children: [
+      {path: 'projectes', name: 'dashboardProjectes', component: () => import('@/views/Dashboards/DashboardProjects.vue')},
+      {path: 'reunions', name: 'dashboardReunions', component: () => import('@/views/Dashboards/DashboardReunions.vue')},
+      {path: 'xarxa', name: 'dashboardXarxa', component: () => import('@/views/Dashboards/DashboardXarxa.vue')},
+      {path: 'global', name: 'dashboardGlobal', component: () => import('@/views/HomeView.vue')},
+    ]
+
   },
   {
     meta: {
-      title: 'Landing Hub'
+      title: 'Membres de la Xarxa'
     },
-    path: '/:asideMenuCategoria/landingview',
-    name: 'Landing Hub',
-    component: LandingView
-  },
-  {
-    meta: {
-      title: 'Xarxatotis'
-    },
-    path: '/xarxa/totis',
-    name: 'Xarxatotis',
-    component: AllMembers
-  },
-  {
-    meta: {
-      title: 'Afegirmembre'
-    },
-    path: '/xarxa/afegirmembre',
+    path: '/xarxa',
     name: 'Xarxa',
-    component: AddMember
+    children: [
+      {path: 'totis', name: 'Totis', component: () => import('@/views/Xarxa/AllMembers.vue')},
+      {path: 'afegir', name: 'AfegirMembre', component: () => import('@/views/Xarxa/AddMember.vue')},
+    ]
+    
   },
+
   {
     meta: {
       title: 'Projectes'
     },
-    path: '/projectes/tots',
-    name: 'Projectes',
-    component: AllProjects
+    path: '/projectes',
+    children: [
+      {  path: 'tots', name: 'Projectes', component: () => import('@/views/Projectes/AllProjects.vue')},
+      {  path: ':project_id', name: 'un sol projecte', component: () => import('@/views/Projectes/SpecificProject.vue')}
+    ]
+
   },
   {
     meta: {
       title: 'Reunions'
     },
-    path: '/reunions/',
-    name: 'Reunions',
-    component: () => import('@/views/ReunionsView.vue')
+    path: '/reunions',
+    children: [
+      {  path: 'totes', name: 'Reunions', component: () => import('@/views/ReunionsView.vue')},
+     // {  path: ':reunion_id', name: 'un sol projecte', component: () => import('@/views/Projectes/SpecificProject.vue')}
+    ]
   },
   {
     meta: {
@@ -99,13 +89,23 @@ const routes = [
   },
   {
     meta: {
+      title: 'Register'
+    },
+    path: '/register',
+    name: 'register',
+    component: () => import('@/views/RegisterView.vue')
+  },
+  {
+    meta: {
       title: 'Error'
     },
-    path: '/error',
+    path: '/',
     name: 'error',
     component: () => import('@/views/ErrorView.vue')
   }
 ]
+
+const authenticated = false;
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -113,6 +113,20 @@ const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     return savedPosition || { top: 0 }
   }
+})
+
+
+// guard preventing access to pages unless the user is logged in like a boss:
+
+router.beforeEach((to, from, next) => {
+
+  const authStore = useAuthStore();
+
+  const userStore = useUserStore()
+
+  if (to.name !== 'login' && !sessionStorage.getItem("refreshToken")) next({ name: 'login' })
+  else next()
+
 })
 
 export default router

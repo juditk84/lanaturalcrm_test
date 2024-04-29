@@ -1,40 +1,45 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import App from './App.vue'
 import router from './router'
-import { useMainStore } from '@/stores/main.js'
+// import { useMainStore } from '@/stores/main.js'
+import { useAuthStore } from '@/stores/authStore.js'
+import { setupCalendar } from 'v-calendar';
 
 import './css/main.css'
 
 // Init Pinia
 const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
 
 // Create Vue app
-createApp(App).use(router).use(pinia).mount('#app')
+createApp(App).use(router).use(setupCalendar, {}).use(pinia).mount('#app')
 
 // Init main store
-const mainStore = useMainStore(pinia)
+// const mainStore = useMainStore(pinia)
+const authStore = useAuthStore(pinia)
 
 // Fetch sample data
-mainStore.fetchSampleClients()
-mainStore.fetchSampleHistory()
+// mainStore.fetchSampleClients()
+// mainStore.fetchSampleHistory()
+
 
 // Dark mode
 // Uncomment, if you'd like to restore persisted darkMode setting, or use `prefers-color-scheme: dark`. Make sure to uncomment localStorage block in src/stores/darkMode.js
-// import { useDarkModeStore } from './stores/darkMode'
+import { useDarkModeStore } from './stores/darkMode'
 
-// const darkModeStore = useDarkModeStore(pinia)
+const darkModeStore = useDarkModeStore(pinia)
 
-// if (
-//   (!localStorage['darkMode'] && window.matchMedia('(prefers-color-scheme: dark)').matches) ||
-//   localStorage['darkMode'] === '1'
-// ) {
-//   darkModeStore.set(true)
-// }
+if (
+  (!localStorage['darkMode'] && window.matchMedia('(prefers-color-scheme: dark)').matches) ||
+  localStorage['darkMode'] === '1'
+) {
+  darkModeStore.set(true)
+}
 
 // Default title tag
-const defaultDocumentTitle = 'Admin One Vue 3 Tailwind'
+const defaultDocumentTitle = 'La Natural Coopmunicació'
 
 // Set document title from route meta
 router.afterEach((to) => {

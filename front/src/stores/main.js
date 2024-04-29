@@ -3,15 +3,21 @@ import { ref, computed } from 'vue'
 import axios from 'axios'
 
 export const useMainStore = defineStore('main', () => {
+
+  const allUserRelatedAssets = ref(null)
+  const allUserProjects = ref(null)
+  const allUserTasks = ref([])
+  const allUserNotes = ref([])
+  const allUserDocuments = ref([])
+  const allUserLinks = ref([])
   const userName = ref('Jane Doe')
   const userEmail = ref('doe.doe.doe@example.com')
 
-  const userAvatar = computed(
+  const notDevelopedYetHahaha = ref(null)
+
+  const userAvatar = computed(  
     () =>
-      `https://api.dicebear.com/7.x/avataaars/svg?seed=${userEmail.value.replace(
-        /[^a-z0-9]+/gi,
-        '-'
-      )}`
+      `https://api.dicebear.com/8.x/adventurer/svg?seed=Salem`
   )
 
   const isFieldFocusRegistered = ref(false)
@@ -19,14 +25,8 @@ export const useMainStore = defineStore('main', () => {
   const clients = ref([])
   const history = ref([])
 
-//   const sampleProjectes = ref([
-//     {id: 1, nom: "Disseny de logo", responsable: "Elena", client: "Ateneus Cooperatius"},
-//     {id: 2, nom: "Web estàtica per campanya Aigua", responsable: "Laura", client: "Ajuntament de Terrassa"}
-// ])
-
-const sampleProjectes = ref([
-  {id: 1, nom: "Projecte 1", responsable: "Usuària 4", client: "La Natural"},
-  {id: 2, nom: "Projecte 2", responsable: "Usuària 4", client: "Ajuntament de Terrassa"}
+const emptyPlaceholder = ref([
+  {emptyyyyy: "al loro amiga, que això està buit"}
 ])
 
   function setUser(payload) {
@@ -36,6 +36,26 @@ const sampleProjectes = ref([
     if (payload.email) {
       userEmail.value = payload.email
     }
+  }
+
+  async function fetchAllUserRelatedAssets(){
+    try {
+      const axiosGet = await axios("api/workers", {
+        headers: {
+          Authorization: localStorage.token
+        }
+      }) 
+      userName.value = axiosGet.data.user.username
+      allUserRelatedAssets.value = axiosGet.data
+      allUserProjects.value = axiosGet.data.user.Projects
+      allUserTasks.value = axiosGet.data.user.Tasks
+      allUserNotes.value = axiosGet.data.user.Notes
+      allUserDocuments.value = axiosGet.data.user.Documents
+      allUserLinks.value = axiosGet.data.user.Links
+    } catch (error) {
+      console.log(error);
+    }
+    
   }
 
   function fetchSampleClients() {
@@ -63,13 +83,20 @@ const sampleProjectes = ref([
   return {
     userName,
     userEmail,
+    allUserProjects,
+    allUserTasks,
+    allUserNotes,
+    allUserDocuments,
+    allUserLinks,
     userAvatar,
+    notDevelopedYetHahaha,
     isFieldFocusRegistered,
     clients,
-    sampleProjectes,
+    emptyPlaceholder,
     history,
     setUser,
     fetchSampleClients,
-    fetchSampleHistory
+    fetchSampleHistory,
+    fetchAllUserRelatedAssets
   }
 })

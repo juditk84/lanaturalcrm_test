@@ -18,12 +18,23 @@ import {
   mdiClockStarFourPoints
 } from '@mdi/js'
 
+import { ref } from "vue"
+
 export default [
-  {
-    to: '/global/landingview',            
+  {           
+    icon: mdiAccountStar,
+    label: 'Dashboard',
+    to: '/dashboard', 
+  },
+  {       
     icon: mdiDatabaseCogOutline,
     label: 'Espai Global',
     menu: [
+      
+      {
+        to: '/dashboard/global', 
+        label: 'Dashboard'
+      },
       {
         to: '/dades',
         label: 'Visualització de dades'
@@ -34,41 +45,33 @@ export default [
       }
     ]
   },
-  {
-    to: '/user/landingview',            
-    icon: mdiAccountStar,
-    label: 'Espai Usuària',
-    menu: [
-      {
-        to: '/profile',
-        label: 'El meu perfil'
-      },
-      {
-        // to: '/missatges',
-        label: 'Els meus missatges'
-      }
-    ]
-  },
-  {
-    to: '/xarxa/landingview',            
+  {            
     icon: mdiAccountGroup,
     label: 'Xarxa',
     menu: [
       {
-        to: '/xarxa/totis',
-        label: 'Veure-ho tot'
+        to: '/dashboard/xarxa', 
+        label: 'Dashboard Xarxa'
       },
       {
-        to: '/xarxa/afegirmembre',
+        to: '/xarxa/totis',
+        label: 'Tota la xarxa'
+      },
+      {
+        to: '/xarxa/afegir',
         label: 'Afegir membre'
       }
     ]
   },
   {
-    to: '/projectes/landingview',
+
     label: 'Projectes',
     icon: mdiCardMultiple,
     menu: [
+      {
+        to: '/dashboard/projectes', 
+        label: 'Dashboard Projectes'
+      },
       {
         to: '/projectes/tots',
         label: 'Tots els projectes'
@@ -80,18 +83,27 @@ export default [
     ]
   },
   {
-    to: '/reunions/landingview',
     label: 'Reunions',
     icon: mdiClockStarFourPoints,
     menu: [
       {
-        to: '/reunions',
-        label: 'Totes les reunions'
+        to: '/dashboard/reunions', 
+        label: 'Dashboard'
       },
       {
-        to: '/reunions',
-        label: 'propera Natural Focus'
-      }
+        to: '/reunions/totes',
+        label: 'Totes les reunions'
+      },
+      // {
+      //   to: '/reunions',
+      //   label: 'propera Natural Focus'
+      // }
     ]
+  },
+  {
+    // add the necessary logic to this to conditionally display this if the user is admin or not.
+    to: '/register',            
+    icon: mdiLock,
+    label: 'Crear usuaria',
   },
 ]

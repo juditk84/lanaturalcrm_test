@@ -5,7 +5,8 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const models = require("../models");
-
+const { v4: uuidv4 } = require('uuid');
+const userShouldExist = require('../guards/userShouldExist')
 const supersecret = process.env.SUPER_SECRET;
 
 router.post("/register", async (req, res) => {
@@ -13,8 +14,8 @@ router.post("/register", async (req, res) => {
 
   try {
       const hash = await bcrypt.hash(password, saltRounds);
-      const newUser = await models.User.create({username: username, password: hash})
-      res.status(200).send({ message: `${username} was created!` }); 
+      const newUser = await models.Worker.create({id: uuidv4(), username: username, password: hash})
+      res.status(200).send({ message: `${username} was created!`, user: newUser }); 
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
@@ -22,9 +23,9 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
-
+  
   try {
-    const results = await models.User.findOne({
+    const results = await models.Worker.findOne({
       where: {
         username
       }

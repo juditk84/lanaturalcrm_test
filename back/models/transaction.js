@@ -10,19 +10,39 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      // type, type of IVA
       Transaction.belongsTo(models.Transaction_Category, {foreignKey: "categoryId", allowNull: true});
       Transaction.belongsTo(models.Transaction_TipusIVA, {foreignKey: "tipusIVAId", allowNull: true});
+
+      // associated to Projecte
       Transaction.belongsTo(models.Project, {foreignKey: "projectId", allowNull: true});
+      
+      // associated to Member
+      Transaction.belongsTo(models.Member, {foreignKey: "memberId", allowNull: true});
+      
+      // as creator
+      Transaction.belongsTo(models.Worker, {as: "creator", foreignKey: 'creatorId'})
+
+      // commentables
+      Transaction.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'transaction'}});
+      Transaction.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'transaction'}});
+      Transaction.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'transaction'}});
     }
   }
   Transaction.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
     transactionRef: DataTypes.STRING,
     date: DataTypes.DATE,
     description: DataTypes.STRING,
     base: DataTypes.INTEGER,
     irpf: DataTypes.INTEGER,
     status: DataTypes.ENUM("en curs", "tancada"),
-    transactionType: DataTypes.ENUM("factura", "nòmina", "subvenció")
+    transactionType: DataTypes.ENUM("factura", "nòmina", "subvenció"),
+    isRecurrent: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Transaction',

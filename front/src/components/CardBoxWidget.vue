@@ -39,8 +39,22 @@ defineProps({
   trendType: {
     type: String,
     default: null
+  }, 
+  date: {
+    type: String,
+    default: null
+  },
+  status: {
+    type: String,
+    default: null
+  }, 
+  title: {
+    type: String,
+    default: null
   }
 })
+
+
 </script>
 
 <template>
@@ -51,12 +65,15 @@ defineProps({
     </BaseLevel>
     <BaseLevel mobile>
       <div>
+        <h1> {{ title }}</h1>
         <h3 class="text-lg leading-tight text-gray-500 dark:text-slate-400">
           {{ label }}
         </h3>
-        <h1 class="text-3xl leading-tight font-semibold">
+        <h6> {{ date  }}</h6>
+        <!-- <h1 class="text-3xl leading-tight font-semibold">
           <NumberDynamic :value="number" :prefix="prefix" :suffix="suffix" />
-        </h1>
+         
+        </h1> -->
       </div>
       <BaseIcon v-if="icon" :path="icon" size="48" w="" h="h-16" :class="color" />
     </BaseLevel>

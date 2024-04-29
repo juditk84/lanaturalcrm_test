@@ -1,20 +1,18 @@
 var express = require('express');
 var router = express.Router();
 const models = require('../models');
+const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn');
+const onlySendUserDataIfUserIsLoggedIn = require('../guards/onlySendUserDataIfUserIsLoggedIn') 
+const short = require('short-uuid')
+const translator = short()
 
-router.get('/', async (req, res, next) => {
-  const {firstname, lastname1, lastname2, pronouns, role, officialId, email} = req.body
-  try {
-    const workerInfo = await models.Worker.findAll({
-      where: {
-        firstname, lastname1, lastname2
+router.get("/", onlySendUserDataIfUserIsLoggedIn, async (req, res) => {
+    const { user } = req
+      try {
+          res.status(200).send({user: user})
+      } catch (err) {
+          res.status(500).send(err.message)
       }
-      // include: models.Tag, models.Notes.... etc
-    })
-    res.status(200).send(workerInfo)
-  } catch (err) {
-    res.status(500).send({message: err.message})
-  }
 })
 
 router.get('/all', async (req, res, next) => {

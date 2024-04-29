@@ -5,12 +5,12 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('Tasks_By_ProjectType', {
       TaskId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         references: {
           model: "Tasks",
           key: "id",
         },
-        allowNull:false,
+     
       },
       ProjectTypeId: {
         type: Sequelize.INTEGER,
@@ -18,7 +18,7 @@ module.exports = {
           model: "ProjectTypes",
           key: "id",
         },
-        allowNull: false,
+
       },
       createdAt: {
         allowNull: false,

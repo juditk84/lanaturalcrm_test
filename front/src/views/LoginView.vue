@@ -1,10 +1,10 @@
 <script setup>
 import { reactive } from 'vue'
-import { useRouter } from 'vue-router'
 import { mdiAccount, mdiAsterisk } from '@mdi/js'
+import { useAuthStore } from '@/stores/authStore'
 import SectionFullScreen from '@/components/SectionFullScreen.vue'
 import CardBox from '@/components/CardBox.vue'
-import FormCheckRadio from '@/components/FormCheckRadio.vue'
+// import FormCheckRadio from '@/components/FormCheckRadio.vue'
 import FormField from '@/components/FormField.vue'
 import FormControl from '@/components/FormControl.vue'
 import BaseButton from '@/components/BaseButton.vue'
@@ -12,16 +12,22 @@ import BaseButtons from '@/components/BaseButtons.vue'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
 
 const form = reactive({
-  login: 'john.doe',
-  pass: 'highly-secure-password-fYjUw-',
+  login: 'Judit',
+  pass: 'Judit',
   remember: true
 })
 
-const router = useRouter()
+let authStore = useAuthStore()
 
-const submit = () => {
-  router.push('/dashboard')
+const submit = async (event) => {
+  const credentials = {username: form.login, password: form.pass}
+    try {
+      authStore.handleLogin(credentials);
+    } catch (error) {
+      console.log(error);
+    }
 }
+
 </script>
 
 <template>
@@ -47,16 +53,12 @@ const submit = () => {
           />
         </FormField>
 
-        <FormCheckRadio
-          v-model="form.remember"
-          name="remember"
-          label="Remember"
-          :input-value="true"
-        />
+
 
         <template #footer>
           <BaseButtons>
             <BaseButton type="submit" color="info" label="Login" />
+            <!-- <BaseButton type="submit" color="info" label="Register" /> -->
             <BaseButton to="/dashboard" color="info" outline label="Back" />
           </BaseButtons>
         </template>

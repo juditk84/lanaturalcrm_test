@@ -10,17 +10,33 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+
       Task.belongsTo(models.Project, {foreignKey: "projectId"})
+
+      // tree structure
       Task.belongsTo(models.Task, {as: "parentTask", foreignKey: "parentId"})
       Task.hasMany(models.Task, {as: "subTasks", foreignKey: "parentId"})
-      Task.belongsToMany(models.Worker, {through: "Tasks_By_Worker"})
+
+      // assigned tasks to worker
+      Task.belongsToMany(models.Worker, {through: "Tasks_Assigned_To_Workers"})
+
+      // tasks by project type:
       Task.belongsToMany(models.ProjectType, {through: "Tasks_By_ProjectType"})
+
+      // commentables
+      Task.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'task'}});
+      Task.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'task'}});
+      Task.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'task'}});
+
+      // as creator
+      Task.belongsTo(models.Worker, {as: "creator", foreignKey: 'creatorId'})
     }
   }
   Task.init({
     title: DataTypes.STRING,
+    startDate: DataTypes.DATE,
     deadline: DataTypes.DATE,
-    descripcion: DataTypes.STRING,
+    description: DataTypes.STRING,
     defaultPrice: DataTypes.INTEGER,
     status: DataTypes.ENUM('futur', 'pendent', 'en curs', 'tancat', 'tard')
   }, {

@@ -41,6 +41,10 @@ const props = defineProps({
     type: String,
     default: null
   },
+  buttonname: {
+    type: String,
+    default: null
+  },
   small: Boolean,
   outline: Boolean,
   active: Boolean,
@@ -104,19 +108,25 @@ const componentClass = computed(() => {
 
   return base
 })
+
+const buttonName = computed(() => props.buttonname)
+
 </script>
 
 <template>
-  <component
-    :is="is"
-    :class="componentClass"
-    :href="href"
-    :type="computedType"
-    :to="to"
-    :target="target"
-    :disabled="disabled"
-  >
-    <BaseIcon v-if="icon" :path="icon" :size="iconSize" />
-    <span v-if="label" :class="labelClass">{{ label }}</span>
-  </component>
+
+    <component
+      :is="is"
+      :class="componentClass"
+      :href="href"
+      :type="computedType"
+      :to="to"
+      :target="target"
+      :disabled="disabled"
+      :buttonname="buttonName"
+    >
+      <BaseIcon v-if="icon" :path="icon" :size="iconSize" :buttonname="buttonName"/>
+      <span v-if="label" :class="labelClass">{{ label }}</span>
+    </component>
+
 </template>
