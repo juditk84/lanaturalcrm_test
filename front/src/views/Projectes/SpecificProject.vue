@@ -93,9 +93,9 @@ const attributes = ref(taskDates);
           <Table 
                 has-filter
                 table-category="tasques"
-               :content="projectesStore.specificProjectTasks.content"
-               :table-content="projectesStore.specificProjectTasks.tableContent"
-               :table-headers="projectesStore.specificProjectTasks.tableHeaders"
+               :content="projectesStore.specificProjectTasks?.content"
+               :table-content="projectesStore.specificProjectTasks?.tableContent"
+               :table-headers="projectesStore.specificProjectTasks?.tableHeaders"
                table-title="Tasques"
                />
       
@@ -109,9 +109,9 @@ const attributes = ref(taskDates);
         <Table 
                 has-filter
                 table-category="moviments"
-               :content="projectesStore.specificProjectTransactions.content"
-               :table-content="projectesStore.specificProjectTransactions.tableContent"
-               :table-headers="projectesStore.specificProjectTransactions.tableHeaders"
+               :content="projectesStore.specificProjectTransactions?.content"
+               :table-content="projectesStore.specificProjectTransactions?.tableContent"
+               :table-headers="projectesStore.specificProjectTransactions?.tableHeaders"
                table-title="Moviments"
                />
 
