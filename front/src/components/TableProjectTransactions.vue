@@ -9,16 +9,23 @@ import BaseLevel from '@/components/BaseLevel.vue'
 import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import UserAvatar from '@/components/UserAvatar.vue'
-import {format, parse} from '@formkit/tempo'
+import SectionMain from '@/components/SectionMain.vue'
 
-defineProps({
-  checkable: Boolean
+const props = defineProps({
+  checkable: Boolean,
+  title: String,
+  category: String
 })
 
 const mainStore = useMainStore();
 const projectesStore = useProjectesStore();
 
-const items = computed(() => projectesStore?.specificProject?.Tasks)
+const items = computed(() => {
+  if(props.category === "transactions"){
+    return projectesStore.specificProject?.Transactions
+  }
+
+})
 
 const isModalActive = ref(false)
 
@@ -68,9 +75,6 @@ const checked = (isChecked, client) => {
   }
 }
 
-function printTasks(){
-  console.log(items)
-}
 </script>
 
 <template>
@@ -83,44 +87,36 @@ function printTasks(){
     <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
     <p>This is sample modal</p>
   </CardBoxModal>
+
+  <SectionMain>
+    <b>Moviments</b>
   <table>
     <thead>
       <tr>
         <!-- <th v-if="checkable" /> -->
         <th />
-        <th>Nom</th>
-        <th>Descripció</th>
-        <th>Assignada a</th>
-        <th>Progrés</th>
-        <th>Data finalitz.</th>
+        <th>Referència</th>
+        <th>Import</th>
+        <th>Proveïdor</th>
+        <th>Tipus</th>
         <th />
       </tr>
     </thead>
     <tbody>
-      <tr v-for="task in itemsPaginated" :key="task.id">
+      <tr v-for="transaction in itemsPaginated" :key="transaction.id" :class="transaction.base >= 0 ? '!bg-lime-200 hover:!bg-lime-300' : '!bg-rose-200 hover:!bg-rose-300'">
 
-        <TableCheckboxCell v-if="checkable" @checked="checked($event, task)" />
-        <td class="border-b-0 lg:w-6 before:hidden">
-          <UserAvatar :username="task.title" class="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
-        </td>
+        <td></td>
         <td data-label="Nom">
-          {{ task.title }}
+          {{ transaction.transactionRef }}
         </td>
         <td data-label="Descripció">
-          {{ task.description }}
+          {{ transaction.base }}
         </td>
-        <td data-label="Assignada a">
-          {{ task.Workers[0].firstname }}
+        <td data-label="Proveïdor">
+          {{ transaction.Member.commercialName1 }}
         </td>
-        <td data-label="Progrés" class="lg:w-32">
-          <progress class="flex w-2/5 self-center lg:w-full" max="100" :value="60">
-            [Barra de progrés]
-          </progress>
-        </td>
-        <td data-label="Data finalitz." class="lg:w-1 whitespace-nowrap">
-          <small class="text-gray-500 dark:text-slate-400" :title="task.createdAt ">{{
-            format(task.deadline, "full", "ca")
-          }}</small>
+        <td data-label="Tipus">
+          {{ transaction.transactionType }}
         </td>
         <td class="before:hidden lg:w-1 whitespace-nowrap">
           <BaseButtons type="justify-start lg:justify-end" no-wrap>
@@ -152,4 +148,5 @@ function printTasks(){
       <small>Page {{ currentPageHuman }} of {{ numPages }}</small>
     </BaseLevel>
   </div>
+</SectionMain>
 </template>

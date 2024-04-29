@@ -16,7 +16,7 @@ export const useMemberStore = defineStore('memberStore', () => {
                                                       adreça: member.address,
                                                       ciutat: member.city}
       })
-      console.log(allMembers.value)
+      // console.log(allMembers.value)
       // allMembers.value = results?.data
     } catch(error) {
         alert(error.message)

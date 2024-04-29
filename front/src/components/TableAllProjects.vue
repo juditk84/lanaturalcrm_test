@@ -10,14 +10,10 @@ import BaseLevel from '@/components/BaseLevel.vue'
 import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import UserAvatar from '@/components/UserAvatar.vue'
+import {format, parse} from '@formkit/tempo'
 
 // I don't like it here, to refactor:
 import shortUUID from 'short-uuid'
-
-// IMPORTANT: En aquest exemple, estem fent que tota la fila sigui clicable, just to play around and see
-// what option suits us better. 
-
-// EDIT: afegit un botó a part de la línia que porta a la url de cada projecte
 
 const mainStore = useMainStore()
 const router = useRouter()
@@ -30,47 +26,12 @@ const activeProject = ref();
 
 const viewButton = mdiEye
 
-const items = computed(() => mainStore.sampleProjectes)
+const items = computed(() => projectesStore.allProjects.content)
 
 const isModalActive = ref(false)
 
 const isModalDangerActive = ref(false)
 
-// const perPage = ref(5)
-
-// const currentPage = ref(0)
-
-// const checkedRows = ref([])
-
-// const itemsPaginated = computed(() =>
-//   items.value.slice(perPage.value * currentPage.value, perPage.value * (currentPage.value + 1))
-// )
-
-// const numPages = computed(() => Math.ceil(items.value.length / perPage.value))
-
-// const currentPageHuman = computed(() => currentPage.value + 1)
-
-// const pagesList = computed(() => {
-//   const pagesList = []
-
-//   for (let i = 0; i < numPages.value; i++) {
-//     pagesList.push(i)
-//   }
-
-//   return pagesList
-// })
-
-// const remove = (arr, cb) => {
-//   const newArr = []
-
-//   arr.forEach((item) => {
-//     if (!cb(item)) {
-//       newArr.push(item)
-//     }
-//   })
-
-//   return newArr
-// }
 
 function onRowClick(event, project){
   if(event.target.name !== "rowButton"){
@@ -80,9 +41,52 @@ function onRowClick(event, project){
   }
 }
 
-function onRowButtonClick(){
-  console.log("hola")
-  // add the logic to navigate to specific project page.
+const perPage = ref(10)
+
+const currentPage = ref(0)
+
+const checkedRows = ref([])
+
+const itemsPaginated = computed(() =>
+  items.value && items.value.slice(perPage.value * currentPage.value, perPage.value * (currentPage.value + 1))
+)
+
+const numPages = computed(() => items.value && Math.ceil(items.value.length / perPage.value))
+
+const currentPageHuman = computed(() => currentPage.value + 1)
+
+const pagesList = computed(() => {
+  const pagesList = []
+
+  for (let i = 0; i < numPages.value; i++) {
+    pagesList.push(i)
+  }
+
+  return pagesList
+})
+
+const remove = (arr, cb) => {
+  const newArr = []
+
+  arr.forEach((item) => {
+    if (!cb(item)) {
+      newArr.push(item)
+    }
+  })
+
+  return newArr
+}
+
+const checked = (isChecked, client) => {
+  if (isChecked) {
+    checkedRows.value.push(client)
+  } else {
+    checkedRows.value = remove(checkedRows.value, (row) => row.id === client.id)
+  }
+}
+
+function printTasks(){
+  console.log(items)
 }
 </script>
 
@@ -106,73 +110,50 @@ function onRowButtonClick(){
     <p>This is sample modal</p>
   </CardBoxModal>
 
-  <table class="table-auto">
-    <thead>
-      <tr v-if="!projectesStore.allProjects">
-        <th>Loading...</th>
-      </tr>
-      <tr v-else>
-        <th>Nom</th>
-        <th>Responsable</th>
-        <th>Client</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="project in projectesStore.allProjects" @click="(event) => onRowClick(event, project)" >
-        <td v-for="value in project">{{ value }}</td>
-        <button name="rowButton" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" @click="(event) => onRowClick(event, project)">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 pointer-events-none">
-            <path class="pointer-events-none" stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-            <path class="pointer-events-none" stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-          </svg>
-        </button>
-      </tr>
-      
-    </tbody>
-  </table>
-
-  <!-- <table>
+  <table>
     <thead>
       <tr>
-        <th v-if="checkable" />
+        <!-- <th v-if="checkable" /> -->
         <th />
         <th>Nom</th>
-        <th>Responsable</th>
         <th>Client</th>
-        <th>Progress</th>
-        <th>Created</th>
+        <th>Responsable</th>
+        <th>Progrés</th>
+        <th>Data finalitz.</th>
         <th />
       </tr>
     </thead>
     <tbody>
-      <tr v-for="projecte in itemsPaginated" :key="projecte.id">
-        <TableCheckboxCell v-if="checkable" @checked="checked($event, projecte)" />
+      <tr v-for="project in itemsPaginated" :key="project.id">
+
+        <!-- <TableCheckboxCell v-if="checkable" @checked="checked($event, project)" /> -->
         <td class="border-b-0 lg:w-6 before:hidden">
-          <UserAvatar :username="projecte.nom" class="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
+          <UserAvatar :username="project.name" class="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
         </td>
-        <td data-label="Name">
-          {{ projecte.nom }}
-        </td>
-        <td data-label="Company">
-          {{ projecte.responsable }}
+        <td data-label="Nom">
+          {{ project.name }}
         </td>
         <td data-label="Client">
-          {{ projecte.client }}
+          {{ project.Member.commercialName1 }}
         </td>
-        <td data-label="Progress" class="lg:w-32">
-          <progress class="flex w-2/5 self-center lg:w-full" max="100" :value="projecte.progress">
-            {{ projecte.progress }}
+        <td data-label="Responsable">
+          {{ project.Worker.firstname }}
+        </td>
+        <td data-label="Progrés" class="lg:w-32">
+          <progress class="flex w-2/5 self-center lg:w-full" max="100" :value="60">
+            [Barra de progrés]
           </progress>
         </td>
-        <td data-label="Created" class="lg:w-1 whitespace-nowrap">
-          <small class="text-gray-500 dark:text-slate-400" :title="projecte.created">{{
-            projecte.created
-          }}</small>
+        <td data-label="Data finalitz." class="lg:w-1 whitespace-nowrap">
+          <small class="text-gray-500 dark:text-slate-400" :title="project.createdAt ">
+            {{
+            format(project.end_date, "full", "ca")
+          }}
+          </small>
         </td>
         <td class="before:hidden lg:w-1 whitespace-nowrap">
           <BaseButtons type="justify-start lg:justify-end" no-wrap>
-            <BaseButton color="info" :icon="mdiEye" small @click="isModalActive = true" />
+            <BaseButton color="info" :icon="mdiEye" small @click="(event) => onRowClick(event, project)" />
             <BaseButton
               color="danger"
               :icon="mdiTrashCan"
@@ -183,11 +164,11 @@ function onRowButtonClick(){
         </td>
       </tr>
     </tbody>
-  </table> -->
+  </table>
   <div class="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800">
     <BaseLevel>
-      <!-- <BaseButtons> -->
-        <!-- <BaseButton
+      <BaseButtons>
+        <BaseButton
           v-for="page in pagesList"
           :key="page"
           :active="page === currentPage"
@@ -196,8 +177,9 @@ function onRowButtonClick(){
           small
           @click="currentPage = page"
         />
-      </BaseButtons> -->
-      <!-- <small>Page {{ currentPageHuman }} of {{ numPages }}</small> -->
+      </BaseButtons>
+      <small>Page {{ currentPageHuman }} of {{ numPages }}</small>
     </BaseLevel>
   </div>
+
 </template>

@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       Member.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'member'}});
       Member.hasMany(models.Document, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'member'}});
       Member.hasMany(models.Link, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'member'}});
+      Member.hasMany(models.Transaction, {foreignKey: 'memberId'});
 
       // as creator
       Member.belongsTo(models.Worker, {as: "creator", foreignKey: 'creatorId'})

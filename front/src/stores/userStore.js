@@ -24,7 +24,6 @@ const user = ref(null)
       })
       user.value = await response?.data?.user
    
-      console.log(user.value)
     } catch (error) {
       console.log(error);
     }   

@@ -5,7 +5,7 @@ import App from './App.vue'
 import router from './router'
 // import { useMainStore } from '@/stores/main.js'
 import { useAuthStore } from '@/stores/authStore.js'
-
+import { setupCalendar } from 'v-calendar';
 
 import './css/main.css'
 
@@ -14,7 +14,7 @@ const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 
 // Create Vue app
-createApp(App).use(router).use(pinia).mount('#app')
+createApp(App).use(router).use(setupCalendar, {}).use(pinia).mount('#app')
 
 // Init main store
 // const mainStore = useMainStore(pinia)
