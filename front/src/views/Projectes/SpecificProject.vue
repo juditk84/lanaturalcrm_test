@@ -53,20 +53,21 @@ const attributes = ref(taskDates);
     <SectionMain class=" rounded-2xl">
       <CardBox>
         
-      <SectionTitleLineWithButton :title="projectesStore?.specificProject?.name" main>
-        {{ projectesStore.specificProject?.Member.commercialName1 }}
-      </SectionTitleLineWithButton>
-      <div v-if="!projectesStore.specificProject">
-        Loading...
-      </div>
-      <div v-else>
-        {{projectesStore.specificProject.description}}
-      </div>
-    </CardBox>
+        <SectionTitleLineWithButton :title="projectesStore?.specificProject?.name" main>
+          {{ projectesStore.specificProject?.Member.commercialName1 }}
+        </SectionTitleLineWithButton>
+        <div v-if="!projectesStore.specificProject">
+          Loading...
+        </div>
+        <div v-else>
+          {{projectesStore.specificProject.description}}
+        </div>
+        
+      </CardBox>
     </SectionMain>
 
     <SectionTitle>Tasques</SectionTitle>
-    <SectionMain v-if="projectesStore.specificProjectTasks">
+    <SectionMain>
       <CardBox has-table>
         
         <div class="grid grid-cols-12 gap-4">
@@ -92,36 +93,30 @@ const attributes = ref(taskDates);
           <Table 
                 has-filter
                 table-category="tasques"
-               :content="projectesStore.specificProjectTasks.content"
-               :table-content="projectesStore.specificProjectTasks.tableContent"
-               :table-headers="projectesStore.specificProjectTasks.tableHeaders"
+               :content="projectesStore.specificProjectTasks?.content"
+               :table-content="projectesStore.specificProjectTasks?.tableContent"
+               :table-headers="projectesStore.specificProjectTasks?.tableHeaders"
                table-title="Tasques"
                />
       
         </CardBox>
     </SectionMain>
-    <SectionMain v-else>
-      <div class="text-center text-xl font-light">Sense tasques.</div>
-    </SectionMain>
 
    <SectionTitle>Balanç Econòmic</SectionTitle>
-   <SectionMain v-if="projectesStore.specificProjectTransactions">
+   <SectionMain>
     <CardBox has-table>
       
         <Table 
                 has-filter
                 table-category="moviments"
-               :content="projectesStore.specificProjectTransactions.content"
-               :table-content="projectesStore.specificProjectTransactions.tableContent"
-               :table-headers="projectesStore.specificProjectTransactions.tableHeaders"
+               :content="projectesStore.specificProjectTransactions?.content"
+               :table-content="projectesStore.specificProjectTransactions?.tableContent"
+               :table-headers="projectesStore.specificProjectTransactions?.tableHeaders"
                table-title="Moviments"
                />
 
     </CardBox>
    </SectionMain>
-    <SectionMain v-else>
-      <div class="text-center text-xl font-light">Sense moviments.</div>
-  </SectionMain>
   </LayoutAuthenticated>
 </template>
 

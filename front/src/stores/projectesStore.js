@@ -33,8 +33,12 @@ export const useProjectesStore = defineStore('projecteStore', () => {
                                   DataFinalització: project.end_date
                                 }
                               }),
-                              tableHeaders: ["Nom", "Client", "Responsable", "Progrés", "Data finalitz."]
-                            }
+                              tableHeaders:  [{binder: "Nom", label:"Nom"}, 
+                                              {binder: "Client", label:"Client"},
+                                              {binder: "Responsable",label: "Responsable"},
+                                              {binder: "Progrés", label:"Progrés"},
+                                              {binder: "DataFinalització", label:"Data finalitz."}
+                                              ]}
       } catch(error) {
           alert(error.message)
       }
