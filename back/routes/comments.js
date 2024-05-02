@@ -18,9 +18,12 @@ router.post('/pinboard/:element', userShouldBeLoggedIn, async (req, res, next) =
           title: data.title,
           text: data.text,
           creatorId: user.id,
-          parentId: data.parentId || null
+          parentId: data.parentId || null,
+          commentableType: "worker",
+          commentableId: user.id
         },
-        { fields: ["title", "text"]})
+        { fields: ["title", "text"]}
+      )
         res.status(200).send({data: note})
         break;
         case "document":
@@ -29,9 +32,12 @@ router.post('/pinboard/:element', userShouldBeLoggedIn, async (req, res, next) =
             title: data.title,
             url: data.url,
             description: data.description,
-            creatorId: user.id
+            creatorId: user.id,
+            commentableType: "worker",
+            commentableId: user.id
           }, 
-          { fields: ["title", "url", "description"]})
+          { fields: ["title", "url", "description"]}
+        )
           res.status(200).send({data: doc})
           break;
           case "link":
@@ -40,9 +46,12 @@ router.post('/pinboard/:element', userShouldBeLoggedIn, async (req, res, next) =
               title: data.title,
               url: data.url,
               description: data.description,
-              creatorId: user.id
+              creatorId: user.id,
+              commentableType: "worker",
+              commentableId: user.id
             }, 
-            { fields: ["title", "url", "description"]})
+            { fields: ["title", "url", "description"]}
+          )
           res.status(200).send({data: link})
           break;
           default:

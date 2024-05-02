@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref, onMounted, watch } from 'vue'
+import { watchImmediate } from '@vueuse/core'
 import {
   mdiAccountMultiple,
   mdiCartOutline,
@@ -37,17 +38,20 @@ import AddComment from '@/components/AddComment.vue'
 const isModalActive = ref(false)
 const userStore = useUserStore();
 
-const fillData = () => {
- // why nooooo :_____
-}
 
-onMounted(() => {
-  fillData()
-})
+// const fillData = () => {
+//  // why nooooo :_____
+// }
 
+// onMounted(() => {
+//   fillData()
+// })
+
+watch(() => userStore.user, userStore.fetchAllUserRelatedAssets, { deep: true })
+// userStore.$subscribe((user), )
 async function printUser() {
   console.log(userStore.user)
-  console.log(userStore.userNotes)
+  console.log(userStore.user.userNotes)
 }
 
 
