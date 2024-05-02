@@ -89,6 +89,7 @@ const authStore = useAuthStore()
             }
           })
 
+          console.log(user.value)
         
     } catch (error) {
       console.log(error);
