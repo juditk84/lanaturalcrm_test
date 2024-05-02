@@ -35,6 +35,7 @@ async function submit(){
   console.log("submit button clicked")
     try {
       const response = await userStore.addToPinboard("note", form.value)
+      userStore.fetchAllUserRelatedAssets();
       console.log(response)
     } catch (error) {
       console.log(error);

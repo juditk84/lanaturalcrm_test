@@ -38,8 +38,6 @@ const componentClass = computed(() => [
 const hasDropdown = computed(() => !!props.item.menu)
 
 const dropItDown = () => {
-
-
   if(mainStore.activeAsideElement?.label === props.item?.label){
     mainStore.activeAsideElement = null
   }

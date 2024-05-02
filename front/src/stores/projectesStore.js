@@ -24,7 +24,9 @@ export const useProjectesStore = defineStore('projecteStore', () => {
       try {
         const results = await axios('api/projectes/', {
           headers: {   
-          Authorization: "Bearer " + sessionStorage.refreshToken
+          Authorization: "Bearer " + sessionStorage.refreshToken,
+          'If-None-Match': allProjects.value?.etag,
+          'Cache-Control': 'private'
         }})
         allProjects.value = { content: results.data,
                               tableContent: results.data.map(project => {
@@ -41,9 +43,14 @@ export const useProjectesStore = defineStore('projecteStore', () => {
                                               {binder: "Responsable",label: "Responsable"},
                                               {binder: "Progrés", label:"Progrés"},
                                               {binder: "DataFinalització", label:"Data finalitz."}
-                                              ]}
+                                              ],
+                              etag: results.headers.etag
+                            }
+                            
       } catch(error) {
+        if(error.response.status !== 304){
           alert(error.message)
+        }
       }
     }
 

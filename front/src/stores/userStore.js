@@ -44,7 +44,7 @@ const authStore = useAuthStore()
     try {
       const response = await axios("api/workers", {
         headers: {
-          Authorization: sessionStorage.getItem("refreshToken")
+          Authorization: sessionStorage.getItem("refreshToken"),
         }
       })
       user.value = await response?.data?.user
@@ -108,4 +108,4 @@ const authStore = useAuthStore()
     fetchAllUserRelatedAssets,
     addToPinboard
   }
-}, {persist: true})
+})

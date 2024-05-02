@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useProjectesStore } from '@/stores/projectesStore'
+import { useUserStore } from '@/stores/userStore'
 import { mdiBallotOutline, mdiAccount, mdiMail, mdiGithub } from '@mdi/js'
 import SectionMain from '@/components/SectionMain.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
@@ -11,6 +12,7 @@ import CardBox from '@/components/CardBox.vue'
 import Table from '@/components/Table.vue'
 
 const projectesStore = useProjectesStore();
+const userStore = useUserStore();
 
 onMounted( async () => await projectesStore.fetchProjects())
 

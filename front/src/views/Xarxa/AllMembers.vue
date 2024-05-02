@@ -1,23 +1,13 @@
 <script setup>
-import { reactive, ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useMemberStore } from '@/stores/memberStore'
-import TableAllXarxa from '@/components/TableAllXarxa.vue'
 import Table from '@/components/Table.vue'
 import { mdiBallotOutline, mdiAccount, mdiMail, mdiGithub } from '@mdi/js'
 import SectionMain from '@/components/SectionMain.vue'
 import CardBox from '@/components/CardBox.vue'
-import FormCheckRadioGroup from '@/components/FormCheckRadioGroup.vue'
-import FormFilePicker from '@/components/FormFilePicker.vue'
-import FormField from '@/components/FormField.vue'
-import FormControl from '@/components/FormControl.vue'
-import BaseDivider from '@/components/BaseDivider.vue'
-import BaseButton from '@/components/BaseButton.vue'
-import BaseButtons from '@/components/BaseButtons.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
-import NotificationBarInCard from '@/components/NotificationBarInCard.vue'
-import ViewMembers from '@/components/ViewMembers.vue'
 
 // JUDIT: love how simple this component is ^^
 
@@ -32,14 +22,14 @@ async function grabAllMembersFromStore(){await memberStore.fetchMembers()}
   <LayoutAuthenticated>
     <SectionMain>
       <CardBox>
-      <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Xarxa" main>
+      <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Xarxa" main />
         
-      </SectionTitleLineWithButton>
       <Table table-category="xarxa" 
             :content="memberStore.allMembers?.content" 
             :table-content="memberStore.allMembers?.tableContent" 
             :table-headers="memberStore.allMembers?.tableHeaders" 
              table-title="Tots els membres"/>
+
     </CardBox>
     </SectionMain>
 

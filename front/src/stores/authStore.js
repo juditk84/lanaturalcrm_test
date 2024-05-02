@@ -43,7 +43,7 @@ export const useAuthStore = defineStore('auth', () => {
       const refreshToken = await data.token
       setRefreshToken(refreshToken)
       setUsername(credentials.username)
-      userStore.fetchAllUserRelatedAssets(refreshToken)
+      // userStore.fetchAllUserRelatedAssets(refreshToken)
       router.push("dashboard")    
     } catch (error) {
       console.log(error);
