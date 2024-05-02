@@ -12,8 +12,7 @@ import Table from '@/components/Table.vue'
 
 const projectesStore = useProjectesStore();
 
-onMounted(() => { grabAllProjectsFromStore() })
-async function grabAllProjectsFromStore(){await projectesStore.fetchProjects()}
+onMounted( async () => await projectesStore.fetchProjects())
 
 </script>
 

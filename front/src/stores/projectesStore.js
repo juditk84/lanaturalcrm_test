@@ -22,7 +22,10 @@ export const useProjectesStore = defineStore('projecteStore', () => {
 
   async function fetchProjects() {
       try {
-        const results = await axios('api/projectes/')
+        const results = await axios('api/projectes/', {
+          headers: {   
+          Authorization: "Bearer " + sessionStorage.refreshToken
+        }})
         allProjects.value = { content: results.data,
                               tableContent: results.data.map(project => {
                                 return {
@@ -30,7 +33,7 @@ export const useProjectesStore = defineStore('projecteStore', () => {
                                   Client: project.Member.commercialName1,
                                   Responsable: project.Worker.firstname,
                                   Progrés: "indefinit",
-                                  DataFinalització: project.end_date
+                                  DataFinalització: {content: project.end_date, isDate: true}
                                 }
                               }),
                               tableHeaders:  [{binder: "Nom", label:"Nom"}, 
@@ -90,7 +93,7 @@ export const useProjectesStore = defineStore('projecteStore', () => {
                                           descripció: task.description,
                                           workers: task.Workers.map(worker => worker.firstname).join(", "),
                                           progrés: "pendent de definir.",
-                                          dataFinalització: task.deadline
+                                          dataFinalització: {content: task.deadline, isDate: true}
                                         }
                                       }),
                                       tableHeaders: [{binder: "nom", label:"Nom"}, 

@@ -24,12 +24,15 @@ const authStore = useAuthStore()
   async function addToPinboard(element, data) {
       try {
         const response = await axios.post(`api/comments/pinboard/${element}`,
-       {body: data},
+       {data},
         {
           headers: {
             Authorization: sessionStorage.getItem("refreshToken")
           }
         })
+      
+      console.log("hello")
+      console.log(user)
       return response.data
       } catch (error) {
         console.log(error);

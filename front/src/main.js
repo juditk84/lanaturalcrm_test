@@ -35,13 +35,14 @@ if (
   (!localStorage['darkMode'] && window.matchMedia('(prefers-color-scheme: dark)').matches) ||
   localStorage['darkMode'] === '1'
 ) {
-  darkModeStore.set(true)
+  darkModeStore.set(false)
 }
 
 // Default title tag
 const defaultDocumentTitle = 'La Natural Coopmunicació'
 
 // Set document title from route meta
+// judit: not sure if we should use document.title as a global variable
 router.afterEach((to) => {
   document.title = to.meta?.title
     ? `${to.meta.title} — ${defaultDocumentTitle}`

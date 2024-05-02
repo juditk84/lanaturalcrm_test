@@ -31,7 +31,7 @@ module.exports = {
         type: Sequelize.ENUM("en curs", "tancada")
       },
       transactionType: {
-        type: Sequelize.ENUM("factura", "nòmina", "subvenció")
+        type: Sequelize.ENUM("factura", "nòmina", "subvenció", "ingrés")
       },
       isRecurrent: {
         type: Sequelize.BOOLEAN

@@ -3,6 +3,7 @@ import { ref, computed, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { mdiConsoleNetworkOutline, mdiMinus, mdiPlus } from '@mdi/js'
 import { getButtonColor } from '@/colors.js'
+import { useMainStore } from '@/stores/main'
 import BaseIcon from '@/components/BaseIcon.vue'
 import AsideMenuList from '@/components/AsideMenuList.vue'
 
@@ -15,8 +16,9 @@ const props = defineProps({
 })
 
 const route = useRoute();
+const mainStore = useMainStore();
 
-const isDropdownActive = ref(false)
+
 
 const emit = defineEmits(['menu-click'])
 
@@ -34,19 +36,37 @@ const componentClass = computed(() => [
 ])
 
 const hasDropdown = computed(() => !!props.item.menu)
+
 const dropItDown = () => {
-  if(hasDropdown) isDropdownActive.value = !isDropdownActive.value
+
+
+  if(mainStore.activeAsideElement?.label === props.item?.label){
+    mainStore.activeAsideElement = null
+  }
+  else{
+    mainStore.activeAsideElement = props.item
+  }
 }
+
+const isDropdownActive = computed(() => {
+  if(mainStore.activeAsideElement?.label === props.item?.label){
+    return true
+  }
+return false
+})
+
 const menuClick = (event) => {
   
   emit('menu-click', event, props.item)
-  // if (hasDropdown && !isDropdownActive.value) isDropdownActive.value = !isDropdownActive.value
+  
 }
+
 </script>
 
 <template>
   <li>
     <component
+    
       :is="item.to ? RouterLink : 'a'"
       v-slot="vSlot"
       :to="item.to ?? null"
@@ -63,6 +83,7 @@ const menuClick = (event) => {
         :class="[vSlot && vSlot.isExactActive ? '' : asideMenuItemActiveStyle]"
         w="w-16"
         :size="18"
+
       />
       <span
         class="grow text-ellipsis line-clamp-1"

@@ -10,7 +10,7 @@ const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn');
 const translator = short()
 
 
-router.get('/', async (req, res, next) => {
+router.get('/', userShouldBeLoggedIn, async (req, res, next) => {
   
   try {
       const allProjects = await models.Project.findAll({
@@ -27,7 +27,6 @@ router.get('/', async (req, res, next) => {
         ],
 
       })
-
       res.status(200).send(allProjects)
   } catch (err) {
     res.status(500).send({message: "no s'ha trobat cap projecte, revisa les dades oi"})
@@ -74,7 +73,6 @@ router.get('/userprojects', userShouldBeLoggedIn, async (req, res) => {
 })
 
 router.get('/:project_id', userShouldBeLoggedIn, async (req, res, next) => {
-
 
   try {
   

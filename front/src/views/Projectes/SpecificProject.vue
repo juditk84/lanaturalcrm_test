@@ -19,9 +19,9 @@ import 'v-calendar/style.css';
 const darkModeStore = useDarkModeStore()
 const projectesStore = useProjectesStore();
 
-onMounted(() => { grabSpecificProjectFromStore() })
+onMounted(async () => await projectesStore.fetchSpecificProject())
 onUnmounted(() => projectesStore.specificProject.value = null)
-async function grabSpecificProjectFromStore(){await projectesStore.fetchSpecificProject()}
+
 
 const calendarActive = ref(false)
 
