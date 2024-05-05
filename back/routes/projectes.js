@@ -10,7 +10,10 @@ const projectMustExist = require('../guards/projectMustExist');
 
 const translator = short()
 
-
+// GET all projects
+// needs token
+// s'ha d'enviar Authorization headers with token
+// ara envia tb el "projectNames" q es un llistat rapidet de lo mateix (id, name, createdAt)
 router.get('/', userShouldBeLoggedIn, async (req, res, next) => {
   
   try {
@@ -34,24 +37,30 @@ router.get('/', userShouldBeLoggedIn, async (req, res, next) => {
       })
 
       res.status(200).send({allProjects, projectNames})
-  } catch (err) {
-    res.status(500).send({message: "no s'ha trobat cap projecte, revisa les dades oi"})
-  }
-})
-
-
-router.get('/:projectId', userShouldBeLoggedIn, projectMustExist, async (req, res, next) => {
-    const {project} = req
-  try {
-        res.status(200).send(project)
-      // const minifiedUUID = translator.fromUUID(req.params.project_id)
-
       
   } catch (err) {
     res.status(500).send({message: "no s'ha trobat cap projecte, revisa les dades oi"})
   }
 })
 
+//GET one specific project
+// needs token
+// receives projectId tal cual. Maybe s'ha de encode somewhere along the way? 
+router.get('/:projectId', userShouldBeLoggedIn, projectMustExist, async (req, res, next) => {
+    const {project} = req
+  try {
+        res.status(200).send(project)
+      // const minifiedUUID = translator.fromUUID(req.params.project_id)
+    
+  } catch (err) {
+    res.status(500).send({message: "no s'ha trobat cap projecte, revisa les dades oi"})
+  }
+})
+
+// POST new project
+// needs token
+/////////  s'ha d'enviar: { key: value, etc } objecte normal
+// type (as a string), name, start_date, end_date, description, memberId, deadline, priority
 router.post('/', userShouldBeLoggedIn, async (req, res, next) => {
   const { user } = req
   // const { data } = req.body
@@ -82,6 +91,40 @@ router.post('/', userShouldBeLoggedIn, async (req, res, next) => {
   }
 })
 
+// needs token
+/// pass fields that we want to change as a { data : { field : newValue } } object
+// sends updated project
+router.patch('/:projectId', userShouldBeLoggedIn, projectMustExist, async (req, res, next) => {
+  const { project } = req
+  
+  try {
+    const updated = await project.update(req.body.data)
+    res.status(200).send(updated)
+  } catch (err) {
+    res.status(400).send({message: "error al updatear el projecte"})
+  }
+})
+
+// needs token
+// paranoid : true? where
+router.delete('/:projectId', userShouldBeLoggedIn, projectMustExist, async (req, res, next) => {
+  const { project } = req
+  try {
+    await project.destroy()
+    res.status(200).send({message: "el projecte s'ha destruït"})
+  } catch (err) {
+    res.status(400).send({message: "no s'ha destruït el projecte"})
+  }
+})
+
+
+////// TASKS 
+
+// POST task to projecte
+// needs token
+// s'ha d'enviar projectId (de moment not encoded) en req.params
+// + title, startDate, description, defaultPrice, status, deadline, priority
+// més endavant vull fer algo que calcula el status sol 
 router.post('/:projectId/tasks', userShouldBeLoggedIn, projectMustExist, async (req, res, next) => {
   const { user } = req
   const {project} = req
@@ -108,6 +151,57 @@ router.post('/:projectId/tasks', userShouldBeLoggedIn, projectMustExist, async (
     res.status(500).send(err.message)
   }
 })
+
+// GET one task
+// needs token
+router.get('/:projectId/tasks/:taskId', userShouldBeLoggedIn, projectMustExist, async (req, res, next) => {
+  const {project} = req
+  const {taskId} = req.params
+  try {
+   
+      const task = await project.getTasks({
+        where: {
+          id: taskId
+        }
+      }) 
+      res.status(200).send(task[0])
+
+  } catch (err) {
+    res.status(500).send(err.message)
+  }
+})
+
+// UPDATE task
+// needs token
+/// pass fields that we want to change as a { data : { field : newValue } } object
+// sends updated task
+router.patch('/:projectId/tasks/:taskId', userShouldBeLoggedIn, projectMustExist, async (req, res, next) => {
+  const {project} = req
+  const {taskId} = req.params
+  
+  try {
+   
+      const taskToUpdate = await project.getTasks({
+        where: {
+          id: taskId
+        }
+      })
+      const updatedTask = await taskToUpdate[0].update(req.body.data)   
+      res.status(200).send(taskToUpdate)
+
+  } catch (err) {
+    res.status(500).send(err.message)
+  }
+})
+
+
+
+
+// beforeEach userShouldBeLoggedIn?
+
+
+//// connection pooling
+/// destroy : paranoid true
 
 
 module.exports = router;

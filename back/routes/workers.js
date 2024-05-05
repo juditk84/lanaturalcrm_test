@@ -38,7 +38,7 @@ router.get('/all', async (req, res, next) => {
 //   }
 // })
 
-router.post('/pinboard/:element', userShouldBeLoggedIn, async (req, res, next) => {
+router.post('/:type/:element', userShouldBeLoggedIn, async (req, res, next) => {
   const { user } = req
   const { element } = req.params
   const { data } = req.body

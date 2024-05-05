@@ -1,12 +1,24 @@
 const models = require("../models");
 
 async function memberMustExist(req, res, next) {
-
-    const membre = await models.Member.findOne({
+  
+    try {
+      const response = await models.Member.findOne({
         where: {
-            id: memberId
+          id: req.params.memberId
         }
-    })
+      })
+    response.dataValues.name = response.dataValues.memberType === 'contact'
+            ? `${response.dataValues.firstname} ${response.dataValues.lastname1} ${response.dataValues.lastname2 ?? ""}`.trim()
+            :  `${response.dataValues.commercialName1}`
+    
+    req.member = response;
+
+    next()
+
+  } catch (err) {
+    res.status(500).send({message: "no s'ha trobat el membre que busques, revisa les dades oi"})
+  }
 
 }
 
