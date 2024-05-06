@@ -18,6 +18,7 @@ const userNotes = ref(null)
 
 
 
+
 // watch(() => authStore.isLoggedIn, fetchAllUserRelatedAssets, { immediate: true })
 // watchEffect(async () => {
 //   fetchAllUserRelatedAssets()
@@ -38,6 +39,7 @@ const userAvatar = computed(
     `https://api.dicebear.com/8.x/adventurer/svg?seed=Salem`
 )
 async function addToPinboard(element, data) {
+
     try {
 
       // const { data } = useMyFetch("workers", { data}).post().text()
@@ -48,8 +50,10 @@ async function addToPinboard(element, data) {
           Authorization: sessionStorage.getItem("refreshToken"),
         }
       })
+
       console.log(response)
     return response.data
+
     } catch (error) {
       console.log(error);
     }
@@ -131,4 +135,3 @@ async function fetchAllUserRelatedAssets(){
   }
 
 })
-

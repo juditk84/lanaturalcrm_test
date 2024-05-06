@@ -10,10 +10,12 @@ const projectMustExist = require('../guards/projectMustExist');
 
 const translator = short()
 
+
 // GET all projects
 // needs token
 // s'ha d'enviar Authorization headers with token
 // ara envia tb el "projectNames" q es un llistat rapidet de lo mateix (id, name, createdAt)
+
 router.get('/', userShouldBeLoggedIn, async (req, res, next) => {
   
   try {
@@ -32,12 +34,14 @@ router.get('/', userShouldBeLoggedIn, async (req, res, next) => {
 
       })
 
+
       const projectNames = allProjects.map((project) => {
         return {id: project.id, name: project.name, createdAt: project.createdAt}
       })
 
       res.status(200).send({allProjects, projectNames})
       
+
   } catch (err) {
     res.status(500).send({message: "no s'ha trobat cap projecte, revisa les dades oi"})
   }
@@ -118,6 +122,7 @@ router.delete('/:projectId', userShouldBeLoggedIn, projectMustExist, async (req,
 })
 
 
+
 ////// TASKS 
 
 // POST task to projecte
@@ -128,6 +133,7 @@ router.delete('/:projectId', userShouldBeLoggedIn, projectMustExist, async (req,
 router.post('/:projectId/tasks', userShouldBeLoggedIn, projectMustExist, async (req, res, next) => {
   const { user } = req
   const {project} = req
+
 
   try {
    

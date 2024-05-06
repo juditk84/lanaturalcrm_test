@@ -43,17 +43,6 @@ onMounted(() => {
 })
 
 
-// onMounted(() => {
-//   fillData()
-// })
-
-watch(() => userStore.user, userStore.fetchAllUserRelatedAssets, { deep: true })
-// userStore.$subscribe((user), )
-async function printUser() {
-  console.log(userStore.user)
-  console.log(userStore.user.userNotes)
-}
-
 
 </script>
 
