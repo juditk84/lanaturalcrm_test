@@ -14,14 +14,14 @@ const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn')
 router.get('/', userShouldBeLoggedIn, async (req, res, next) => {
   try {
       const response = await models.Member.findAll()
-      const workerInfo = await response.map((worker) => {
+      const memberInfo = await response.map((member) => {
        return {
-        ...worker.dataValues,
-        name : worker.memberType === 'contact' ? `${worker.firstname} ${worker.lastname1} ${worker.lastname2 ?? ""}`.trim()
-         : `${worker.commercialName1}`
+        ...member.dataValues,
+        name : member.memberType === 'contact' ? `${member.firstname} ${member.lastname1} ${member.lastname2 ?? ""}`.trim()
+         : `${member.commercialName1}`
         }
         })
-      res.status(200).send(workerInfo)
+      res.status(200).send(memberInfo)
   } catch (err) {
     res.status(500).send({message: "error al carregar els membres de la xarxa, ups"})
   }

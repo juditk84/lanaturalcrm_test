@@ -4,11 +4,7 @@ import { parse, format } from '@formkit/tempo'
 import axios from 'axios'
 import { useAuthStore } from './authStore'
 import { useRouter, useRoute } from 'vue-router'
-import { useAsyncState, watchImmediate } from '@vueuse/core'
-// const router = useRouter()
-// const route = useRoute()
 
-import { useMyFetch } from '../helper/useMyFetch'
 
 
 export const useUserStore = defineStore('userStore', () => {

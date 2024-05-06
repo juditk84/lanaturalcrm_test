@@ -28,8 +28,8 @@ export const useProjectesStore = defineStore('projecteStore', () => {
           'If-None-Match': allProjects.value?.etag,
           'Cache-Control': 'private'
         }})
-        allProjects.value = { content: results.data,
-                              tableContent: results.data.map(project => {
+        allProjects.value = { content: results.data.allProjects,
+                              tableContent: results.data.allProjects.map(project => {
                                 return {
                                   Nom: project.name,
                                   Client: project.Member.commercialName1,
@@ -48,7 +48,7 @@ export const useProjectesStore = defineStore('projecteStore', () => {
                             }
                             
       } catch(error) {
-        if(error.response.status !== 304){
+        if(error.response?.status !== 304){
           alert(error.message)
         }
       }
@@ -75,6 +75,7 @@ export const useProjectesStore = defineStore('projecteStore', () => {
         headers: {   
         Authorization: "Bearer " + sessionStorage.refreshToken
       }
+
       })
       specificProject.value = results.data
       specificProjectTransactions.value = { // ojito amiga amb les factures, l'import ara mateix és NOMÉS LA BASE.

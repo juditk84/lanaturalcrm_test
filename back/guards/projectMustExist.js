@@ -10,7 +10,7 @@ const project = await models.Project.findOne({
           {
             model: models.Member,
             attributes: {
-              exclude: ["id", "ProjectTypeId"]
+              exclude: ["ProjectTypeId"]
             }
           },
           {

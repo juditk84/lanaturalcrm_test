@@ -1,6 +1,5 @@
 <script setup>
 import { computed, ref, onMounted, watch } from 'vue'
-import { watchImmediate } from '@vueuse/core'
 import {
   mdiAccountMultiple,
   mdiCartOutline,
