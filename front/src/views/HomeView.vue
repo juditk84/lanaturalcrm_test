@@ -37,17 +37,21 @@ import AddComment from '@/components/AddComment.vue'
 const isModalActive = ref(false)
 const userStore = useUserStore();
 
-// const fillData = () => {
-//  // why nooooo :_____
-// }
 
 onMounted(() => {
   userStore.fetchAllUserRelatedAssets()
 })
 
+
+// onMounted(() => {
+//   fillData()
+// })
+
+watch(() => userStore.user, userStore.fetchAllUserRelatedAssets, { deep: true })
+// userStore.$subscribe((user), )
 async function printUser() {
   console.log(userStore.user)
-  console.log(userStore.userNotes)
+  console.log(userStore.user.userNotes)
 }
 
 
@@ -58,7 +62,7 @@ async function printUser() {
     <SectionMain>
 
       <CardBoxModal v-model="isModalActive" title="Afegir algo al pinboard">
-        <AddComment element="hola"/>
+        <AddComment element="an element is required"/>
       </CardBoxModal>
 
 

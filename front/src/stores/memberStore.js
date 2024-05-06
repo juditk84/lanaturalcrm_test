@@ -10,16 +10,15 @@ export const useMemberStore = defineStore('memberStore', () => {
 
  async function fetchMembers() {
     try {
-      const results = await axios('api/xarxa/', {
+      const results = await axios('api/xarxa/',
+      {
         headers: {   
-          Authorization: "Bearer " + sessionStorage.refreshToken,
-          'If-None-Match': allMembers.value?.etag,
-          'Cache-Control': 'private'
+        Authorization: "Bearer " + sessionStorage.refreshToken
         }
       })
       allMembers.value = {content: results.data,
                           tableContent: results?.data.map(member => { 
-                                          return {nom: member.commercialName1,
+                                          return {nom: member.name,
                                                   adreça: member.address,
                                                   ciutat: member.city}}),
                           tableHeaders: [
