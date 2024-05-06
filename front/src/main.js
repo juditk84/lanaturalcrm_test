@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, watch } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import App from './App.vue'
@@ -12,7 +12,7 @@ import './css/main.css'
 // Init Pinia
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
-
+// watch(pinia.state, handler, { deep: true })
 // Create Vue app
 createApp(App).use(router).use(setupCalendar, {}).use(pinia).mount('#app')
 
