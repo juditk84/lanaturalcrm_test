@@ -11,7 +11,7 @@ const models = require("../models");
 
 async function userShouldBeLoggedIn(req, res, next) {
   
-  const token = req.headers["authorization"]?.replace(/^Bearer\s/, "");
+ const token = req.headers["authorization"]?.replace(/^Bearer\s/, "");
   if (!token) {
     console.log("ha estat horrible!")
     res.status(401).send({ message: "please provide a token" });
