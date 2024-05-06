@@ -26,16 +26,14 @@ async function addToPinboard(element, data) {
 
     try {
 
-      // const { data } = useMyFetch("workers", { data}).post().text()
       const response = await axios.post(`api/workers/pinboard/${element}`,
       {data},
       {
         headers: {
           Authorization: sessionStorage.getItem("refreshToken"),
-        }
-      })
-
-      console.log(response)
+        },
+      },
+      )
     return response.data
 
     } catch (error) {
