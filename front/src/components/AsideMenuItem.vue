@@ -1,10 +1,13 @@
 <script setup>
+import { useMainStore } from '@/stores/main'
 import { ref, computed, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { mdiConsoleNetworkOutline, mdiMinus, mdiPlus } from '@mdi/js'
 import { getButtonColor } from '@/colors.js'
 import BaseIcon from '@/components/BaseIcon.vue'
 import AsideMenuList from '@/components/AsideMenuList.vue'
+
+const mainStore = useMainStore();
 
 const props = defineProps({
   item: {
@@ -15,8 +18,6 @@ const props = defineProps({
 })
 
 const route = useRoute();
-
-const isDropdownActive = ref(false)
 
 const emit = defineEmits(['menu-click'])
 
@@ -34,9 +35,24 @@ const componentClass = computed(() => [
 ])
 
 const hasDropdown = computed(() => !!props.item.menu)
+
 const dropItDown = () => {
-  if(hasDropdown) isDropdownActive.value = !isDropdownActive.value
+  if(mainStore.activeAsideElement?.label === props.item?.label){
+    mainStore.activeAsideElement = null
+  }
+  else{
+    mainStore.activeAsideElement = props.item
+  }
 }
+
+const isDropdownActive = computed(() => {
+  if(mainStore.activeAsideElement?.label === props.item?.label){
+    return true
+  }
+return false
+})
+
+
 const menuClick = (event) => {
   
   emit('menu-click', event, props.item)

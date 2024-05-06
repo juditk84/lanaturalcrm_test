@@ -105,4 +105,4 @@ const authStore = useAuthStore()
     fetchAllUserRelatedAssets,
     addToPinboard
   }
-}, {persist: true})
+})
