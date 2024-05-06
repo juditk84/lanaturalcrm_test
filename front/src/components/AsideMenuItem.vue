@@ -4,7 +4,6 @@ import { ref, computed, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { mdiConsoleNetworkOutline, mdiMinus, mdiPlus } from '@mdi/js'
 import { getButtonColor } from '@/colors.js'
-import { useMainStore } from '@/stores/main'
 import BaseIcon from '@/components/BaseIcon.vue'
 import AsideMenuList from '@/components/AsideMenuList.vue'
 
@@ -56,11 +55,7 @@ return false
 
 
 const menuClick = (event) => {
-  
   emit('menu-click', event, props.item)
-
-  if (hasDropdown && !isDropdownActive.value) isDropdownActive.value = !isDropdownActive.value
-
 }
 
 </script>

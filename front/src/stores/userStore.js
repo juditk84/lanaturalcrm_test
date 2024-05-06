@@ -16,22 +16,6 @@ const userLinks = ref(null)
 const userDocs = ref(null)
 const userNotes = ref(null)
 
-
-
-
-// watch(() => authStore.isLoggedIn, fetchAllUserRelatedAssets, { immediate: true })
-// watchEffect(async () => {
-//   fetchAllUserRelatedAssets()
-// })
-// watch(
-//   pinia.state,
-//   (state) => {
-//     // persist the whole state to the local storage whenever it changes
-//     localStorage.setItem('piniaState', JSON.stringify(state))
-//   },
-//   { deep: true }
-// )
-
 const $reset = () => {user.value = null}
 
 const userAvatar = computed(  

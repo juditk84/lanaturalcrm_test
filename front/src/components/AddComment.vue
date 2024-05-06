@@ -34,9 +34,9 @@ const form = ref({
 async function submit(){
   console.log("submit button clicked")
     try {
+      console.log(form.value)
       const response = await userStore.addToPinboard("note", form.value)
       userStore.fetchAllUserRelatedAssets();
-      console.log(response)
     } catch (error) {
       console.log(error);
     }   
@@ -46,13 +46,11 @@ async function submit(){
 </script>
 
 <template>
-  <LayoutAuthenticated>
+
     
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiHandshakeOutline" title="Afegir una nota" main>
       </SectionTitleLineWithButton>
-
-        
         <BaseDivider />
       <CardBox form @submit.prevent="submit">
           <FormControl v-model="form.title" :icon="mdiAccount" placeholder="titól"/>
@@ -64,5 +62,5 @@ async function submit(){
         </template>
       </CardBox>
     </SectionMain>
-  </LayoutAuthenticated>
+
 </template>
