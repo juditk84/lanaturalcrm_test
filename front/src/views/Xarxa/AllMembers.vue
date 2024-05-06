@@ -28,7 +28,8 @@ async function grabAllMembersFromStore(){await memberStore.fetchMembers()}
             :content="memberStore.allMembers?.content" 
             :table-content="memberStore.allMembers?.tableContent" 
             :table-headers="memberStore.allMembers?.tableHeaders" 
-             table-title="Tots els membres"/>
+             table-title="Tots els membres"
+            :items-per-page="10"/>
 
     </CardBox>
     </SectionMain>

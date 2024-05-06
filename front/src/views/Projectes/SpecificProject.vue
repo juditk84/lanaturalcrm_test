@@ -97,6 +97,7 @@ const attributes = ref(taskDates);
                :table-content="projectesStore.specificProjectTasks?.tableContent"
                :table-headers="projectesStore.specificProjectTasks?.tableHeaders"
                table-title="Tasques"
+               :items-per-page="5"
                />
       
         </CardBox>
@@ -113,6 +114,7 @@ const attributes = ref(taskDates);
                :table-content="projectesStore.specificProjectTransactions?.tableContent"
                :table-headers="projectesStore.specificProjectTransactions?.tableHeaders"
                table-title="Moviments"
+               :items-per-page="5"
                />
 
     </CardBox>

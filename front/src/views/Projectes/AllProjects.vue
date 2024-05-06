@@ -30,7 +30,8 @@ onMounted( async () => await projectesStore.fetchProjects())
               :content="projectesStore.allProjects?.content" 
               :table-content="projectesStore.allProjects?.tableContent" 
               :table-headers="projectesStore.allProjects?.tableHeaders" 
-               table-title="Tots els projectes"/>
+               table-title="Tots els projectes"
+              :items-per-page="5"/>
       </CardBox>
     </SectionMain>
 
