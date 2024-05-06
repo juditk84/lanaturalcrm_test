@@ -62,7 +62,7 @@ async function printUser() {
     <SectionMain>
 
       <CardBoxModal v-model="isModalActive" title="Afegir algo al pinboard">
-        <AddComment :element="element"/>
+        <AddComment element="an element is required"/>
       </CardBoxModal>
 
 

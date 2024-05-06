@@ -48,7 +48,7 @@ defineProps({
 
 
     </div>
-    <BaseIcon v-if="icon" :path="icon" size="48" w="" h="h-16" :class="color" />
+    <!-- <BaseIcon v-if="icon" :path="icon" size="48" w="" h="h-16" :class="color" /> -->
   </BaseLevel>
 </CardBox>
 
