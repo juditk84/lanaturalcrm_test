@@ -37,12 +37,8 @@ import AddComment from '@/components/AddComment.vue'
 const isModalActive = ref(false)
 const userStore = useUserStore();
 
-const fillData = () => {
- // why nooooo :_____
-}
-
 onMounted(() => {
-  fillData()
+  userStore.fetchAllUserRelatedAssets()
 })
 
 async function printUser() {
