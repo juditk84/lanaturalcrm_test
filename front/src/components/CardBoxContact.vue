@@ -65,7 +65,7 @@ const pillText = computed(() => props.text ?? `${props.progress}%`)
 </script>
 
 <template>
-  <CardBox class="mb-6 last:mb-0 bg-slate-100">
+  <CardBox class="mb-6 last:mb-0 bg-blue-100">
     <BaseLevel>
       <BaseLevel type="justify-start">
         <!-- <UserAvatar class="w-12 h-12 mr-6" :username="name" /> -->
@@ -77,6 +77,7 @@ const pillText = computed(() => props.text ?? `${props.progress}%`)
           <p class="text-gray-500 dark:text-slate-400">{{ mail }}</p>
         </div>
       </BaseLevel>
+      <a v-bind:href="'mailto:' + mail">send fancy mail💌</a>
     </BaseLevel>
   </CardBox>
 </template>

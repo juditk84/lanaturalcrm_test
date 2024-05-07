@@ -7,9 +7,7 @@ import CardBox from '@/components/CardBox.vue'
 import CardBoxComponentHeader from '@/components/CardBoxComponentHeader.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
-import TableProjectTasks from '@/components/TableProjectTasks.vue'
 import Table from '@/components/Table.vue'
-import TableProjectTransactions from '@/components/TableProjectTransactions.vue'
 import { useProjectesStore } from '@/stores/projectesStore'
 import { useDarkModeStore } from '@/stores/darkMode'
 
@@ -20,7 +18,6 @@ const darkModeStore = useDarkModeStore()
 const projectesStore = useProjectesStore();
 
 onMounted(async () => await projectesStore.fetchSpecificProject())
-onUnmounted(() => projectesStore.specificProject.value = null)
 
 
 const calendarActive = ref(false)

@@ -158,6 +158,24 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        id: "7b9b8b8f-d1b8-4fc6-ad2b-6fb5dcfc50e2",
+        firstname: 'Manoli',
+        lastname1: 'Turbo',
+        lastname2: 'Power',
+        email: 'manoli@lasermanoli.cat',
+        officialId: "46775599J",
+        address: "Carrer de la Maldat Pura, s/n", 
+        city: "SABADELL",
+        postcode: "08192",
+        country: "SPAIN",
+        phoneNumber: "937773333",
+        memberType: 'contact',
+        parentId: '1e271fc4-4718-43ee-9d80-849915fbbf6b',
+        creatorId: "83482ffe-63d1-403c-83d5-a70dd01ae597",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ])
   },
 

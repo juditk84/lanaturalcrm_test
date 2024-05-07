@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       
       // tree structure
       Member.belongsTo(models.Member, {as: "Parent", foreignKey: "parentId", allowNull: true});
-      Member.hasMany(models.Member, {as: "LinkedMembers", foreignKey: "parentId"})
+      Member.hasMany(models.Member, {as: "Child", foreignKey: "parentId"})
 
       // commentables
       Member.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'member'}});
@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     city: DataTypes.STRING,
     postcode: DataTypes.STRING,
     country: DataTypes.STRING,
-    phoneNumber: DataTypes.INTEGER,
+    phoneNumber: DataTypes.STRING,
     authorizationImg: DataTypes.BOOLEAN,
     memberType: DataTypes.ENUM('entity', 'contact'),
   }, {
