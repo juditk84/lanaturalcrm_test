@@ -7,7 +7,6 @@ import { getButtonColor } from '@/colors.js'
 import BaseIcon from '@/components/BaseIcon.vue'
 import AsideMenuList from '@/components/AsideMenuList.vue'
 
-const mainStore = useMainStore();
 
 const props = defineProps({
   item: {
@@ -18,6 +17,8 @@ const props = defineProps({
 })
 
 const route = useRoute();
+const mainStore = useMainStore();
+
 
 const emit = defineEmits(['menu-click'])
 
@@ -54,15 +55,15 @@ return false
 
 
 const menuClick = (event) => {
-  
   emit('menu-click', event, props.item)
-  if (hasDropdown && !isDropdownActive.value) isDropdownActive.value = !isDropdownActive.value
 }
+
 </script>
 
 <template>
   <li>
     <component
+    
       :is="item.to ? RouterLink : 'a'"
       v-slot="vSlot"
       :to="item.to ?? null"
@@ -79,6 +80,7 @@ const menuClick = (event) => {
         :class="[vSlot && vSlot.isExactActive ? '' : asideMenuItemActiveStyle]"
         w="w-16"
         :size="18"
+
       />
       <span
         class="grow text-ellipsis line-clamp-1"

@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     base: DataTypes.INTEGER,
     irpf: DataTypes.INTEGER,
     status: DataTypes.ENUM("en curs", "tancada"),
-    transactionType: DataTypes.ENUM("factura", "nòmina", "subvenció"),
+    transactionType: DataTypes.ENUM("factura", "nòmina", "subvenció", "ingrés"),
     isRecurrent: DataTypes.BOOLEAN
   }, {
     sequelize,

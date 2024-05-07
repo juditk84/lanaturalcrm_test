@@ -19,6 +19,7 @@ router.post('/pinboard/:element', userShouldBeLoggedIn, async (req, res, next) =
           text: data.text,
           creatorId: user.id,
           parentId: data.parentId || null,
+
           commentableType: "worker",
           commentableId: user.id
         },
@@ -36,7 +37,9 @@ router.post('/pinboard/:element', userShouldBeLoggedIn, async (req, res, next) =
             commentableType: "worker",
             commentableId: user.id
           }, 
+
           { fields: ["title", "url", "description"]}
+
         )
           res.status(200).send({data: doc})
           break;
@@ -50,7 +53,9 @@ router.post('/pinboard/:element', userShouldBeLoggedIn, async (req, res, next) =
               commentableType: "worker",
               commentableId: user.id
             }, 
+
             { fields: ["title", "url", "description"]}
+
           )
           res.status(200).send({data: link})
           break;

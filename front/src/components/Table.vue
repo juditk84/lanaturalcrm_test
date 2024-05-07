@@ -19,7 +19,8 @@ const props = defineProps({
   tableContent: Object,
   tableHeaders: Array,
   tableTitle: String,
-  hasFilter: Boolean
+  hasFilter: Boolean,
+  itemsPerPage: Number
 })
 
 const router = useRouter()
@@ -31,7 +32,7 @@ const isModalActive = ref(false)
 
 const isModalDangerActive = ref(false)
 
-const perPage = ref(5)
+const perPage = ref(props.itemsPerPage)
 
 const currentPage = ref(0)
 

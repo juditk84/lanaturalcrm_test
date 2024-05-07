@@ -16,21 +16,6 @@ const userLinks = ref(null)
 const userDocs = ref(null)
 const userNotes = ref(null)
 
-
-
-// watch(() => authStore.isLoggedIn, fetchAllUserRelatedAssets, { immediate: true })
-// watchEffect(async () => {
-//   fetchAllUserRelatedAssets()
-// })
-// watch(
-//   pinia.state,
-//   (state) => {
-//     // persist the whole state to the local storage whenever it changes
-//     localStorage.setItem('piniaState', JSON.stringify(state))
-//   },
-//   { deep: true }
-// )
-
 const $reset = () => {user.value = null}
 
 const userAvatar = computed(  
@@ -38,18 +23,19 @@ const userAvatar = computed(
     `https://api.dicebear.com/8.x/adventurer/svg?seed=Salem`
 )
 async function addToPinboard(element, data) {
+
     try {
 
-      // const { data } = useMyFetch("workers", { data}).post().text()
       const response = await axios.post(`api/workers/pinboard/${element}`,
       {data},
       {
         headers: {
-          Authorization: sessionStorage.getItem("refreshToken")
-        }
-      })
-      console.log(response)
+          Authorization: sessionStorage.getItem("refreshToken"),
+        },
+      },
+      )
     return response.data
+
     } catch (error) {
       console.log(error);
     }
@@ -131,4 +117,3 @@ async function fetchAllUserRelatedAssets(){
   }
 
 })
-

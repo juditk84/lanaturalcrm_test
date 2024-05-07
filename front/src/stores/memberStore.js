@@ -25,9 +25,12 @@ export const useMemberStore = defineStore('memberStore', () => {
                             { binder: "nom", label: "nom"},
                             { binder: "adreça", label: "adreça"},
                             { binder: "ciutat", label: "ciutat"}
-                          ]
+                          ],
+                          etag: results.headers.etag
     }} catch(error) {
+      if(error.response.status !== 304){
         alert(error.message)
+      }
     }
   }
 

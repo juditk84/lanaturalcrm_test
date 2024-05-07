@@ -19,9 +19,9 @@ import 'v-calendar/style.css';
 const darkModeStore = useDarkModeStore()
 const projectesStore = useProjectesStore();
 
-onMounted(() => { grabSpecificProjectFromStore() })
+onMounted(async () => await projectesStore.fetchSpecificProject())
 onUnmounted(() => projectesStore.specificProject.value = null)
-async function grabSpecificProjectFromStore(){await projectesStore.fetchSpecificProject()}
+
 
 const calendarActive = ref(false)
 
@@ -97,6 +97,7 @@ const attributes = ref(taskDates);
                :table-content="projectesStore.specificProjectTasks?.tableContent"
                :table-headers="projectesStore.specificProjectTasks?.tableHeaders"
                table-title="Tasques"
+               :items-per-page="5"
                />
       
         </CardBox>
@@ -113,6 +114,7 @@ const attributes = ref(taskDates);
                :table-content="projectesStore.specificProjectTransactions?.tableContent"
                :table-headers="projectesStore.specificProjectTransactions?.tableHeaders"
                table-title="Moviments"
+               :items-per-page="5"
                />
 
     </CardBox>

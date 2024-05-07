@@ -42,6 +42,7 @@ if (
 const defaultDocumentTitle = 'La Natural Coopmunicació'
 
 // Set document title from route meta
+// judit: not sure if we should use document.title as a global variable
 router.afterEach((to) => {
   document.title = to.meta?.title
     ? `${to.meta.title} — ${defaultDocumentTitle}`
