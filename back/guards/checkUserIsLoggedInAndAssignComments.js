@@ -58,7 +58,11 @@ if (!token) {
         }
         
     } catch (err) {
-        return err
+        return err.message
+        // hi ha un slight problema amb el envio de error
+        //si faig aixi si no hi ha url es queda trancat
+        // si faig res.send(err.message) si no hi ha url, envia el msg de error, però si hi ha es tranca perquè no es poden fer varis "res.send"
+        // to be affinat
     }
 
     req.comment = comment
