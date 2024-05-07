@@ -1,72 +1,76 @@
 var express = require('express');
 var router = express.Router();
+const checkUserIsLoggedInAndAssignComments = require('../guards/checkUserIsLoggedInAndAssignComments')
 const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn');
+const commentMustExist = require('../guards/commentMustExist')
 const { v4: uuidv4 } = require('uuid')
 
+// ************ EN TOTES LES URLs de comments
+// *******    s'ha d'especificar /comments/note o /comments/link (de moment deixo enrere els documents)
 
 
-router.post('/pinboard/:element', userShouldBeLoggedIn, async (req, res, next) => {
-    const { user } = req
-    const { element } = req.params
-    const { data } = req.body
-    
+// ADD comment
+// needs token
+// s'ha d'enviar : { data : { object with data }}
+// for note, object with data = title, text, commentableId (id de wtv we are linking to)
+// for link or doc, object with data = title, description, url, commentableId
+
+// URL : :element es "note", o "link" (document per pereza ho deixo per més endavant)
+//        :type es el tipo de element al que ho afegim.
+//        :type pot ser: pinboard, project, task, member, transaction, document, estimate, link,.... 
+// NOTE pot tener parentId, en quin cas s'hauria de pasar a traves de un "respondre" botó o algo que figuri a cada NoteBox 
+router.post('/:element/:type', checkUserIsLoggedInAndAssignComments, async (req, res, next) => {
+
+    const {comment} = req
     try {
-      switch (element){
-        case "note":
-        const note = user.createNote({
-          id: uuidv4(),
-          title: data.title,
-          text: data.text,
-          creatorId: user.id,
-          parentId: data.parentId || null,
 
-          commentableType: "worker",
-          commentableId: user.id
-        },
-        { fields: ["title", "text"]}
-      )
-        res.status(200).send({data: note})
-        break;
-        case "document":
-        const doc = user.createDocument({
-            id: uuidv4(),
-            title: data.title,
-            url: data.url,
-            description: data.description,
-            creatorId: user.id,
-            commentableType: "worker",
-            commentableId: user.id
-          }, 
-
-          { fields: ["title", "url", "description"]}
-
-        )
-          res.status(200).send({data: doc})
-          break;
-          case "link":
-          const link = user.createDocument({
-              id: uuidv4(),
-              title: data.title,
-              url: data.url,
-              description: data.description,
-              creatorId: user.id,
-              commentableType: "worker",
-              commentableId: user.id
-            }, 
-
-            { fields: ["title", "url", "description"]}
-
-          )
-          res.status(200).send({data: link})
-          break;
-          default:
-            res.status(401).send({message: "hi ha abigut un error a l'hora de afegir elements al teu pinboard"})
-          break;
-      }
+  
+      res.status(200).send(comment)
       
     } catch (err) {
-      res.status(404).send({message: err.message})
+      res.status(500).send({message: err.message})
     }
   })
 
-  module.exports = router;
+  // needs token
+router.get('/:element/:id', userShouldBeLoggedIn, commentMustExist, async (req, res, next) => {
+  const { comment } = req
+
+  try {
+    res.status(200).send(comment)
+  } catch (err) {
+    res.status(500).send({message: err.message})
+  }
+
+})
+
+// needs token
+/// pass fields that we want to change as a { data : { field : newValue } } object
+// sends updated comment
+
+/// maybe we want to check if user is creatorId? but maybe not also. de moment no ho fem.
+router.patch('/:element/:id', userShouldBeLoggedIn, commentMustExist, async (req, res, next) => {
+  const { comment } = req
+  
+  try {
+    const updated = await comment.update(req.body.data)
+    res.status(200).send(updated)
+  } catch (err) {
+    res.status(400).send({message: `error al updatear el element ${element}`})
+  }
+})
+
+// needs token
+// paranoid : true? where
+router.delete('/:element/:id', userShouldBeLoggedIn, commentMustExist, async (req, res, next) => {
+  const { comment } = req
+
+  try {
+    await comment.destroy()
+    res.status(200).send({message: `${req.params.element} destroyed`})
+  } catch (err) {
+    res.status(400).send({message: `ups! ${req.params.element} not destroyed`})
+  }
+})
+
+module.exports = router;

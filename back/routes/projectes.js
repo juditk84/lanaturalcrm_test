@@ -29,7 +29,9 @@ router.get('/', userShouldBeLoggedIn, async (req, res, next) => {
           {
             model: models.Worker,
             attributes: ["firstname"]
-          }
+          },
+          {model: models.Note},
+          {model: models.Link}
         ],
 
       })
