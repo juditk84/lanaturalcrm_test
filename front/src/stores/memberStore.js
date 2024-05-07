@@ -14,7 +14,7 @@ export const useMemberStore = defineStore('memberStore', () => {
 
 
 
- async function fetchMembers() {
+  async function fetchMembers() {
     try {
       const results = await axios('api/xarxa/',
       {
@@ -70,10 +70,27 @@ export const useMemberStore = defineStore('memberStore', () => {
     }
   }
 
+  async function addMember(data){
+    try{
+      const response = await axios.post('api/xarxa/',
+      {data},
+      {
+        headers: {
+          Authorization: sessionStorage.getItem("refreshToken"),
+        },
+      },
+      )
+    return response.data
+    
+    } catch (error) {
+      return error.message
+    }
+  }
 
   return {
     allMembers,
     fetchedMember,
+    addMember,
     specificMember,
     fetchMembers,
     fetchSpecificMember
