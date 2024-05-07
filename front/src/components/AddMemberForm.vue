@@ -26,20 +26,20 @@ const memberStore = useMemberStore();
 
 
 const form = ref({
-  firstname: '',
-  lastname1: '',
-  lastname2: '',
-  commercialName1: '',
-  commercialName2: '',
-  pronouns: '',
-  role: '',
-  officialId: '',
-  email: '',
-  address: '',
-  city: '',
-  postcode: '',
+  firstname: null,
+  lastname1: null,
+  lastname2: null,
+  commercialName1: null,
+  commercialName2: null,
+  pronouns: null,
+  role: null,
+  officialId: null,
+  email: null,
+  address: null,
+  city: null,
+  postcode: null,
   authorizationImg: false,
-  phoneNumber: '',
+  phoneNumber: null,
   memberType: 'contact', 
 })
 

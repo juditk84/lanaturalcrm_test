@@ -1,63 +1,26 @@
 var express = require('express');
 var router = express.Router();
+const checkUserIsLoggedInAndAssignComments = require('../guards/checkUserIsLoggedInAndAssignComments')
 const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn');
 const { v4: uuidv4 } = require('uuid')
 
 
+// ADD comment
+// needs token
+// s'ha d'enviar : { data : { object with data }}
+// for note, object with data = title, text, commentableId (id de wtv we are linking to)
+// for link or doc, object with data = title, description, url, commentableId
 
-router.post('/pinboard/:element', userShouldBeLoggedIn, async (req, res, next) => {
-    const { user } = req
-    const { element } = req.params
-    const { data } = req.body
-    
+// URL : :element es "note", "document" o "link" (de moment document o link retorna link)
+//        :type es el tipo de element al que ho afegim.
+//        :type pot ser: pinboard, project, task, member, transaction, document, estimate, link,.... 
+// NOTE pot tener parentId, en quin cas s'hauria de pasar a traves de un "respondre" botó o algo que figuri a cada NoteBox 
+router.post('/:element/:type', checkUserIsLoggedInAndAssignComments, async (req, res, next) => {
+
+    const {comment} = req
     try {
-      switch (element){
-        case "note":
-        const note = user.createNote({
-          id: uuidv4(),
-          title: data.title,
-          text: data.text,
-          creatorId: user.id,
-          parentId: data.parentId || null,
-          commentableType: "worker",
-          commentableId: user.id
-        },
-        { fields: ["title", "text"]}
-      )
-        res.status(200).send({data: note})
-        break;
-        case "document":
-        const doc = user.createDocument({
-            id: uuidv4(),
-            title: data.title,
-            url: data.url,
-            description: data.description,
-            creatorId: user.id,
-            commentableType: "worker",
-            commentableId: user.id
-          }, 
-          { fields: ["title", "url", "description"]}
-        )
-          res.status(200).send({data: doc})
-          break;
-          case "link":
-          const link = user.createDocument({
-              id: uuidv4(),
-              title: data.title,
-              url: data.url,
-              description: data.description,
-              creatorId: user.id,
-              commentableType: "worker",
-              commentableId: user.id
-            }, 
-            { fields: ["title", "url", "description"]}
-          )
-          res.status(200).send({data: link})
-          break;
-          default:
-            res.status(401).send({message: "hi ha abigut un error a l'hora de afegir elements al teu pinboard"})
-          break;
-      }
+  
+      res.status(200).send(comment)
       
     } catch (err) {
       res.status(404).send({message: err.message})

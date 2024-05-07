@@ -14,11 +14,11 @@ const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn')
 router.get('/', userShouldBeLoggedIn, async (req, res, next) => {
   try {
       const response = await models.Member.findAll()
-      const workerInfo = await response.map((worker) => {
+      const memberInfo = await response.map((member) => {
        return {
-        ...worker.dataValues,
-        name : worker.memberType === 'contact' ? `${worker.firstname} ${worker.lastname1} ${worker.lastname2 ?? ""}`.trim()
-         : `${worker.commercialName1}`
+        ...member.dataValues,
+        name : member.memberType === 'contact' ? `${member.firstname} ${member.lastname1} ${member.lastname2 ?? ""}`.trim()
+         : `${member.commercialName1}`
         }
         })
       res.status(200).send(workerInfo)
@@ -45,7 +45,7 @@ router.get('/:memberId', userShouldBeLoggedIn, memberMustExist, async (req, res,
 //  s'ha d'enviar: { data : { key: value, etc }} objecte 
 // if contact enviar firstname, lastname1(+2), role, pronouns
 // if entity commercialName1(+2) 
-// ALL : memberType, officialId, email, address, city, postcode, country, phoneNumber, authorizationImg, parentId
+// ALL : memberType, officialId, email, address, city, postcode, country, phoneNumber, authorizationImg, parentId (or null)
 
 // data by default should be NULL i quant ho sigui podem borrar tots els || null aqui
 
@@ -123,7 +123,7 @@ async function checkMemberTypeMatchesData(member, memberType) {
       if (member.commercialName1 === null) throw new Error("entitats necesitan com a minim nom comercial")
     break;
     default: 
-      return new Error("s'ha d'indicar el tipus de membre")
+      throw new Error("s'ha d'indicar el tipus de membre")
   }
 }
 
