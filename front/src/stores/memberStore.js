@@ -1,11 +1,17 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import shortUUID from 'short-uuid'
 import axios from 'axios'
-
+import { useRoute, useRouter } from 'vue-router'
 export const useMemberStore = defineStore('memberStore', () => {
+
+  const minifier = shortUUID();
+  const route = useRoute();
 
   const allMembers = ref(null)
   const fetchedMember = ref(null);
+  const specificMember = ref(null)
+
 
 
  async function fetchMembers() {
@@ -34,9 +40,42 @@ export const useMemberStore = defineStore('memberStore', () => {
     }
   }
 
+  async function fetchSpecificMember() {
+    try {
+      const results = await axios(`api/xarxa/${minifier.toUUID(route.params.member_id)}`, 
+      {
+        headers: {   
+        Authorization: "Bearer " + sessionStorage.refreshToken
+      }
+
+      })
+      specificMember.value = { 
+                                            content: results.data }
+                                            // tableContent: results.data.map(transaction => {
+                                            //   return {
+                                            //     referència: transaction.transactionRef,
+                                            //     import: transaction.base,
+                                            //     proveïdor: transaction.Member.commercialName1,
+                                            //     tipus: transaction.transactionType
+                                            //   }
+                                            // }),
+                                            // tableHeaders:  [{binder: "referència", label:"Referència"}, 
+                                            //                 {binder: "import", label:"Import"},
+                                            //                 {binder: "proveïdor",label: "Proveïdor"},
+                                            //                 {binder: "tipus", label:"Tipus"}
+                                            //                ]},
+      
+    } catch(error) {
+        alert(error.message)
+    }
+  }
+
+
   return {
     allMembers,
     fetchedMember,
-    fetchMembers
+    specificMember,
+    fetchMembers,
+    fetchSpecificMember
   }
 })
