@@ -1,6 +1,7 @@
 <script setup>
 
 import { onMounted, onUnmounted, ref, computed} from 'vue'
+import { useRouter } from 'vue-router'
 import SectionMain from '@/components/SectionMain.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 import CardBox from '@/components/CardBox.vue'
@@ -10,12 +11,16 @@ import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.
 import Table from '@/components/Table.vue'
 import { useProjectesStore } from '@/stores/projectesStore'
 import { useDarkModeStore } from '@/stores/darkMode'
+import shortUUID from 'short-uuid'
 
 import { Calendar, DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
 
 const darkModeStore = useDarkModeStore()
 const projectesStore = useProjectesStore();
+
+const router = useRouter();
+const minifier = shortUUID();
 
 onMounted(async () => await projectesStore.fetchSpecificProject())
 
@@ -40,6 +45,10 @@ const taskDates = computed(() => {
 
 const attributes = ref(taskDates);
 
+function navigateToMember(){
+  router.push({ path: `/xarxa/${minifier.fromUUID(projectesStore.specificProject?.Member.id)}` })
+}
+
 </script>
 
 <template>
@@ -51,7 +60,7 @@ const attributes = ref(taskDates);
       <CardBox>
         
         <SectionTitleLineWithButton :title="projectesStore?.specificProject?.name" main>
-          {{ projectesStore.specificProject?.Member.commercialName1 }}
+          <button @click="navigateToMember">{{ projectesStore.specificProject?.Member.commercialName1 }}</button>
         </SectionTitleLineWithButton>
         <div v-if="!projectesStore.specificProject">
           Loading...

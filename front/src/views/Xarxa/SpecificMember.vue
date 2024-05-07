@@ -72,8 +72,6 @@ const attributes = ref(taskDates);
       </CardBox>
     </SectionMain>
 
-    
-  
     <SectionMain>
       <CardBox>
         <SectionTitleLineWithButton title="Contactes" main></SectionTitleLineWithButton>
