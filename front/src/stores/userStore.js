@@ -26,7 +26,7 @@ async function addToPinboard(element, data) {
 
     try {
 
-      const response = await axios.post(`api/workers/pinboard/${element}`,
+      const response = await axios.post(`api/comments/${element}/pinboard`,
       {data},
       {
         headers: {

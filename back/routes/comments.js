@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 const checkUserIsLoggedInAndAssignComments = require('../guards/checkUserIsLoggedInAndAssignComments')
 const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn');
-const commentMustExist = require('../guards/commentMustExist')
+const commentMustExist = require('../guards/commentMustExist');
 const { v4: uuidv4 } = require('uuid')
 
-// ************ EN TOTES LES URLs de comments
-// *******    s'ha d'especificar /comments/note o /comments/link (de moment deixo enrere els documents)
+// ************ EN TOTES LES URLs de comments ********************
+// *******    s'ha d'especificar ':element' --->>>>  /comments/note o /comments/link (de moment deixo enrere els documents)
 
 
 // ADD comment

@@ -144,7 +144,7 @@ function sortTheList(headerBinder){
     <tbody>
       <tr v-for="tableRow, index in itemsPaginated" :key="index" :class="setClassIfTransactions(tableRow)">
         
-        <td v-for="rowCell in tableRow">{{ typeof rowCell === "object" ? format(rowCell.content, "full", "ca") : rowCell }}</td>
+      <td v-for="rowCell in tableRow">{{ typeof rowCell === "object" ? format(rowCell.content, "full", "ca") : rowCell }}</td>
 
         <td class="before:hidden lg:w-1 whitespace-nowrap">
           
