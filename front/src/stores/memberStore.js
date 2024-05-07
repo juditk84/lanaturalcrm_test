@@ -77,9 +77,8 @@ export const useMemberStore = defineStore('memberStore', () => {
       {
         headers: {
           Authorization: sessionStorage.getItem("refreshToken"),
-        },
-      },
-      )
+        }
+      })
     return response.data
     
     } catch (error) {
@@ -87,12 +86,30 @@ export const useMemberStore = defineStore('memberStore', () => {
     }
   }
 
+  async function updateMember(data){
+    try {
+      const response = await axios.patch(`api/xarxa/${minifier.toUUID(route.params.member_id)}`,
+      {data},
+      {
+        headers: {
+          Authorization: sessionStorage.getItem("refreshToken")
+        }
+      })
+      // maybe this?
+      //specificMember.value = { content: results.data }
+     
+      return response.data
+    } catch (error) {
+      return error.message
+    }
+  }
   return {
     allMembers,
     fetchedMember,
-    addMember,
     specificMember,
     fetchMembers,
-    fetchSpecificMember
+    fetchSpecificMember,
+    addMember,
+    updateMember,
   }
 })

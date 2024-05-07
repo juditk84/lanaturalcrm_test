@@ -7,9 +7,10 @@ const uppercaseFirst = str => `${str[0].toUpperCase()}${str.substr(1)}`
 const memberMustExist = require('../guards/memberMustExist')
 const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn')
 
+// ALL need token
+
 
 // GET all members
-// needs token
 // sends also un "name" value que es el nom posat en un string bonic, accessible independement de memberType
 router.get('/', userShouldBeLoggedIn, async (req, res, next) => {
   try {
@@ -23,7 +24,6 @@ router.get('/', userShouldBeLoggedIn, async (req, res, next) => {
 })
 
 // GET one member
-// needs token
 // de moment envia tot (but no associations) becasue aviam que (no) volem enviar
 // i el guard afegeix un "name" property, accessible independent de memberType
 router.get('/:memberId', userShouldBeLoggedIn, memberMustExist, async (req, res, next) => {
@@ -36,7 +36,6 @@ router.get('/:memberId', userShouldBeLoggedIn, memberMustExist, async (req, res,
 })
 
 // POST new membro
-// needs token
 //  s'ha d'enviar: { data : { key: value, etc }} objecte 
 // if contact enviar firstname, lastname1(opcional #2), role, pronouns
 // if entity commercialName1(opcional #2) 
@@ -61,7 +60,7 @@ router.post('/', userShouldBeLoggedIn, async (req, res, next) => {
     const [response, created] = await models.Member.findOrCreate({ 
       where : {
         memberType: data.memberType,
-    
+        // check if official id or name matches same membertype
         [Op.or]: {
           officialId: data.officialId,
           firstname: data.firstname,
@@ -78,7 +77,6 @@ router.post('/', userShouldBeLoggedIn, async (req, res, next) => {
   }
 })
 
-// needs token
 /// pass fields that we want to change as a { data : { field : newValue } } object
 // sends updated project
 router.patch('/:memberId', userShouldBeLoggedIn, memberMustExist, async (req, res, next) => {
@@ -93,6 +91,7 @@ router.patch('/:memberId', userShouldBeLoggedIn, memberMustExist, async (req, re
   }
 })
 
+// afegeix una columna "name" i normalment si no pot no es tranca. also checks data matches
 async function namify(member){
   try {
     await checkMemberTypeMatchesData(member, member.memberType)
