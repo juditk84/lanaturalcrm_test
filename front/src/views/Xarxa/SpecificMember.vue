@@ -45,17 +45,16 @@ const attributes = ref(taskDates);
   <LayoutAuthenticated>
     <SectionTitle>Dades Bàsiques</SectionTitle>
     <SectionMain class=" rounded-2xl">
-      
       <CardBox>
         
         <SectionTitleLineWithButton :title="memberStore?.specificMember?.content.name" main>
-          {{ memberStore.specificMember?.content.name }}
         </SectionTitleLineWithButton>
         <div v-if="!memberStore.specificMember">
           Loading...
         </div>
         <div v-else>
-          {{memberStore.specificMember.content.name}}
+          <b>pronoms:</b> {{memberStore.specificMember.content.pronouns}} <br>
+          <b>adreça:</b> {{memberStore.specificMember.content.address}}
         </div>
         
       </CardBox>
