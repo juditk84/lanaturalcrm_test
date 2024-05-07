@@ -21,7 +21,7 @@ router.get('/', userShouldBeLoggedIn, async (req, res, next) => {
          : `${member.commercialName1}`
         }
         })
-      res.status(200).send(workerInfo)
+      res.status(200).send(memberInfo)
   } catch (err) {
     res.status(500).send({message: "error al carregar els membres de la xarxa, ups"})
   }

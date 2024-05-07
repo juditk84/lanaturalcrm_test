@@ -1,6 +1,5 @@
 <script setup>
 import { computed, ref, onMounted, watch } from 'vue'
-import { watchImmediate } from '@vueuse/core'
 import {
   mdiAccountMultiple,
   mdiCartOutline,
@@ -39,9 +38,10 @@ const isModalActive = ref(false)
 const userStore = useUserStore();
 
 
-// const fillData = () => {
-//  // why nooooo :_____
-// }
+onMounted(() => {
+  userStore.fetchAllUserRelatedAssets()
+})
+
 
 // onMounted(() => {
 //   fillData()
@@ -62,7 +62,7 @@ async function printUser() {
     <SectionMain>
 
       <CardBoxModal v-model="isModalActive" title="Afegir algo al pinboard">
-        <AddComment :element="element"/>
+        <AddComment element="an element is required"/>
       </CardBoxModal>
 
 

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { mdiEye, mdiTrashCan } from '@mdi/js'
 import CardBoxModal from '@/components/CardBoxModal.vue'
 import TableCheckboxCell from '@/components/TableCheckboxCell.vue'
@@ -10,6 +10,7 @@ import UserAvatar from '@/components/UserAvatar.vue'
 import SectionMain from '@/components/SectionMain.vue'
 import { useRouter } from 'vue-router'
 import shortUUID from 'short-uuid'
+import {format, parse} from '@formkit/tempo'
 
 const props = defineProps({
   checkable: Boolean,
@@ -91,24 +92,31 @@ const setClassIfTransactions = (element) => {
 
 const activeSortColumn = ref(null)
 
-function sortTheList(event, headerBinder){
+function sortTheList(headerBinder){
 
   // it needs styling to show the little arrow next to the word, marking what field we sortin'
   // de moment simplement apareix un cutre asterisco.
 
   if(activeSortColumn.value !== headerBinder){
-    items.value.sort((item1, itemNext) => typeof item1[headerBinder] === 'string' 
-                                          ? item1[headerBinder].localeCompare(itemNext[headerBinder]) 
-                                          : itemNext[headerBinder] - item1[headerBinder])
-                                          
+    items.value.sort((item1, itemNext) => {if(typeof item1[headerBinder] === 'string'){
+                                            return item1[headerBinder].localeCompare(itemNext[headerBinder])
+                                          }
+                                          else if(typeof item1[headerBinder] === 'object' && item1[headerBinder].isDate === true){
+                                            return item1[headerBinder].content.localeCompare(itemNext[headerBinder].content)
+                                          }
+                                          else{
+                                            return itemNext[headerBinder] - item1[headerBinder]
+                                          }
+                                        })
+                                
     activeSortColumn.value = headerBinder;
+    console.log("sorting")
   }
   else{
     items.value.reverse()
     console.log("reversing")
   }
 
-  
 }
 
 </script>
@@ -124,18 +132,18 @@ function sortTheList(event, headerBinder){
     <p>This is sample modal</p>
   </CardBoxModal>
 
-  <SectionMain>
+  <SectionMain v-if="props.content?.length !== 0">
     <b>{{ props.tableTitle }}</b>
   <table>
     <thead>
       <tr>
-        <th v-for="header in props.tableHeaders" @click="(event) => sortTheList(event, header.binder)">{{ activeSortColumn === header.binder ? header.label + "*" : header.label }}</th>
+        <th v-for="header in props.tableHeaders" @click="sortTheList(header.binder)">{{ activeSortColumn === header.binder ? header.label + "*" : header.label }}</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="element, index in itemsPaginated" :key="index" :class="setClassIfTransactions(element)">
+      <tr v-for="tableRow, index in itemsPaginated" :key="index" :class="setClassIfTransactions(tableRow)">
         
-        <td v-for="subelement in element">{{ subelement }}</td>
+        <td v-for="rowCell in tableRow">{{ typeof rowCell === "object" ? format(rowCell.content, "full", "ca") : rowCell }}</td>
 
         <td class="before:hidden lg:w-1 whitespace-nowrap">
           
@@ -170,5 +178,8 @@ function sortTheList(event, headerBinder){
       <small>Page {{ currentPageHuman }} of {{ numPages }}</small>
     </BaseLevel>
   </div>
+</SectionMain>
+<SectionMain v-else>
+  <div class="text-center text-xl font-light">Sense {{ props.tableTitle }}.</div>
 </SectionMain>
 </template>

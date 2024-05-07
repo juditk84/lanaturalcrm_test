@@ -22,21 +22,35 @@ export const useProjectesStore = defineStore('projecteStore', () => {
 
   async function fetchProjects() {
       try {
-        const results = await axios('api/projectes/')
-        allProjects.value = { content: results.data,
-                              tableContent: results.data.map(project => {
+        const results = await axios('api/projectes/', {
+          headers: {   
+          Authorization: "Bearer " + sessionStorage.refreshToken,
+          'If-None-Match': allProjects.value?.etag,
+          'Cache-Control': 'private'
+        }})
+        allProjects.value = { content: results.data.allProjects,
+                              tableContent: results.data.allProjects.map(project => {
                                 return {
                                   Nom: project.name,
                                   Client: project.Member.commercialName1,
                                   Responsable: project.Worker.firstname,
                                   Progrés: "indefinit",
-                                  DataFinalització: project.end_date
+                                  DataFinalització: {content: project.end_date, isDate: true}
                                 }
                               }),
-                              tableHeaders: ["Nom", "Client", "Responsable", "Progrés", "Data finalitz."]
+                              tableHeaders:  [{binder: "Nom", label:"Nom"}, 
+                                              {binder: "Client", label:"Client"},
+                                              {binder: "Responsable",label: "Responsable"},
+                                              {binder: "Progrés", label:"Progrés"},
+                                              {binder: "DataFinalització", label:"Data finalitz."}
+                                              ],
+                              etag: results.headers.etag
                             }
+                            
       } catch(error) {
+        if(error.response?.status !== 304){
           alert(error.message)
+        }
       }
     }
 
@@ -61,6 +75,7 @@ export const useProjectesStore = defineStore('projecteStore', () => {
         headers: {   
         Authorization: "Bearer " + sessionStorage.refreshToken
       }
+
       })
       specificProject.value = results.data
       specificProjectTransactions.value = { // ojito amiga amb les factures, l'import ara mateix és NOMÉS LA BASE.
@@ -86,7 +101,7 @@ export const useProjectesStore = defineStore('projecteStore', () => {
                                           descripció: task.description,
                                           workers: task.Workers.map(worker => worker.firstname).join(", "),
                                           progrés: "pendent de definir.",
-                                          dataFinalització: task.deadline
+                                          dataFinalització: {content: task.deadline, isDate: true}
                                         }
                                       }),
                                       tableHeaders: [{binder: "nom", label:"Nom"}, 
