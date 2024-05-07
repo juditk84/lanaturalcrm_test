@@ -43,21 +43,19 @@ const attributes = ref(taskDates);
 
 <template>
   <LayoutAuthenticated>
-   
-  
     <SectionTitle>Dades Bàsiques</SectionTitle>
     <SectionMain class=" rounded-2xl">
-      {{ memberStore.specificMember }}
+      
       <CardBox>
         
-        <SectionTitleLineWithButton :title="memberStore?.specificMember?.name" main>
-          {{ memberStore.specificMember?.name }}
+        <SectionTitleLineWithButton :title="memberStore?.specificMember?.content.name" main>
+          {{ memberStore.specificMember?.content.name }}
         </SectionTitleLineWithButton>
         <div v-if="!memberStore.specificMember">
           Loading...
         </div>
         <div v-else>
-          {{memberStore.specificMember.address}}
+          {{memberStore.specificMember.content.name}}
         </div>
         
       </CardBox>

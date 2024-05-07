@@ -2,10 +2,11 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import shortUUID from 'short-uuid'
 import axios from 'axios'
-
+import { useRoute, useRouter } from 'vue-router'
 export const useMemberStore = defineStore('memberStore', () => {
 
   const minifier = shortUUID();
+  const route = useRoute();
 
   const allMembers = ref(null)
   const fetchedMember = ref(null);
