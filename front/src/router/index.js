@@ -30,6 +30,7 @@ const routes = [
     children: [
       {path: 'totis', name: 'Totis', component: () => import('@/views/Xarxa/AllMembers.vue')},
       {path: 'afegir', name: 'AfegirMembre', component: () => import('@/views/Xarxa/AddMember.vue')},
+      {path: ':member_id', name: 'un sol membre', component: () => import('@/views/Xarxa/SpecificMember.vue')},
     ]
     
   },
