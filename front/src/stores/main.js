@@ -15,6 +15,8 @@ export const useMainStore = defineStore('main', () => {
 
   const notDevelopedYetHahaha = ref(null)
 
+  const activeAsideElement = ref()
+
   const userAvatar = computed(  
     () =>
       `https://api.dicebear.com/8.x/adventurer/svg?seed=Salem`
@@ -94,6 +96,7 @@ const emptyPlaceholder = ref([
     clients,
     emptyPlaceholder,
     history,
+    activeAsideElement,
     setUser,
     fetchSampleClients,
     fetchSampleHistory,

@@ -23,6 +23,7 @@ router.post('/:element/:type', checkUserIsLoggedInAndAssignComments, async (req,
 
     const {comment} = req
     try {
+
   
       res.status(200).send(comment)
       
