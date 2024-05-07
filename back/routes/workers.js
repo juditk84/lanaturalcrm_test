@@ -30,6 +30,7 @@ router.get('/all', userShouldBeLoggedIn, async (req, res, next) => {
   }
 })
 
+
 router.patch('/', userShouldBeLoggedIn, async (req, res, next) => {
   const { user } = req
   const { data } = req.body
