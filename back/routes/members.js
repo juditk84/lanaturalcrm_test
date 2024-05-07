@@ -14,13 +14,8 @@ const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn')
 router.get('/', userShouldBeLoggedIn, async (req, res, next) => {
   try {
       const response = await models.Member.findAll()
-      const memberInfo = await response.map((member) => {
-       return {
-        ...member.dataValues,
-        name : member.memberType === 'contact' ? `${member.firstname} ${member.lastname1} ${member.lastname2 ?? ""}`.trim()
-         : `${member.commercialName1}`
-        }
-        })
+      const memberInfo = await Promise.all(response.map(async (member) => { return namify(member) }))
+
       res.status(200).send(memberInfo)
   } catch (err) {
     res.status(500).send({message: "error al carregar els membres de la xarxa, ups"})
@@ -43,57 +38,41 @@ router.get('/:memberId', userShouldBeLoggedIn, memberMustExist, async (req, res,
 // POST new membro
 // needs token
 //  s'ha d'enviar: { data : { key: value, etc }} objecte 
-// if contact enviar firstname, lastname1(+2), role, pronouns
-// if entity commercialName1(+2) 
+// if contact enviar firstname, lastname1(opcional #2), role, pronouns
+// if entity commercialName1(opcional #2) 
 // ALL : memberType, officialId, email, address, city, postcode, country, phoneNumber, authorizationImg, parentId (or null)
 
-// data by default should be NULL i quant ho sigui podem borrar tots els || null aqui
+// molt important que les dades que s'envian, el default sigui NULL
 
 // retorna member + boolean CREATED si s'ha fet un nou
-// if created === false NO S'HA CREAT, estem tornant un membre que ja existia
 router.post('/', userShouldBeLoggedIn, async (req, res, next) => {
   const { user } = req
   const { data } = req.body
 
   const defaultOptions = {
     id: uuidv4(),
-    firstname : data.firstname || null,
-    lastname1 : data.lastname1 || null,
-    commercialName1: data.commercialName1 || null,
-    memberType : data.memberType,
-    lastname2 : data.lastname2,
-    commercialName2 : data.commercialName2,
-    pronouns : data.pronouns || null,
-    role: data.role || null,
-    officialId : data.officialId || null,
-    email: data.email || null, 
-    address: data.address || null, 
-    city: data.city || null, 
-    postcode: data.postcode || null,
-    country: data.country || null,
-    phoneNumber: data.phoneNumber || null,
-    authorizationImg: data.authorizationImg || null,
-    parentId: data.parentId || null,
+    ...data,
     creatorId: user.id,
   }
 
   try {
    await checkMemberTypeMatchesData(data, data.memberType)
 
-    // here we check si ja hi ha un member de aquest tipus amb aquest nom
-    // si no existeix ho creem
-    const [member, created] = await models.Member.findOrCreate({ 
+    const [response, created] = await models.Member.findOrCreate({ 
       where : {
         memberType: data.memberType,
-        [Op.or]: [
-          {firstname : data.firstname, lastname1 : data.lastname1, commercialName1: null},
-          {firstname: null, lastname1: null, commercialName1 : data.commercialName1},
-        ]
+    
+        [Op.or]: {
+          officialId: data.officialId,
+          firstname: data.firstname,
+          lastname1 : data.lastname1,
+          commercialName1: data.commercialName1
+        }
       },
       defaults: defaultOptions
     })
-  
-    res.send({member, created})
+    const member = await namify(response)
+    res.status(200).send({member, created})
   } catch (err) {
     res.status(500).send(err.message)
   }
@@ -114,13 +93,30 @@ router.patch('/:memberId', userShouldBeLoggedIn, memberMustExist, async (req, re
   }
 })
 
+async function namify(member){
+  try {
+    await checkMemberTypeMatchesData(member, member.memberType)
+
+    return {
+       ...member.dataValues,
+       name : member.memberType === 'contact' ? `${member.firstname} ${member.lastname1} ${member.lastname2 ?? ""}`.trim()
+        : `${member.commercialName1}`
+       }
+  } catch(err) {
+    return member
+    // hopefully aixó retorna el membre sense canviar-ho si no funciona for some reason
+  }
+
+}
+
+// this should be refactorized, those are some ugly ifs
 async function checkMemberTypeMatchesData(member, memberType) {
   switch (memberType) {
     case "contact" :
-      if (member.firstname === null || member.lastname1 === null) throw new Error("contactes necesitan com a minim nom i 1r cognom")
+      if ((member.firstname === null || member.lastname1 === null) || (member.commercialName1)) throw new Error("contactes poder tener nom, primer cognóm, i un segon cognóm opcional")
       break;
     case "entity" :
-      if (member.commercialName1 === null) throw new Error("entitats necesitan com a minim nom comercial")
+      if (member.commercialName1 === null || (member.firstname || member.firstname)) throw new Error("les entitats poden tener un o dos noms comercials")
     break;
     default: 
       throw new Error("s'ha d'indicar el tipus de membre")

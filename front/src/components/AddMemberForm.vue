@@ -56,17 +56,8 @@ const customElementsForm = reactive({
 async function submit() {
 
     try {
-      const response = await axios.post("api/xarxa", {data: form.value})
-
-      if (response.statusText === "OK") {
-        message.value = "ha funcionat"
-        // memberStore.fetchedMember = response.data
-        fetchedMember.value = response.data
-        console.log(memberStore.fetchedMember)
-
-      } else {
-        message.value = "no ha funcionat"
-      }
+      const response = await memberStore.addMember(form.value)
+      if (response.created) message.value = `S'ha creat un nou membre: ${response.data.name}`
     } catch (error) {
       console.log(error);
     }
