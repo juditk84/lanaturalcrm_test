@@ -44,7 +44,7 @@ if (!token) {
                 })   
             break;
             case "link":
-            case "document":
+            // case "document":
                 if (data.url === null) throw new Error("falta una url!")
                 comment = await models.Link.create({
                     ...commObj,
