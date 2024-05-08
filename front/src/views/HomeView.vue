@@ -48,7 +48,7 @@ onMounted(() => {
     <SectionMain>
 
       <CardBoxModal v-model="isModalActive" title="Afegir algo al pinboard">
-        <AddComment element="an element is required"/>
+        <AddComment element="an element is required" commentableType="pinboard"/>
       </CardBoxModal>
 
       <br />

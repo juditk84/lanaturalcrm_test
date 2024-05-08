@@ -22,11 +22,11 @@ const userAvatar = computed(
   () =>
     `https://api.dicebear.com/8.x/adventurer/svg?seed=Salem`
 )
-async function addToPinboard(element, data) {
+async function addComment(type, element, data) {
 
     try {
 
-      const response = await axios.post(`api/comments/${element}/pinboard`,
+      const response = await axios.post(`api/comments/${element}/${type}`,
       {data},
       {
         headers: {
@@ -113,7 +113,7 @@ async function fetchAllUserRelatedAssets(){
     pinboard,
     $reset,
     fetchAllUserRelatedAssets,
-    addToPinboard
+    addComment,
   }
 
 })

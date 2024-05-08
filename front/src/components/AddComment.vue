@@ -16,9 +16,16 @@ import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import NotificationBarInCard from '@/components/NotificationBarInCard.vue'
 import axios from 'axios'
+import { useRoute } from 'vue-router'
 
-defineProps({
+const route = useRoute()
+
+const props = defineProps({
   element: {
+    type: String,
+    required: true
+  },
+  commentableType : {
     type: String,
     required: true
   }
@@ -28,18 +35,20 @@ const userStore = useUserStore();
 
 const form = ref({
   title: '',
-  text: '',
+  text: ''
 })
-
+// HOW TO PASS commentable Id to the addComment thing? 
 async function submit(){
   console.log("submit button clicked")
     try {
+      console.log(route)
       console.log(form.value)
-      const response = await userStore.addToPinboard("note", form.value)
+      const response = await userStore.addComment(props.commentableType, "note", form.value)
+      console.log(response)
       userStore.fetchAllUserRelatedAssets();
     } catch (error) {
       console.log(error);
-    }   
+    }
 }
 
 
