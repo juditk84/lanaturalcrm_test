@@ -7,9 +7,28 @@ async function memberMustExist(req, res, next) {
         where: {
           id: req.params.memberId
         },
-        include: [{
+        include: [
+            {
           model: models.Member,
-          as: "Child"
+          as: "parent"
+        },  
+            {
+          model: models.Member,
+          as: "children"
+        },
+        {
+          model: models.Project,
+          as: "projects",
+          include: [
+            {
+              model: models.ProjectType,
+              attributes: ["type"]
+            },
+            {
+              model: models.Worker,
+              attributes: ["firstname"]
+            }
+          ]
         }]
       })
     response.dataValues.name = response.dataValues.memberType === 'contact'

@@ -1,22 +1,29 @@
 <script setup>
 
-import { onMounted, ref, computed} from 'vue'
+import { onMounted, ref, computed, watch} from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import SectionMain from '@/components/SectionMain.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 import CardBox from '@/components/CardBox.vue'
 import CardBoxContact from '@/components/CardBoxContact.vue'
+import CardBoxProject from '@/components/CardBoxProject.vue'
 import CardBoxComponentHeader from '@/components/CardBoxComponentHeader.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import { useMemberStore } from '@/stores/memberStore'
+import shortUUID from 'short-uuid'
 
 import { Calendar, DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
 
-
 const memberStore = useMemberStore();
 
+const route = useRoute();
+const router = useRouter();
+const minifier = shortUUID();
+
 onMounted(async () => await memberStore.fetchSpecificMember())
+watch(route, async () => await memberStore.fetchSpecificMember())
 
 const calendarActive = ref(false)
 
@@ -25,7 +32,6 @@ const titleForCalendarOrTableSection = computed(() => {
     return "Calendari"
   }
   return "Llista"
-
 })
 
 function calendarOrListSwitch(){
@@ -37,6 +43,11 @@ const taskDates = computed(() => {
 })
 
 const attributes = ref(taskDates);
+
+function navigateToMember(){
+  memberStore.specificMember.value = null
+  router.push({ path: `/xarxa/${minifier.fromUUID(memberStore.specificMember?.content?.parent.id)}` })
+}
 
 </script>
 
@@ -67,25 +78,48 @@ const attributes = ref(taskDates);
                   <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Telèfon</dt>
                   <dd class="text-lg font-semibold">{{ memberStore.specificMember?.content?.phoneNumber }}</dd>
               </div>
+              <div v-if="memberStore.specificMember?.content.memberType === 'contact'" class="flex flex-col pt-3">
+                  <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Entitat</dt>
+                  <dd class="text-lg font-semibold">
+                    {{ memberStore.specificMember?.content?.parent.commercialName1 }}
+                    <button @click="navigateToMember()" class="px-8">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                      </svg>
+                    </button>
+                  </dd>
+              </div>
           </dl>
         
       </CardBox>
     </SectionMain>
 
-    <SectionMain>
+    <SectionMain v-if="memberStore.specificMember?.content.memberType === 'entity'">
       <CardBox>
         <SectionTitleLineWithButton title="Contactes" main></SectionTitleLineWithButton>
-        Contactes: 
-        <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
-        <CardBoxContact v-for="contact in memberStore.specificMember?.content.Child" 
-                      :name="contact.firstname" 
-                      :mail="contact.email" 
-                      :phone-number="contact.phoneNumber"/>
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-4 mb-6">
+          <CardBoxContact v-for="contact in memberStore.specificMember?.content.children" 
+                        :name="contact.firstname" 
+                        :mail="contact.email" 
+                        :phone-number="contact.phoneNumber"/>
         </div>
         </CardBox>
     </SectionMain>
 
-   <SectionTitle>Balanç Econòmic</SectionTitle>
+    <SectionMain v-if="memberStore.specificMember?.content.memberType === 'entity'">
+      <CardBox>
+        <SectionTitleLineWithButton title="Projectes" main></SectionTitleLineWithButton>
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-4 mb-6">
+          <CardBoxProject v-for="project in memberStore.specificMember?.content.projects" 
+                        :name="project.name" 
+                        :start-date="project.start_date" 
+                        :project-type="project.projectType?.type"
+                        :worker-name="project.Worker?.firstname"
+                        :project-id="project.id"/>
+        </div>
+        </CardBox>
+    </SectionMain>
+
   </LayoutAuthenticated>
 </template>
 

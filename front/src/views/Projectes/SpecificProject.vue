@@ -1,7 +1,7 @@
 <script setup>
 
-import { onMounted, onUnmounted, ref, computed} from 'vue'
-import { useRouter } from 'vue-router'
+import { onMounted, ref, computed, watch} from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import SectionMain from '@/components/SectionMain.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 import CardBox from '@/components/CardBox.vue'
@@ -19,11 +19,12 @@ import 'v-calendar/style.css';
 const darkModeStore = useDarkModeStore()
 const projectesStore = useProjectesStore();
 
+const route = useRoute();
 const router = useRouter();
 const minifier = shortUUID();
 
 onMounted(async () => await projectesStore.fetchSpecificProject())
-
+watch(route, async () => await projectesStore.fetchSpecificProject())
 
 const calendarActive = ref(false)
 
@@ -60,7 +61,7 @@ function navigateToMember(){
       <CardBox>
         
         <SectionTitleLineWithButton :title="projectesStore?.specificProject?.name" main>
-          <button @click="navigateToMember">{{ projectesStore.specificProject?.Member.commercialName1 }}</button>
+          <button class="col-span-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex content-center items-center" @click="navigateToMember"><b>{{ projectesStore.specificProject?.Member.commercialName1 }}</b></button>
         </SectionTitleLineWithButton>
         <div v-if="!projectesStore.specificProject">
           Loading...

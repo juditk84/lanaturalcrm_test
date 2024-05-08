@@ -1,23 +1,28 @@
 <script setup>
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import shortUUID, { uuid } from 'short-uuid'
 import { mdiTrendingDown, mdiTrendingUp, mdiTrendingNeutral } from '@mdi/js'
 import CardBox from '@/components/CardBox.vue'
 import BaseLevel from '@/components/BaseLevel.vue'
-import PillTag from '@/components/PillTag.vue'
-import UserAvatar from '@/components/UserAvatar.vue'
+import {format, parse} from '@formkit/tempo'
 
 const props = defineProps({
   name: {
     type: String,
     required: true
   },
-  mail: {
+  startDate: {
     type: String,
     required: true
   },
-  phoneNumber: {
+  workerName: {
     type: String,
     required: true
+  },
+  projectType: {
+    type: String,
+    default: null
   },
   progress: {
     type: Number,
@@ -27,11 +32,14 @@ const props = defineProps({
     type: String,
     default: null
   },
-  type: {
+  projectId: {
     type: String,
     default: null
   }
 })
+
+const router = useRouter();
+const minifier = shortUUID();
 
 const pillType = computed(() => {
   if (props.type) {
@@ -62,10 +70,17 @@ const pillIcon = computed(() => {
 })
 
 const pillText = computed(() => props.text ?? `${props.progress}%`)
+
+const formattedStartDate = computed(() => format(props.startDate, "medium", "ca"))
+
+function navigateToProject(){
+  router.push({ path: `/projectes/${minifier.fromUUID(props.projectId)}` })
+}
+
 </script>
 
 <template>
-  <CardBox class="mb-6 last:mb-0 bg-blue-50 hover:bg-blue-100">
+  <CardBox class="mb-6 last:mb-0 bg-green-50 hover:bg-green-100">
     <BaseLevel>
       <BaseLevel type="justify-start">
         <!-- <UserAvatar class="w-12 h-12 mr-6" :username="name" /> -->
@@ -73,15 +88,17 @@ const pillText = computed(() => props.text ?? `${props.progress}%`)
           <h4 class="text-xl text-ellipsis">
             {{ name }}
           </h4>
-          <p class="text-gray-500 dark:text-slate-400">{{ phoneNumber }}</p>
-          <p class="text-gray-500 dark:text-slate-400">{{ mail }}</p>
+          <p class="text-gray-800 dark:text-slate-600">data creació</p>
+          <p class="text-gray-500 dark:text-slate-400">{{ formattedStartDate }}</p>
+          <p class="text-gray-800 dark:text-slate-400">creat per</p>
+          <p class="text-gray-500 dark:text-slate-400">{{ workerName }}</p>
         </div>
       </BaseLevel>
-      <a v-bind:href="'mailto:' + mail">
+      <button @click=navigateToProject>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
         </svg>
-      </a>
+      </button>
     </BaseLevel>
   </CardBox>
 </template>
