@@ -6,7 +6,11 @@ async function memberMustExist(req, res, next) {
       const response = await models.Member.findOne({
         where: {
           id: req.params.memberId
-        }
+        },
+        include: [{
+          model: models.Member,
+          as: "Child"
+        }]
       })
     response.dataValues.name = response.dataValues.memberType === 'contact'
             ? `${response.dataValues.firstname} ${response.dataValues.lastname1} ${response.dataValues.lastname2 ?? ""}`.trim()

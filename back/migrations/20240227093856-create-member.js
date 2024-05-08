@@ -61,7 +61,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       phoneNumber: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       authorizationImg: {
         type: Sequelize.BOOLEAN
