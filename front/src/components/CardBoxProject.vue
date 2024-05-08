@@ -80,7 +80,7 @@ function navigateToProject(){
 </script>
 
 <template>
-  <CardBox class="mb-6 last:mb-0 bg-green-50 hover:bg-green-100">
+  <CardBox class="mb-6 last:mb-0 bg-green-100 hover:bg-green-200">
     <BaseLevel>
       <BaseLevel type="justify-start">
         <!-- <UserAvatar class="w-12 h-12 mr-6" :username="name" /> -->

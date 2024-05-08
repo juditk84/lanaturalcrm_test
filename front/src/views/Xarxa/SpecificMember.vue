@@ -68,7 +68,14 @@ function navigateToMember(){
               </div>
               <div class="flex flex-col pb-3">
                   <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Correu electrònic</dt>
-                  <dd class="text-lg font-semibold">{{ memberStore.specificMember?.content?.email }}</dd>
+                  <dd class="text-lg font-semibold">
+                    {{ memberStore.specificMember?.content?.email }}
+                    <a v-bind:href="'mailto:' + memberStore.specificMember?.content?.email">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                      </svg>
+                    </a>
+                  </dd>
               </div>
               <div class="flex flex-col py-3">
                   <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Adreça</dt>
@@ -101,7 +108,8 @@ function navigateToMember(){
           <CardBoxContact v-for="contact in memberStore.specificMember?.content.children" 
                         :name="contact.firstname" 
                         :mail="contact.email" 
-                        :phone-number="contact.phoneNumber"/>
+                        :phone-number="contact.phoneNumber"
+                        :member-id="contact.id"/>
         </div>
         </CardBox>
     </SectionMain>
