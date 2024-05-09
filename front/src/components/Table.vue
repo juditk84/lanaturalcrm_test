@@ -8,7 +8,7 @@ import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import UserAvatar from '@/components/UserAvatar.vue'
 import SectionMain from '@/components/SectionMain.vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import shortUUID from 'short-uuid'
 import {format, parse} from '@formkit/tempo'
 
@@ -20,10 +20,12 @@ const props = defineProps({
   tableHeaders: Array,
   tableTitle: String,
   hasFilter: Boolean,
-  itemsPerPage: Number
+  itemsPerPage: Number,
+  parentCategory: String
 })
 
 const router = useRouter()
+const route = useRoute()
 const minifier = shortUUID()
 
 const items = computed(() => props?.tableContent)
@@ -77,8 +79,26 @@ const checked = (isChecked, client) => {
 }
 
 function onRowClick(event, index){
-  router.push(`/${props.tableCategory}/${minifier.fromUUID(props.content[index].id)}`)
+
+  // Judit:
+  // tricky one... after a lot of different options, the most reliable way to do this without hardcoding anything is
+  // to asume that """parent""" routes have no url params (like xarxa/totis or projectes/totis)
+  // and therefore the route.params object will be empty. If there's a table in a route like xarxa/totis with no params,
+  // the """parent""" route is not to be appended with the sub-route. 
+  // If you're in a page that you reached with url params (like projectes/:project_id), then you have something in the
+  // route.params object. Since objects are not iterable the way arrays are, to know if there's one or more key-value pairs in
+  // an object I have to declare a count and loop through the object. Since projectes/:project_id route has 1 route.param,
+  // the count will be higher than 0 and then the sub-route will be appended (or the main route kept if u prefer). 
+  // it makes sense to do it like that for now because of our table structure so far, but we'll have to review this in the future.
+  
+  let count = 0;
+
+  for(const key in route.params){
+    count++
   }
+
+  router.push(`${count > 0 ? route.path : ''}/${props.tableCategory}/${minifier.fromUUID(props.content[index].id)}`)
+}
 
 const setClassIfTransactions = (element) => {
 

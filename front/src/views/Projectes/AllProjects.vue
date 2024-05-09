@@ -27,6 +27,7 @@ onMounted( async () => await projectesStore.fetchProjects())
           
         </SectionTitleLineWithButton>
         <Table table-category="projectes" 
+                parent-category="projectes"
               :content="projectesStore.allProjects?.content" 
               :table-content="projectesStore.allProjects?.tableContent" 
               :table-headers="projectesStore.allProjects?.tableHeaders" 

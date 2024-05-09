@@ -100,6 +100,7 @@ function navigateToMember(){
           <Table 
                 has-filter
                 table-category="tasques"
+                parent-category="projectes"
                :content="projectesStore.specificProjectTasks?.content"
                :table-content="projectesStore.specificProjectTasks?.tableContent"
                :table-headers="projectesStore.specificProjectTasks?.tableHeaders"
@@ -117,6 +118,7 @@ function navigateToMember(){
         <Table 
                 has-filter
                 table-category="moviments"
+                parent-category="projectes"
                :content="projectesStore.specificProjectTransactions?.content"
                :table-content="projectesStore.specificProjectTransactions?.tableContent"
                :table-headers="projectesStore.specificProjectTransactions?.tableHeaders"
@@ -126,6 +128,7 @@ function navigateToMember(){
 
     </CardBox>
    </SectionMain>
+   <router-view></router-view>
   </LayoutAuthenticated>
 </template>
 

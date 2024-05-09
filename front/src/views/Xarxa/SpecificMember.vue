@@ -13,8 +13,6 @@ import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.
 import { useMemberStore } from '@/stores/memberStore'
 import shortUUID from 'short-uuid'
 
-import { Calendar, DatePicker } from 'v-calendar';
-import 'v-calendar/style.css';
 
 const memberStore = useMemberStore();
 
