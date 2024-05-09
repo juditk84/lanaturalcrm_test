@@ -12,6 +12,10 @@ const props = defineProps({
     type: String,
     default: 'flex-col'
   },
+  background: {
+    type: String,
+    default: "bg-white"
+  },
   hasComponentLayout: Boolean,
   hasTable: Boolean,
   isForm: Boolean,
@@ -27,6 +31,7 @@ const hasFooterSlot = computed(() => slots.footer && !!slots.footer())
 
 const componentClass = computed(() => {
   const base = [
+    props.background,
     props.rounded,
     props.flex,
     props.isModal ? 'dark:bg-slate-900' : 'dark:bg-slate-900/70'
@@ -48,7 +53,6 @@ const submit = (event) => {
   <component
     :is="isForm ? 'form' : 'div'"
     :class="componentClass"
-    class="bg-white flex"
     @submit="submit"
   >
     <slot v-if="hasComponentLayout" />

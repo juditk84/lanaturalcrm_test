@@ -76,7 +76,7 @@ function navigateToMember(){
 </script>
 
 <template>
-  <CardBox class="mb-6 last:mb-0 bg-blue-100 hover:bg-blue-200">
+  <CardBox background="bg-blue-100 hover:bg-blue-200">
     <BaseLevel>
       <BaseLevel type="justify-start">
         <!-- <UserAvatar class="w-12 h-12 mr-6" :username="name" /> -->
