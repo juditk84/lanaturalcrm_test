@@ -1,37 +1,14 @@
 <script setup>
 import { computed, ref, onMounted, watch } from 'vue'
-import {
-  mdiAccountMultiple,
-  mdiCartOutline,
-  mdiChartTimelineVariant,
-  mdiMonitorCellphone,
-  mdiReload,
-  mdiGithub,
-  mdiPlus,
-mdiChartLineVariant
-} from '@mdi/js'
-import * as chartConfig from '@/components/Charts/chart.config.js'
-import LineChart from '@/components/Charts/LineChart.vue'
+import { mdiChartTimelineVariant, mdiPlus, mdiChartLineVariant } from '@mdi/js'
 import SectionMain from '@/components/SectionMain.vue'
-import CardBoxWidget from '@/components/CardBoxWidget.vue'
-import CardBox from '@/components/CardBox.vue'
-import TableSampleClients from '@/components/TableSampleClients.vue'
-import NotificationBar from '@/components/NotificationBar.vue'
 import BaseButton from '@/components/BaseButton.vue'
-import CardBoxTransaction from '@/components/CardBoxTransaction.vue'
-import CardBoxClient from '@/components/CardBoxClient.vue'
 import CardBoxModal from '@/components/CardBoxModal.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
-import SectionBannerStarOnGitHub from '@/components/SectionBannerStarOnGitHub.vue'
 import { useUserStore } from '@/stores/userStore'
-import { useMemberStore } from '@/stores/memberStore'
-import { storeToRefs } from 'pinia'
-import { parse, format } from '@formkit/tempo'
-import DashboardProjects from './Dashboards/DashboardProjects.vue'
 import TaskCardBox from '@/components/TaskCardBox.vue'
 import NoteBox from '@/components/NoteBox.vue'
-import SectionBanner from '@/components/SectionBanner.vue'
 import AddComment from '@/components/AddComment.vue'
 
 const isModalActive = ref(false)
@@ -47,8 +24,8 @@ onMounted(() => {
   <LayoutAuthenticated>
     <SectionMain>
 
-      <CardBoxModal v-model="isModalActive" title="Afegir algo al pinboard">
-        <AddComment element="an element is required" commentableType="pinboard"/>
+      <CardBoxModal v-model="isModalActive" title="Afegeix una nova nota">
+        <AddComment commentableId=null />
       </CardBoxModal>
 
       <br />
@@ -94,7 +71,7 @@ onMounted(() => {
           :label="note.text"
           :children="0"
         />
-        <BaseButton :icon="mdiPlus" @click="isModalActive=true"></BaseButton>
+        <BaseButton :icon="mdiPlus" rounded-full big @click="isModalActive=true"></BaseButton>
       </div>
     
 

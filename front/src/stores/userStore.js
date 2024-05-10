@@ -15,18 +15,19 @@ const pinboard = ref(null)
 const userLinks = ref(null)
 const userDocs = ref(null)
 const userNotes = ref(null)
-
+const router = useRouter()
+const route = useRoute()
 const $reset = () => {user.value = null}
 
 const userAvatar = computed(  
   () =>
     `https://api.dicebear.com/8.x/adventurer/svg?seed=Salem`
 )
-async function addComment(type, element, data) {
-
+async function addComment(element, data) {
+    
     try {
-
-      const response = await axios.post(`api/comments/${element}/${type}`,
+      
+      const response = await axios.post(`api/comments/${element}/${route.path.replace('/', '')}`,
       {data},
       {
         headers: {

@@ -16,38 +16,38 @@ import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import NotificationBarInCard from '@/components/NotificationBarInCard.vue'
 import axios from 'axios'
-import { useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
+const router = useRouter()
 const route = useRoute()
-
 const props = defineProps({
-  element: {
-    type: String,
+  commentableId : {
+    type: String, 
     required: true
   },
-  commentableType : {
-    type: String,
-    required: true
-  }
 })
+
+const isModalActive = ref(false)
 
 const userStore = useUserStore();
 
+const message = ref("")
+
 const form = ref({
   title: '',
-  text: ''
+  text: '',
+  commentableId: props.id 
 })
-// HOW TO PASS commentable Id to the addComment thing? 
+
+
 async function submit(){
-  console.log("submit button clicked")
+  console.log(router)
+  console.log(route)
     try {
-      console.log(route)
-      console.log(form.value)
-      const response = await userStore.addComment(props.commentableType, "note", form.value)
-      console.log(response)
-      userStore.fetchAllUserRelatedAssets();
+      const response = await userStore.addComment("note", form.value)
+      if (response.ok) message.value = "ha funcionat!"
     } catch (error) {
-      console.log(error);
+      message.value = "oops! algo ha anat malament.";
     }
 }
 
@@ -56,20 +56,15 @@ async function submit(){
 
 <template>
 
+        <CardBox form @submit.prevent="submit">
+          <!-- <FormControl v-model="form.title" :icon="mdiAccount" placeholder="titól"/> -->
+            <FormControl v-model="form.text" type="textarea" placeholder="escriu algo aqui oi" />
+            {{ message }}
+              <template #footer>
+                <BaseButtons>
+                  <BaseButton type="submit" rounded label="bip bip!" @click="submit"/>
+              </BaseButtons>
+            </template>
+          </CardBox>
     
-    <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiHandshakeOutline" title="Afegir una nota" main>
-      </SectionTitleLineWithButton>
-        <BaseDivider />
-      <CardBox form @submit.prevent="submit">
-          <FormControl v-model="form.title" :icon="mdiAccount" placeholder="titól"/>
-          <FormControl v-model="form.text" type="textarea" placeholder="escriu algo aqui oi" />
-        <template #footer>
-          <BaseButtons>
-            <BaseButton type="submit" color="info" label="Submit" @click="submit"/>
-          </BaseButtons>
-        </template>
-      </CardBox>
-    </SectionMain>
-
 </template>

@@ -20,11 +20,9 @@ const { v4: uuidv4 } = require('uuid')
 //        :type pot ser: pinboard, project, task, member, transaction, document, estimate, link,.... 
 // NOTE pot tener parentId, en quin cas s'hauria de pasar a traves de un "respondre" botó o algo que figuri a cada NoteBox 
 router.post('/:element/:type', checkUserIsLoggedInAndAssignComments, async (req, res, next) => {
-
     const {comment} = req
-    try {
 
-  
+    try {
       res.status(200).send(comment)
       
     } catch (err) {
