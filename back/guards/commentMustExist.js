@@ -9,7 +9,8 @@ async function commentMustExist(req, res, next) {
     switch(element){
         case "note" : 
             comment = await models.Note.findOne({
-                where: {id: id}
+                where: {id: id},
+                include: { model: models.Note, as: 'SubNotes'}
             })
         break;
         case "link":

@@ -23,11 +23,11 @@ const userAvatar = computed(
   () =>
     `https://api.dicebear.com/8.x/adventurer/svg?seed=Salem`
 )
-async function addComment(element, data) {
+async function addComment(type, element, data) {
     
     try {
       
-      const response = await axios.post(`api/comments/${element}/${route.path.replace('/', '')}`,
+      const response = await axios.post(`api/comments/${element}/${type}`,
       {data},
       {
         headers: {

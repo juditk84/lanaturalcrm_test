@@ -72,10 +72,11 @@ async function userShouldBeLoggedIn(req, res, next) {
                  },
                 {
                     model: models.Note,
-                    attributes:  ["id", "title", "text", "creatorId"],
+                    attributes:  ["id", "title", "text", "creatorId", "updatedAt"],
                     order: [
                       [models.Notes, "createdAt", 'ASC']
                     ],
+                    include: { model: models.Note, as: 'SubNotes'}
                   }
                 ]
             },
@@ -93,6 +94,7 @@ async function userShouldBeLoggedIn(req, res, next) {
               order: [
                 [models.Note, "createdAt", 'ASC']
               ],
+              include: { model: models.Note, as: 'SubNotes'}
               // separate: true,
             },
             {

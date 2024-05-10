@@ -47,7 +47,7 @@ const attributes = ref(taskDates);
 <template>
   <LayoutAuthenticated>
     <CardBoxModal v-model="isModalActive" title="Afegeix una nova nota">
-        <AddComment :commentableId="memberStore?.specificMember?.content.id" />
+        <AddComment commentableType="member" :commentableId="memberStore?.specificMember?.content.id" />
       </CardBoxModal>
 
     <SectionTitle>Dades Bàsiques</SectionTitle>

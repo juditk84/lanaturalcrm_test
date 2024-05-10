@@ -25,6 +25,10 @@ const props = defineProps({
     type: String, 
     required: true
   },
+  commentableType : {
+    type: String,
+    required: true
+  }
 })
 
 const isModalActive = ref(false)
@@ -44,7 +48,7 @@ async function submit(){
   console.log(router)
   console.log(route)
     try {
-      const response = await userStore.addComment("note", form.value)
+      const response = await userStore.addComment(props.commentableType, "note", form.value)
       if (response.ok) message.value = "ha funcionat!"
     } catch (error) {
       message.value = "oops! algo ha anat malament.";
