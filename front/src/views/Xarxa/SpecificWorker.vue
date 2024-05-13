@@ -7,19 +7,19 @@ import SectionTitle from '@/components/SectionTitle.vue'
 import CardBox from '@/components/CardBox.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
-import { useProjectesStore } from '@/stores/projectesStore'
+import { useMemberStore } from '@/stores/memberStore'
 import Table from '@/components/Table.vue'
 import shortUUID from 'short-uuid'
 
-const projectesStore = useProjectesStore()
+const memberStore = useMemberStore()
 
 const route = useRoute();
 const router = useRouter();
 const minifier = shortUUID();
 
 // is it good doing this here? Are we overusing this trick?
-onMounted(async () => await projectesStore.fetchSpecificProject())
-watch(route, async () => await projectesStore.fetchSpecificProject())
+onMounted(async () => await memberStore.fetchSpecificWorker())
+watch(route, async () => await memberStore.fetchSpecificWorker())
 
 const calendarActive = ref(false)
 
@@ -30,13 +30,13 @@ const titleForCalendarOrTableSection = computed(() => {
   return "Llista"
 })
 
-function calendarOrListSwitch(){
-  calendarActive.value = !calendarActive.value
-}
+// function calendarOrListSwitch(){
+//   calendarActive.value = !calendarActive.value
+// }
 
-function navigateToProject(){
-  router.push({ path: `/projectes/${minifier.fromUUID(projectesStore.specificProject?.id)}` })
-}
+// function navigateToProject(){
+//   router.push({ path: `/projectes/${minifier.fromUUID(projectesStore.specificProject?.id)}` })
+// }
 
 </script>
 
@@ -47,16 +47,11 @@ function navigateToProject(){
   <SectionMain class=" rounded-2xl">
     <CardBox>
       
-      <SectionTitleLineWithButton :title="projectesStore.specificTask?.content.title" main>
-        <button class="col-span-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex content-center items-center" @click="navigateToProject"><b>{{ projectesStore.specificProject?.name }}</b></button>
+      <SectionTitleLineWithButton :title="memberStore?.specificWorker?.content.firstname" main>
+        <!-- <button class="col-span-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex content-center items-center" @click="navigateToProject"><b>{{ projectesStore.specificProject?.name }}</b></button> -->
       </SectionTitleLineWithButton>
-      <div v-if="!projectesStore.specificTask">
-        Loading...
-       </div>
-       <div v-else>
-         {{projectesStore?.specificTask?.content.description}}
-       </div>
-       {{ projectesStore?.specificTask.content.tableContent }}
+      {{ memberStore?.specificWorker }}
+
      </CardBox>
    </SectionMain>
 

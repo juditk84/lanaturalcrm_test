@@ -61,7 +61,7 @@ const routes = [
     meta: {
       title: 'treballadores per tasques'
     },
-    path: '/projectes/:project_id/tasques/:tasca_id/treballadores/:member_id', name: 'specificWorker', component: () => import('@/views/Xarxa/SpecificMember.vue')
+    path: '/projectes/:project_id/tasques/:tasca_id/treballadores/:worker_id', name: 'specificWorker', component: () => import('@/views/Xarxa/SpecificWorker.vue')
   },
   {
     meta: {
