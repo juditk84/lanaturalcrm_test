@@ -47,17 +47,16 @@ function navigateToProject(){
   <SectionMain class=" rounded-2xl">
     <CardBox>
       
-      <SectionTitleLineWithButton :title="projectesStore.specificTask?.content.title" main>
+      <SectionTitleLineWithButton :title="projectesStore.specificTask?.content?.title" main>
         <button class="col-span-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex content-center items-center" @click="navigateToProject"><b>{{ projectesStore.specificProject?.name }}</b></button>
       </SectionTitleLineWithButton>
-      {{ projectesStore.specificTaskWorkers }}
+
       <div v-if="!projectesStore.specificTask">
         Loading...
        </div>
        <div v-else>
-         {{projectesStore?.specificTask?.content.description}}
+         {{projectesStore?.specificTask?.content?.description}}
        </div>
-       {{ projectesStore?.specificTask.content.tableContent }}
      </CardBox>
    </SectionMain>
    
