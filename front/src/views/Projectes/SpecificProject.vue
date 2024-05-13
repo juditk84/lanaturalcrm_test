@@ -54,12 +54,11 @@ function navigateToMember(){
 
 <template>
   <LayoutAuthenticated>
-   
   
     <SectionTitle>Dades Bàsiques</SectionTitle>
     <SectionMain class=" rounded-2xl">
       <CardBox>
-        
+
         <SectionTitleLineWithButton :title="projectesStore?.specificProject?.name" main>
           <button class="col-span-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex content-center items-center" @click="navigateToMember"><b>{{ projectesStore.specificProject?.Member.commercialName1 }}</b></button>
         </SectionTitleLineWithButton>
