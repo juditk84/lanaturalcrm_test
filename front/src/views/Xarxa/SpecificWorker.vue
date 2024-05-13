@@ -50,7 +50,6 @@ function navigateToProject(){
       <SectionTitleLineWithButton :title="projectesStore.specificTask?.content.title" main>
         <button class="col-span-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex content-center items-center" @click="navigateToProject"><b>{{ projectesStore.specificProject?.name }}</b></button>
       </SectionTitleLineWithButton>
-      {{ projectesStore.specificTaskWorkers }}
       <div v-if="!projectesStore.specificTask">
         Loading...
        </div>
@@ -60,23 +59,7 @@ function navigateToProject(){
        {{ projectesStore?.specificTask.content.tableContent }}
      </CardBox>
    </SectionMain>
-   
-   <SectionMain>
-    <CardBox has-table>
-      
-        <Table 
-                has-filter
-                table-category="treballadores"
-                parent-category="tasques"
-               :content="projectesStore.specificTaskWorkers.content"
-               :table-content="projectesStore.specificTaskWorkers.tableContent"
-               :table-headers="projectesStore.specificTaskWorkers.tableHeaders"
-               table-title="Treballadores"
-               :items-per-page="5"
-               />
 
-    </CardBox>
-   </SectionMain>
  </LayoutAuthenticated>
 </template>
 

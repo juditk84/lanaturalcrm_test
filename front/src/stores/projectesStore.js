@@ -21,7 +21,25 @@ export const useProjectesStore = defineStore('projecteStore', () => {
   const specificProjectTasks        = ref(null) // ull! Same comment as transactions
   
   const specificTask = computed(() => {
-    return specificProjectTasks.value?.content?.filter(task => route.params?.tasca_id && task.id === minifier.toUUID(route.params.tasca_id))[0]
+    
+    return { content: specificProjectTasks.value?.content?.
+                      filter(task => route.params?.tasca_id && task.id === minifier.toUUID(route.params.tasca_id))[0],
+    }
+    
+  })
+
+  const specificTaskWorkers = computed(() => {
+    return {
+      content: specificTask.value.content?.Workers,
+      tableContent: specificTask.value.content?.Workers?.map(worker => { return {nom: worker.firstname,
+        pronoms: worker.pronouns,
+        rol: worker.role
+      }}),
+      tableHeaders: [
+        { binder: "nom", label: "nom"},
+        { binder: "pronoms", label: "pronoms"},
+        { binder: "rol", label: "rol"}
+        ]}
   })
 
   async function fetchProjects() {
@@ -126,6 +144,7 @@ export const useProjectesStore = defineStore('projecteStore', () => {
     specificProjectTransactions,
     specificProjectTasks,
     specificTask,
+    specificTaskWorkers,
     fetchProjects,
     fetchUserProjects,
     fetchSpecificProject

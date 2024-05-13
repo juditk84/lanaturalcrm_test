@@ -4,6 +4,7 @@ const models = require('../models');
 const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn');
 const onlySendUserDataIfUserIsLoggedIn = require('../guards/onlySendUserDataIfUserIsLoggedIn') 
 const short = require('short-uuid')
+const workerMustExist = require('../guards/workerMustExist')
 const translator = short()
 const { v4: uuidv4 } = require('uuid')
 const bcrypt = require("bcrypt");
@@ -30,6 +31,18 @@ router.get('/all', userShouldBeLoggedIn, async (req, res, next) => {
   }
 })
 
+// GET one member
+// needs token
+// de moment envia tot (but no associations) becasue aviam que (no) volem enviar
+// i el guard afegeix un "name" property, accessible independent de memberType
+router.get('/:workerId', userShouldBeLoggedIn, workerMustExist, async (req, res, next) => {
+  const {worker} = req
+  try {
+      res.status(200).send(worker)
+  } catch (err) {
+    res.status(500).send({message: "no s'ha trobat el membre que busques, revisa les dades oi"})
+  }
+})
 
 router.patch('/', userShouldBeLoggedIn, async (req, res, next) => {
   const { user } = req

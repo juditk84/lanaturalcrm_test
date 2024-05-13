@@ -131,13 +131,10 @@ function sortTheList(headerBinder){
                                         })
                                 
     activeSortColumn.value = headerBinder;
-    console.log("sorting")
   }
   else{
     items.value.reverse()
-    console.log("reversing")
   }
-
 }
 
 </script>
