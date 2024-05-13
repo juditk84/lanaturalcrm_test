@@ -7,29 +7,11 @@ async function memberMustExist(req, res, next) {
         where: {
           id: req.params.workerId
         },
-        // include: [
-        //     {
-        //   model: models.Member,
-        //   as: "parent"
-        // },  
-        //     {
-        //   model: models.Member,
-        //   as: "children"
-        // },
-        // {
-        //   model: models.Project,
-        //   as: "projects",
-        //   include: [
-        //     {
-        //       model: models.ProjectType,
-        //       attributes: ["type"]
-        //     },
-        //     {
-        //       model: models.Worker,
-        //       attributes: ["firstname"]
-        //     }
-        //   ]
-        // }]
+        include: [
+          {
+            model: models.Project
+          }
+        ]
       })
     
     req.worker = response;
