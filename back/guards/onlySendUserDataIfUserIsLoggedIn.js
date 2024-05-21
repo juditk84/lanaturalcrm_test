@@ -26,6 +26,7 @@ async function userShouldBeLoggedIn(req, res, next) {
             id: decoded.user_id,
           },
           attributes: [
+            "id",
             "firstname",
             "lastname1", 
             "lastname2",
@@ -72,11 +73,14 @@ async function userShouldBeLoggedIn(req, res, next) {
                  },
                 {
                     model: models.Note,
-                    attributes:  ["id", "title", "text", "creatorId", "updatedAt"],
-                    order: [
-                      [models.Notes, "createdAt", 'ASC']
-                    ],
-                    include: { model: models.Note, as: 'SubNotes'}
+                    // attributes:  ["id", "title", "text", "creatorId", "updatedAt"],
+                    // order: [
+                    //   [models.Notes, "createdAt", 'ASC']
+                    // ],
+                    include: [
+                      { model: models.Note, as: 'SubNotes'},
+                      { model: models.Worker, as: 'creator', attributes: ["username"]}],
+               
                   }
                 ]
             },
@@ -90,10 +94,10 @@ async function userShouldBeLoggedIn(req, res, next) {
             
             // **** commentables associated with user-self (pinboard?)
             {model: models.Note,
-              attributes: ["id", "title", "text", "parentId"],
-              order: [
-                [models.Note, "createdAt", 'ASC']
-              ],
+              // attributes: ["id", "title", "text", "parentId"],
+              // order: [
+              //   [models.Note, "createdAt", 'ASC']
+              // ],
               include: { model: models.Note, as: 'SubNotes'}
               // separate: true,
             },

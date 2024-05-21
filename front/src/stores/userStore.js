@@ -23,10 +23,30 @@ const userAvatar = computed(
   () =>
     `https://api.dicebear.com/8.x/adventurer/svg?seed=Salem`
 )
+
+async function getComments(type, id) {
+    
+  try { 
+    // make all a query so we can filter?    
+    const response = await axios.get(`api/comments/${type}/${id}/all`,
+    {
+      headers: {
+        Authorization: sessionStorage.getItem("refreshToken"),
+      },
+    },
+    )
+  
+  return response?.data
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// això es tb reply, si es reply s'agafa el parentId in the AddComment component
 async function addComment(type, element, data) {
     
-    try {
-      
+    try {     
       const response = await axios.post(`api/comments/${element}/${type}`,
       {data},
       {
@@ -43,6 +63,37 @@ async function addComment(type, element, data) {
     console.log("submit button clicked")
 }
 
+async function editComment(id, element, data) {
+
+  try {
+    const response = await axios.patch(`api/comments/${element}/${id}`,
+    {data},
+    {
+      headers: {
+        Authorization: sessionStorage.getItem("refreshToken"),
+      }
+    })
+    return response.data
+  } catch (error) {
+    alert(error.message)
+  }
+}
+
+async function deleteComment(id, element, data) {
+
+  try {
+    const response = await axios.delete(`api/comments/${element}/${id}`,
+    {data},
+    {
+      headers: {
+        Authorization: sessionStorage.getItem("refreshToken"),
+      }
+    })
+    return response.data
+  } catch (error) {
+    alert(error.message)
+  }
+}
 async function fetchAllUserRelatedAssets(){
   try {
 
@@ -67,14 +118,17 @@ async function fetchAllUserRelatedAssets(){
         }
     })
     userNotes.value = response?.data.user.Notes
-      .filter((note) => !note.parentId)
-        .map((note) => {
-          return {
-            id: note.id,
-            text: note.text,
-            title: note.title
-          }
-        }) 
+      // .filter((note) => !note.parentId)
+      //   .map((note) => {
+      //     // const subNotes = note.subNotes.map((note) => note.id)
+      //     return {
+      //       id: note.id,
+      //       text: note.text,
+      //       creator: note.Worker.username,
+      //       createdAt: note.createdAt,
+      //       respostes: subNotes,
+      //     }
+      //   }) 
     userDocs.value += response?.data.user.Documents
         .map((doc) => {
           return {
@@ -114,7 +168,10 @@ async function fetchAllUserRelatedAssets(){
     pinboard,
     $reset,
     fetchAllUserRelatedAssets,
+    getComments,
     addComment,
+    editComment,
+    deleteComment
   }
 
 })

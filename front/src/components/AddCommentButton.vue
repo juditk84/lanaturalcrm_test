@@ -4,26 +4,28 @@
 
 <template>
 
-<button class="big-plus-button"> + </button>
+<button class="big-plus-button"> </button>
 </template>
 
 <style>
 .big-plus-button {
-  /* Making the button round */
-  border-radius: 4em; /* Fully rounded */
-  /* border: 2fr solid black; Border size and style */
-  padding: 1rem; /* Padding to make the button larger */
+ 
+  border-radius: 4em;
+  display:flex;
+  padding: 1rem;
+  margin: 1rem;
   background-color: #efefd3; /* Background color */
   color: #000000; /* Text color */
   font-size: 2em; /* Font size for the plus sign */
   cursor: pointer; /* Cursor style */
-  transition: all 0.2s ease; /* Smooth transition for hover effects */
-  align-self:flex-end;
+  transition: all 0.2s ease;
+  content: "+"; /* Smooth transition for hover effects */
+  /* align-self:flex-end; */
 }
 
 .big-plus-button::before {
-  content: "+"; /* Plus sign */
-  position: absolute;
+  /* content: "+"; Plus sign */
+  position: flex;
   top: 30%;
   left: 30%;
   transform: translate(-50%, -50%); /* Centering the plus sign */

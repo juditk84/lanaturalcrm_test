@@ -20,22 +20,17 @@ import ViewMembers from '@/components/ViewMembers.vue'
 </script>
 
 <template>
-  <LayoutAuthenticated>
-    <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Xarxa" main>
-        
-      </SectionTitleLineWithButton>
-
-    </SectionMain>
-
-   <ViewMembers></ViewMembers>
-
-    <SectionMain>
-
- <BaseDivider/>
-      <AddMemberForm>
-        
-      </AddMemberForm>
-    </SectionMain>
-  </LayoutAuthenticated>
+    <LayoutAuthenticated>
+      <SectionMain>
+        <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Xarxa" main>
+          </SectionTitleLineWithButton>
+        </SectionMain>  
+      <ViewMembers>
+        </ViewMembers>
+      <SectionMain>
+        <BaseDivider/>
+          <AddMemberForm>
+        </AddMemberForm>
+      </SectionMain>
+    </LayoutAuthenticated>
 </template>

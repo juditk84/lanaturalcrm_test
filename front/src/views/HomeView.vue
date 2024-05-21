@@ -19,15 +19,15 @@ onMounted(() => {
   userStore.fetchAllUserRelatedAssets()
 })
 
+const printUser = () => console.log(userStore.user.id)
+
 </script>
 
 <template>
   <LayoutAuthenticated>
     <SectionMain>
 
-      <CardBoxModal v-model="isModalActive" title="Afegeix una nova nota">
-        <AddComment commentableId=null commentableType="dashboard"/>
-      </CardBoxModal>
+      <button @click="printUser"> click-eh me mario</button>
 
       <br />
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Les meves tasques" main>
@@ -66,17 +66,9 @@ onMounted(() => {
         />
       </SectionTitleLineWithButton>
 
-      <CommentsSection :notes="userStore.notes">
+      <CommentsSection :commentableId="userStore?.user?.id" commentableType="worker">
+        </CommentsSection>
 
-      </CommentsSection>
-      <!-- <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6"> 
-        <NoteBox v-for="note in userStore.notes" 
-          :title="note.title"
-          :label="note.text"
-          :children="0"
-        />
-        <BaseButton :icon="mdiPlus" rounded-full big @click="isModalActive=true"></BaseButton>
-      </div> -->
 
       
     

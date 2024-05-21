@@ -21,7 +21,7 @@ async function commentMustExist(req, res, next) {
         default:
             throw new Error(`no tenim ${element}, proba something else`)
     }
-
+    console.log(comment)
     req.comment = comment;
 
     next()

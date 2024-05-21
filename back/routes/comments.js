@@ -4,6 +4,7 @@ const checkUserIsLoggedInAndAssignComments = require('../guards/checkUserIsLogge
 const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn');
 const commentMustExist = require('../guards/commentMustExist');
 const { v4: uuidv4 } = require('uuid')
+const models = require('../models');
 
 // ************ EN TOTES LES URLs de comments ********************
 // *******    s'ha d'especificar ':element' --->>>>  /comments/note o /comments/link (de moment deixo enrere els documents)
@@ -41,6 +42,37 @@ router.get('/:element/:id', userShouldBeLoggedIn, commentMustExist, async (req, 
   }
 
 })
+// get ALL comments from commentableId
+router.get('/:commentableType/:commentableId/all', userShouldBeLoggedIn, async (req, res, next) => {
+  const { commentableId, commentableType } = req.params
+
+  try {
+    const notes = await models.Note.findAll({
+      where : {
+        commentableType: commentableType,
+        commentableId: commentableId
+      }
+    })
+    const links = await models.Link.findAll({
+      where : {
+        commentableType: commentableType,
+        commentableId: commentableId
+      }
+    })
+    const docs = await models.Document.findAll({
+      where : {
+        commentableType: commentableType,
+        commentableId: commentableId
+      }
+    })
+    const allComments = {notes, links, docs}
+    res.status(200).send(allComments)
+  } catch (err) {
+    res.status(500).send({message: err.message})
+  }
+
+})
+
 
 // needs token
 /// pass fields that we want to change as a { data : { field : newValue } } object

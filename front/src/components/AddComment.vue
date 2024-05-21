@@ -28,6 +28,11 @@ const props = defineProps({
   commentableType : {
     type: String,
     required: true
+  },
+  parentId: {
+    type: String,
+    required: false,
+    default: null,
   }
 })
 
@@ -40,9 +45,17 @@ const message = ref("")
 const form = ref({
   title: '',
   text: '',
-  commentableId: props.id 
+  commentableId: props.id,
+  parentId: props.parentId,
 })
 
+async function reply(e){
+  console.log(e.target.id)
+}
+
+async function edit(e){
+  console.log(e.target.id)
+}
 
 async function submit(){
   console.log(router)
@@ -66,7 +79,7 @@ async function submit(){
             {{ message }}
               <template #footer>
                 <BaseButtons>
-                  <BaseButton type="submit" rounded label="bip bip!" @click="submit"/>
+                  <BaseButton type="submit" rounded label="bip bip!" @click="$emit('submit', form.value)"/>
               </BaseButtons>
             </template>
           </CardBox>
