@@ -23,7 +23,7 @@ const userStore = useUserStore()
 const notes = ref(null)
 const parentId = ref(null)
 
-// this is get ALL comments
+// this is GET /all comments
 async function updateComments(){
   try {
     loading.value = true;
@@ -67,7 +67,7 @@ async function submit(data) {
     }
 }
 
-//update the ONE comment. so far not working
+// This is PATCH the one comment
 async function updateComment(data) {
     try {
       data = {
@@ -75,7 +75,6 @@ async function updateComment(data) {
         commentableId: props.commentableId,
         commentableType: props.commentableType
       }
-      console.log(data)
       const response = await userStore.editComment("note", data)
       return response
     } catch (err) {
@@ -90,6 +89,7 @@ async function updateComment(data) {
 </script>
 
 <template>
+
     <button @click="updateComments">CLIK</button>
       <CardBoxModal v-model="isModalActive" title="Afegeix una nova nota">
         <AddComment @submit="(data) => submit(data)" />
@@ -104,39 +104,36 @@ async function updateComment(data) {
         @update="(data) => updateComment(data)"
       />     
   </div>
+  
 </template>
 
 <style>
-/* General styles */
+
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
 }
 
-/* Comment container */
 .comment-container {
   display: grid;
   margin-bottom: 20px;
   margin: 1rem;
   padding: 0.5rem;
   border: 2px solid #000000;
-  border-radius: 1em; /* Rounded corners */
-  background-color: #f9f9f9; /* Light background */
+  border-radius: 1em;
+  background-color: #f9f9f9;
 }
 
-/* Comment text */
 .comment-text {
   margin-bottom: 10px;
   font-size: 14px;
 }
 
-/* Username */
 .username {
   font-weight: bold;
   color: #000;
 }
 
-/* Date */
 .date {
   font-size: 12px;
   color: #777;

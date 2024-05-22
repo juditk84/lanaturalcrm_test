@@ -3,7 +3,9 @@
 </script>
 
 <template>
+
   <button class="big-plus-button"> nova </button>
+  
 </template>
 
 <style>

@@ -1,7 +1,7 @@
 <script setup>
-import {ref} from 'vue'
-import AddComment from './AddComment.vue';
+import { ref } from 'vue'
 import { format } from '@formkit/tempo';
+
 const props = defineProps({
   note: {
     type: Object,
@@ -9,22 +9,26 @@ const props = defineProps({
   }
 })
 
+// aqui s'ha de massejar més la cosa
 const note = ref({
   text: props.note.text,
   createdAt: props.note.createdAt,
-  id: props.note.id})
-// const newValue = ref(props.note.text)
-const id = ref(null)
+  id: props.note.id
+})
+
 const editting = ref(false)
 const emit = defineEmits(['reply', 'update'])
 
 async function reply() {
   emit('reply', {parentId : note.value.id})
 }
+
 async function update(){
-  const data = {text: note.value.text, id: note.value.id}
-  console.log(data)
   try {
+    const data = {
+      text: note.value.text,
+      id: note.value.id
+    }
     emit('update', data)
   } catch (err) {
     alert(err.message)
@@ -35,10 +39,9 @@ async function update(){
 }
 
 function openEditor(e) {
-  console.log(e)
   editting.value = true
-  id.value = e.target.id
 }
+
 </script>
 
 <template>
