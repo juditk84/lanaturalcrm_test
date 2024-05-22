@@ -18,68 +18,29 @@ import NotificationBarInCard from '@/components/NotificationBarInCard.vue'
 import axios from 'axios'
 import { useRouter, useRoute } from 'vue-router'
 
-const router = useRouter()
-const route = useRoute()
-const props = defineProps({
-  commentableId : {
-    type: String, 
-    required: true
-  },
-  commentableType : {
-    type: String,
-    required: true
-  },
-  parentId: {
-    type: String,
-    required: false,
-    default: null,
-  }
-})
-
-const isModalActive = ref(false)
-
-const userStore = useUserStore();
-
 const message = ref("")
 
 const form = ref({
-  title: '',
-  text: '',
-  commentableId: props.id,
-  parentId: props.parentId,
+  title: null,
+  text: null
 })
 
-async function reply(e){
-  console.log(e.target.id)
-}
+const emit = defineEmits('submit')
 
-async function edit(e){
-  console.log(e.target.id)
+const handleSubmit = () => {
+  emit('submit', form.value)
 }
-
-async function submit(){
-  console.log(router)
-  console.log(route)
-    try {
-      const response = await userStore.addComment(props.commentableType, "note", form.value)
-      if (response.ok) message.value = "ha funcionat!"
-    } catch (error) {
-      message.value = "oops! algo ha anat malament.";
-    }
-}
-
 
 </script>
 
 <template>
 
-        <CardBox form @submit.prevent="submit">
-          <!-- <FormControl v-model="form.title" :icon="mdiAccount" placeholder="titól"/> -->
+        <CardBox form @submit.prevent="handleSubmit">
             <FormControl v-model="form.text" type="textarea" placeholder="escriu algo aqui oi" />
             {{ message }}
               <template #footer>
                 <BaseButtons>
-                  <BaseButton type="submit" rounded label="bip bip!" @click="$emit('submit', form.value)"/>
+                  <BaseButton type="submit" rounded label="bip bip!" @click="handleSubmit"/>
               </BaseButtons>
             </template>
           </CardBox>

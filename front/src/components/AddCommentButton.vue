@@ -3,24 +3,19 @@
 </script>
 
 <template>
-
-<button class="big-plus-button"> </button>
+  <button class="big-plus-button"> nova </button>
 </template>
 
 <style>
 .big-plus-button {
- 
-  border-radius: 4em;
-  display:flex;
+  border-radius: 3em;
+  display: grid;
   padding: 1rem;
   margin: 1rem;
-  background-color: #efefd3; /* Background color */
-  color: #000000; /* Text color */
-  font-size: 2em; /* Font size for the plus sign */
-  cursor: pointer; /* Cursor style */
+  background-color: #e6df0f;
+  color: #000000; 
   transition: all 0.2s ease;
-  content: "+"; /* Smooth transition for hover effects */
-  /* align-self:flex-end; */
+
 }
 
 .big-plus-button::before {
@@ -28,17 +23,17 @@
   position: flex;
   top: 30%;
   left: 30%;
-  transform: translate(-50%, -50%); /* Centering the plus sign */
-  font-size: 36px; /* Larger font size for the plus sign */
+  transform: translate(-50%, -50%);
+  font-size: 36px;
 }
 
 .big-plus-button:hover {
-  background-color: #d6c505;
-  color: #f1f1e3 /* Lighter shade on hover */
+  background-color: black;
+  color: #f1f1e3 
 }
 
 .big-plus-button:active {
-  box-shadow: 0 0 2px rgb(234, 174, 215); /* Shadow effect on click */
-  transform: translateY(2px); /* Slight downward movement on click */
+  box-shadow: 0 0 2px rgb(234, 174, 215);
+  transform: translateY(2px); 
 }
 </style>
