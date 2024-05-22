@@ -37,7 +37,7 @@ async function updateComments(){
   }
 }
 
-onMounted(async () => {
+onMounted(() => {
   updateComments()})
 
 async function openForm(data) {
@@ -85,25 +85,25 @@ async function updateComment(data) {
     }
 }
 
-
 </script>
 
 <template>
-
+  <!-- Quant funcioni el onMounted aquest botó pot marxar, de moment es només per carregar les notes -->
     <button @click="updateComments">CLIK</button>
+
       <CardBoxModal v-model="isModalActive" title="Afegeix una nova nota">
         <AddComment @submit="(data) => submit(data)" />
       </CardBoxModal>
 
-  <div class="comment-container"> 
-    <h2 class="text-xl font-semibold mb-4">Notes</h2>
-      <AddCommentButton @click="openForm"/>
-      <NoteBox v-for="note in notes"
-        :note="note"
-        @reply="(parentId) => openForm(parentId)"
-        @update="(data) => updateComment(data)"
-      />     
-  </div>
+        <div class="comment-container"> 
+          <h2 class="text-xl font-semibold mb-4">Notes</h2>
+            <AddCommentButton @click="openForm"/>
+            <NoteBox v-for="note in notes"
+              :note="note"
+              @reply="(parentId) => openForm(parentId)"
+              @update="(data) => updateComment(data)"
+            />     
+        </div>
   
 </template>
 
