@@ -55,6 +55,12 @@ const routes = [
     meta: {
       title: 'tasques'
     },
+    path: '/tasques/gridtest', name: 'gridTasksCalendarTest', component: () => import('@/views/Tasques/GridTasksCalendar.vue')
+  },
+  {
+    meta: {
+      title: 'tasques'
+    },
     path: '/projectes/:project_id/tasques/:tasca_id', name: 'specificTask', component: () => import('@/views/Tasques/SpecificTask.vue')
   },
   {

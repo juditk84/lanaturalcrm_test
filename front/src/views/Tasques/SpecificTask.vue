@@ -5,11 +5,13 @@ import { useRoute, useRouter } from 'vue-router'
 import SectionMain from '@/components/SectionMain.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 import CardBox from '@/components/CardBox.vue'
+import CardBoxDrag from '@/components/CardBoxDrag.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import { useProjectesStore } from '@/stores/projectesStore'
 import Table from '@/components/Table.vue'
 import shortUUID from 'short-uuid'
+import { mdiConsoleNetworkOutline } from '@mdi/js'
 
 const projectesStore = useProjectesStore()
 
@@ -38,13 +40,34 @@ function navigateToProject(){
   router.push({ path: `/projectes/${minifier.fromUUID(projectesStore.specificProject?.id)}` })
 }
 
+function onStartDrag(event, id){
+  console.log(event)
+  console.log(event.dataTransfer)
+  event.dataTransfer.dropEffect = 'move'
+  event.dataTransfer.effectAllowed = 'move'
+  event.dataTransfer.setData('itemID', id)
+}
+
+// function onClick(event){
+//   console.log(event.target.id)
+// }
+
+function onDrop(event, list){
+  const itemId = event.dataTransfer.getData('itemId')
+}
+
+function onDrag(event){
+  console.log(event.x)
+}
+
+
 </script>
 
 <template>
 <LayoutAuthenticated>
   
   <SectionTitle>Dades Bàsiques</SectionTitle>
-  <SectionMain class=" rounded-2xl">
+  <SectionMain class="rounded-2xl">
     <CardBox>
       
       <SectionTitleLineWithButton :title="projectesStore.specificTask?.content?.title" main>
@@ -75,6 +98,7 @@ function navigateToProject(){
                />
 
     </CardBox>
+    
    </SectionMain>
  </LayoutAuthenticated>
 </template>
