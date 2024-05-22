@@ -96,6 +96,14 @@ const routes = [
     name: 'register',
     component: () => import('@/views/RegisterView.vue')
   },
+  // {  
+  //   meta: {
+  //   title: 'Add Comment'
+  //   },
+  //   path: '/afegirComment',
+  //   component: () => import('@/components/AddComment.vue'),
+  //   props: true,
+  // },
   {
     meta: {
       title: 'Error'

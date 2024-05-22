@@ -2,13 +2,14 @@
 import { computed, ref, onMounted, watch } from 'vue'
 import { mdiChartTimelineVariant, mdiPlus, mdiChartLineVariant } from '@mdi/js'
 import SectionMain from '@/components/SectionMain.vue'
+import CommentsSection from '@/components/CommentsSection.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import CardBoxModal from '@/components/CardBoxModal.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import { useUserStore } from '@/stores/userStore'
 import TaskCardBox from '@/components/TaskCardBox.vue'
-import NoteBox from '@/components/NoteBox.vue'
+// import NoteBox from '@/components/NoteBox.vue'
 import AddComment from '@/components/AddComment.vue'
 
 const isModalActive = ref(false)
@@ -18,15 +19,15 @@ onMounted(() => {
   userStore.fetchAllUserRelatedAssets()
 })
 
+const printUser = () => console.log(userStore.user.id)
+
 </script>
 
 <template>
   <LayoutAuthenticated>
     <SectionMain>
 
-      <CardBoxModal v-model="isModalActive" title="Afegeix una nova nota">
-        <AddComment commentableId=null />
-      </CardBoxModal>
+      <button @click="printUser"> click-eh me mario</button>
 
       <br />
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Les meves tasques" main>
@@ -65,14 +66,11 @@ onMounted(() => {
         />
       </SectionTitleLineWithButton>
 
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6"> 
-        <NoteBox v-for="note in userStore.notes" 
-          :title="note.title"
-          :label="note.text"
-          :children="0"
-        />
-        <BaseButton :icon="mdiPlus" rounded-full big @click="isModalActive=true"></BaseButton>
-      </div>
+      <CommentsSection :commentableId="userStore?.user?.id" commentableType="worker">
+        </CommentsSection>
+
+
+      
     
 
 

@@ -1,58 +1,102 @@
 <script setup>
-import { mdiCog } from '@mdi/js'
-import CardBox from '@/components/CardBox.vue'
-import BaseIcon from '@/components/BaseIcon.vue'
-import BaseLevel from '@/components/BaseLevel.vue'
-import PillTagTrend from '@/components/PillTagTrend.vue'
-import BaseButton from '@/components/BaseButton.vue'
-import SectionTitle from '@/components/SectionTitle.vue'
-import SectionMain from '@/components/SectionMain.vue'
+import { ref } from 'vue'
+import { format } from '@formkit/tempo';
 
-defineProps({
-  title: {
-    type: String,
+const props = defineProps({
+  note: {
+    type: Object,
     default: null
-  },
-  label: {
-    type: String,
-    default: null
-  },
-  children: {
-    type: Number,
-    default: null
-  },
-  color: {
-    type: String,
-    default: null
-  },
-//   date: {
-//     type: String,
-//     default: null
-//   },
+  }
 })
 
+// aqui s'ha de massejar més la cosa
+const note = ref({
+  text: props.note.text,
+  createdAt: props.note.createdAt,
+  id: props.note.id
+})
+
+const editting = ref(false)
+const emit = defineEmits(['reply', 'update'])
+
+async function reply() {
+  emit('reply', {parentId : note.value.id})
+}
+
+async function update(){
+  try {
+    const data = {
+      text: note.value.text,
+      id: note.value.id
+    }
+    emit('update', data)
+  } catch (err) {
+    alert(err.message)
+  } finally {
+    editting.value = false;
+  }
+  
+}
+
+function openEditor(e) {
+  editting.value = true
+}
 
 </script>
 
 <template>
-<CardBox>
 
-  <BaseLevel mobile>
-    <div>
-      <SectionTitle>
-          {{ title }}
-      </SectionTitle>
-      <h3>
-        {{ label }}
-      </h3>
-
-
+    <div class="comment-box">
+      <div class="editor" v-if="editting" form>
+        <textarea v-model="note.text" @keyup.enter="update"> </textarea>
+        <!-- <button @click="update"> guardar canvis </button> -->
+      </div>
+      
+      <div v-else="" class="comment-text">
+        <span class="title"> {{ note.text }} </span> <br />
+        <span> {{ format(note.createdAt, "full", "ca") }}</span><br />
+          <!-- <h3> {{ note }} </h3> -->
+      </div>
+      <button class="reply-button" v-if="!editting" :id="note.id" @click="(e) => reply(e)"> respondre </button> {{ " " }}
+          <button class="edit-button" :id="note.id" @click="(e) => editting ? update(e): openEditor(e)"> {{ editting ? "guardar canvis" : "editar" }}</button>
     </div>
-    <!-- <BaseIcon v-if="icon" :path="icon" size="48" w="" h="h-16" :class="color" /> -->
-  </BaseLevel>
-</CardBox>
+
+    <br />
 
 </template>
+
+<style>
+.comment-box {
+  display: grid;
+  -ms-flex-item-align: center;
+  margin-bottom: 20px;
+  padding:1rem;
+  margin: 1rem;
+  border: 2px solid #000000;
+  border-radius: 1em; /* Rounded corners */
+  background-color: #f9f9f9; /* Light background */
+}
+
+/* Comment text */
+.comment-text {
+  margin-bottom: 10px;
+  font-size: 1em;
+}
+
+.title {
+  font-size:1.5em;
+}
+
+.reply-button, .edit-button {
+  font-size:0.8em;
+  margin: 0.8em;
+  border-radius: 1em;
+}
+.reply-button:hover, .edit-button:hover {
+  background-color: black;
+  color: #f1f1e3;
+}
+</style>
 
   
 

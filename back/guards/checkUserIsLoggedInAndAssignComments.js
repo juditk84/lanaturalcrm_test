@@ -26,7 +26,7 @@ if (!token) {
         },
         attributes: ["id"] 
       })
-     
+      
       try {
         let commObj = {
             id: uuidv4(),

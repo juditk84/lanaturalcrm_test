@@ -13,7 +13,7 @@ import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import { useMemberStore } from '@/stores/memberStore'
 import NoteBox from '@/components/NoteBox.vue'
-import AddComment from '@/components/AddComment.vue'
+import CommentsSection from '@/components/CommentsSection.vue'
 import { Calendar, DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
 
@@ -46,9 +46,9 @@ const attributes = ref(taskDates);
 ß
 <template>
   <LayoutAuthenticated>
-    <CardBoxModal v-model="isModalActive" title="Afegeix una nova nota">
-        <AddComment :commentableId="memberStore?.specificMember?.content.id" />
-      </CardBoxModal>
+    <!-- <CardBoxModal v-model="isModalActive" title="Afegeix una nova nota">
+        <AddComment commentableType="member" :commentableId="memberStore?.specificMember?.content.id" />
+      </CardBoxModal> -->
 
     <SectionTitle>Dades Bàsiques</SectionTitle>
         <SectionMain class=" rounded-2xl">
@@ -96,8 +96,7 @@ const attributes = ref(taskDates);
     <SectionTitle>Balanç Econòmic</SectionTitle>
 
     <div>
-      ....Afegir una nota: 
-      <BaseButton :icon="mdiPlus" rounded-full big @click="isModalActive=true"></BaseButton>
+      <CommentsSection :commentableId="memberStore?.specificMember?.content.id" commentableType="member"/>
     </div>
   </LayoutAuthenticated>
 </template>
