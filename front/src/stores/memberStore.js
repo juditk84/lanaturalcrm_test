@@ -11,8 +11,7 @@ export const useMemberStore = defineStore('memberStore', () => {
   const allMembers = ref(null)
   const fetchedMember = ref(null);
   const specificMember = ref(null)
-
-
+  const specificWorker = ref(null)
 
   async function fetchMembers() {
     try {
@@ -70,6 +69,23 @@ export const useMemberStore = defineStore('memberStore', () => {
     }
   }
 
+  async function fetchSpecificWorker() {
+    try {
+      const results = await axios(`api/workers/${minifier.toUUID(route.params.worker_id)}`,
+      {
+        headers: {   
+        Authorization: "Bearer " + sessionStorage.refreshToken
+        }
+      })
+      specificWorker.value = {content: results.data,
+                          etag: results.headers.etag
+    }} catch(error) {
+      if(error.response.status !== 304){
+        alert(error.message)
+      }
+    }
+  }
+
   async function addMember(data){
     try{
       const response = await axios.post('api/xarxa/',
@@ -103,10 +119,13 @@ export const useMemberStore = defineStore('memberStore', () => {
       return error.message
     }
   }
+
   return {
     allMembers,
     fetchedMember,
     specificMember,
+    specificWorker,
+    addMember,
     fetchMembers,
     fetchSpecificMember,
     addMember,

@@ -12,8 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       
       // tree structure
-      Member.belongsTo(models.Member, {as: "Parent", foreignKey: "parentId", allowNull: true});
-      Member.hasMany(models.Member, {as: "Child", foreignKey: "parentId"})
+      Member.belongsTo(models.Member, {as: "parent", foreignKey: "parentId", allowNull: true});
+      Member.hasMany(models.Member, {as: "children", foreignKey: "parentId"})
+
+      // linked projects
+      Member.hasMany(models.Project, {as: "projects", foreignKey: "memberId", allowNull: true})
 
       // commentables
       Member.hasMany(models.Note, {foreignKey: 'commentableId', constraints: false, scope: {commentableType: 'member'}});

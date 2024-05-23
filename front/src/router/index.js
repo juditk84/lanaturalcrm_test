@@ -26,25 +26,48 @@ const routes = [
       title: 'Membres de la Xarxa'
     },
     path: '/xarxa',
-    name: 'Xarxa',
+    name: 'xarxa',
     children: [
-      {path: 'totis', name: 'Totis', component: () => import('@/views/Xarxa/AllMembers.vue')},
-      {path: 'afegir', name: 'AfegirMembre', component: () => import('@/views/Xarxa/AddMember.vue')},
-      {path: ':member_id', name: 'un sol membre', component: () => import('@/views/Xarxa/SpecificMember.vue')},
+      {path: 'totis', name: 'allMembers', component: () => import('@/views/Xarxa/AllMembers.vue')},
+      {path: 'afegir', name: 'AddMember', component: () => import('@/views/Xarxa/AddMember.vue')},
+      {path: ':member_id', name: 'specificMember', component: () => import('@/views/Xarxa/SpecificMember.vue')},
     ]
     
   },
 
   {
     meta: {
-      title: 'Projectes'
+      title: 'projectes'
     },
     path: '/projectes',
+    name: 'projectes',
     children: [
-      {  path: 'tots', name: 'Projectes', component: () => import('@/views/Projectes/AllProjects.vue')},
-      {  path: ':project_id', name: 'un sol projecte', component: () => import('@/views/Projectes/SpecificProject.vue')}
+      {  path: 'tots', name: 'allProjects', component: () => import('@/views/Projectes/AllProjects.vue')},
+      {  
+        meta: {category: 'projectes'},
+        path: ':project_id', 
+        name: 'specificProject',
+        component: () => import('@/views/Projectes/SpecificProject.vue'),
+      }
     ]
-
+  },
+  {
+    meta: {
+      title: 'tasques'
+    },
+    path: '/tasques/gridtest', name: 'gridTasksCalendarTest', component: () => import('@/views/Tasques/GridTasksCalendar.vue')
+  },
+  {
+    meta: {
+      title: 'tasques'
+    },
+    path: '/projectes/:project_id/tasques/:tasca_id', name: 'specificTask', component: () => import('@/views/Tasques/SpecificTask.vue')
+  },
+  {
+    meta: {
+      title: 'treballadores per tasques'
+    },
+    path: '/projectes/:project_id/tasques/:tasca_id/treballadores/:worker_id', name: 'specificWorker', component: () => import('@/views/Xarxa/SpecificWorker.vue')
   },
   {
     meta: {
@@ -52,7 +75,7 @@ const routes = [
     },
     path: '/reunions',
     children: [
-      {  path: 'totes', name: 'Reunions', component: () => import('@/views/ReunionsView.vue')},
+      {  path: 'totes', name: 'allReunions', component: () => import('@/views/ReunionsView.vue')},
      // {  path: ':reunion_id', name: 'un sol projecte', component: () => import('@/views/Projectes/SpecificProject.vue')}
     ]
   },

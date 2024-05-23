@@ -1,7 +1,7 @@
 <script setup>
 
-import { onMounted, onUnmounted, ref, computed} from 'vue'
-import { useRouter } from 'vue-router'
+import { onMounted, ref, computed, watch} from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import SectionMain from '@/components/SectionMain.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 import CardBox from '@/components/CardBox.vue'
@@ -19,11 +19,12 @@ import 'v-calendar/style.css';
 const darkModeStore = useDarkModeStore()
 const projectesStore = useProjectesStore();
 
+const route = useRoute();
 const router = useRouter();
 const minifier = shortUUID();
 
 onMounted(async () => await projectesStore.fetchSpecificProject())
-
+watch(route, async () => await projectesStore.fetchSpecificProject())
 
 const calendarActive = ref(false)
 
@@ -53,14 +54,13 @@ function navigateToMember(){
 
 <template>
   <LayoutAuthenticated>
-   
   
     <SectionTitle>Dades Bàsiques</SectionTitle>
     <SectionMain class=" rounded-2xl">
       <CardBox>
-        
+
         <SectionTitleLineWithButton :title="projectesStore?.specificProject?.name" main>
-          <button @click="navigateToMember">{{ projectesStore.specificProject?.Member.commercialName1 }}</button>
+          <button class="col-span-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex content-center items-center" @click="navigateToMember"><b>{{ projectesStore.specificProject?.Member.commercialName1 }}</b></button>
         </SectionTitleLineWithButton>
         <div v-if="!projectesStore.specificProject">
           Loading...
@@ -99,6 +99,7 @@ function navigateToMember(){
           <Table 
                 has-filter
                 table-category="tasques"
+                parent-category="projectes"
                :content="projectesStore.specificProjectTasks?.content"
                :table-content="projectesStore.specificProjectTasks?.tableContent"
                :table-headers="projectesStore.specificProjectTasks?.tableHeaders"
@@ -116,6 +117,7 @@ function navigateToMember(){
         <Table 
                 has-filter
                 table-category="moviments"
+                parent-category="projectes"
                :content="projectesStore.specificProjectTransactions?.content"
                :table-content="projectesStore.specificProjectTransactions?.tableContent"
                :table-headers="projectesStore.specificProjectTransactions?.tableHeaders"
@@ -125,6 +127,7 @@ function navigateToMember(){
 
     </CardBox>
    </SectionMain>
+   <router-view></router-view>
   </LayoutAuthenticated>
 </template>
 

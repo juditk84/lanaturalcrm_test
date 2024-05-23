@@ -9,16 +9,38 @@ export const useProjectesStore = defineStore('projecteStore', () => {
   // this store should handle the fetch logic and the relevant state regarding PROJECTS.
   // (all projects, individual project, user projects <maybe>...)
 
+  const minifier = shortUUID();
+  const route = useRoute()
+
   const allProjects = ref(null)
   const allUserProjects = ref(null)
   const specificProject = ref(null)
 
+  
   const specificProjectTransactions = ref(null) // ull! Aquí estem subdividint el fetch en més refs, queda per aclarir que és best practice.
   const specificProjectTasks        = ref(null) // ull! Same comment as transactions
+  
+  const specificTask = computed(() => {
+    
+    return { content: specificProjectTasks.value?.content?.
+                      filter(task => route.params?.tasca_id && task.id === minifier.toUUID(route.params.tasca_id))[0],
+    }
+    
+  })
 
-  const minifier = shortUUID();
-
-  const route = useRoute()
+  const specificTaskWorkers = computed(() => {
+    return {
+      content: specificTask.value.content?.Workers,
+      tableContent: specificTask.value.content?.Workers?.map(worker => { return {nom: worker.firstname,
+        pronoms: worker.pronouns,
+        rol: worker.role
+      }}),
+      tableHeaders: [
+        { binder: "nom", label: "nom"},
+        { binder: "pronoms", label: "pronoms"},
+        { binder: "rol", label: "rol"}
+        ]}
+  })
 
   async function fetchProjects() {
       try {
@@ -121,6 +143,8 @@ export const useProjectesStore = defineStore('projecteStore', () => {
     specificProject,
     specificProjectTransactions,
     specificProjectTasks,
+    specificTask,
+    specificTaskWorkers,
     fetchProjects,
     fetchUserProjects,
     fetchSpecificProject

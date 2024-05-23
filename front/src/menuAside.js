@@ -18,8 +18,6 @@ import {
   mdiClockStarFourPoints
 } from '@mdi/js'
 
-import { ref } from "vue"
-
 export default [
   {           
     icon: mdiAccountStar,

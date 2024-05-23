@@ -1,17 +1,18 @@
 <script setup>
-
 import { onMounted, ref, computed} from 'vue'
 import { mdiChartTimelineVariant, mdiPlus, mdiChartLineVariant } from '@mdi/js'
 import SectionMain from '@/components/SectionMain.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 import CardBox from '@/components/CardBox.vue'
 import CardBoxContact from '@/components/CardBoxContact.vue'
+import CardBoxProject from '@/components/CardBoxProject.vue'
 import CardBoxModal from '@/components/CardBoxModal.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import CardBoxComponentHeader from '@/components/CardBoxComponentHeader.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import { useMemberStore } from '@/stores/memberStore'
+import shortUUID from 'short-uuid'
 import NoteBox from '@/components/NoteBox.vue'
 import CommentsSection from '@/components/CommentsSection.vue'
 import { Calendar, DatePicker } from 'v-calendar';
@@ -20,7 +21,12 @@ import 'v-calendar/style.css';
 const isModalActive = ref(false)
 const memberStore = useMemberStore();
 
+const route = useRoute();
+const router = useRouter();
+const minifier = shortUUID();
+
 onMounted(async () => await memberStore.fetchSpecificMember())
+watch(route, async () => await memberStore.fetchSpecificMember())
 
 const calendarActive = ref(false)
 
@@ -29,7 +35,6 @@ const titleForCalendarOrTableSection = computed(() => {
     return "Calendari"
   }
   return "Llista"
-
 })
 
 function calendarOrListSwitch(){
@@ -41,6 +46,11 @@ const taskDates = computed(() => {
 })
 
 const attributes = ref(taskDates);
+
+function navigateToMember(){
+  memberStore.specificMember.value = null
+  router.push({ path: `/xarxa/${minifier.fromUUID(memberStore.specificMember?.content?.parent.id)}` })
+}
 
 </script>
 ß
