@@ -7,14 +7,16 @@ import { ref, computed, onMounted } from 'vue';
 import { useMyFetch } from '@/helper/useMyFetch';
 import { useUserStore } from '@/stores/userStore'
 
+// s'ha de passar commentableType que serà "worker", "task", "projects"...whatever Thing the comments are about
+// i commentableId que serà l'id d'aquesta cosa
 const props = defineProps({
   commentableId: {
     type: String,
-    require: false,
+    require: true,
   },
   commentableType: {
     type: String,
-    require: false,
+    require: true,
   }
 })
 const loading = ref(false)
@@ -70,12 +72,15 @@ async function submit(data) {
 // This is PATCH the one comment
 async function updateComment(data) {
     try {
+      let regex = /\\n/i;
+      if (data.text.match(regex)) console.log("hello we match the Queenex")
       data = {
         ...data,
         commentableId: props.commentableId,
         commentableType: props.commentableType
       }
-      const response = await userStore.editComment("note", data)
+      const response = !data.text.match(regex) ? await userStore.editComment("note", data) : await userStore.deleteComment("note", data)
+      // const response = await userStore.editComment("note", data)
       return response
     } catch (err) {
       alert(err.message)
@@ -85,6 +90,16 @@ async function updateComment(data) {
     }
 }
 
+async function deleteComment(data) {
+  try {
+    const response = await userStore.deleteComment("note", data)
+    return response
+  } catch (err) {
+    alert(err.message)
+  } finally {
+    updateComments()
+  }
+}
 </script>
 
 <template>
@@ -102,6 +117,7 @@ async function updateComment(data) {
               :note="note"
               @reply="(parentId) => openForm(parentId)"
               @update="(data) => updateComment(data)"
+              @destroy="(data) => deleteComment(data)"
             />     
         </div>
   

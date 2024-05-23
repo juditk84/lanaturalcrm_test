@@ -17,6 +17,10 @@ const emit = defineEmits('submit')
 
 const handleSubmit = () => {
   emit('submit', form.value)
+  form.value = {
+  title: null,
+  text: null
+  }
 }
 
 </script>
@@ -28,7 +32,7 @@ const handleSubmit = () => {
             {{ message }}
               <template #footer>
                 <BaseButtons>
-                  <BaseButton type="submit" rounded label="bip bip!" @click="handleSubmit"/>
+                  <BaseButton type="submit" rounded label="enviar" @click="handleSubmit"/>
               </BaseButtons>
             </template>
           </CardBox>

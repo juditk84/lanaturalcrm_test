@@ -17,7 +17,7 @@ const note = ref({
 })
 
 const editting = ref(false)
-const emit = defineEmits(['reply', 'update'])
+const emit = defineEmits(['reply', 'update', 'destroy'])
 
 async function reply() {
   emit('reply', {parentId : note.value.id})
@@ -29,15 +29,27 @@ async function update(){
       text: note.value.text,
       id: note.value.id
     }
+    if (data.text.trim().includes('/n') && data.text.length < 4) console.log("this is empty")
     emit('update', data)
   } catch (err) {
     alert(err.message)
   } finally {
     editting.value = false;
-  }
-  
-}
 
+  }
+}
+async function destroy(){
+  try {
+    const data = {
+      id: note.value.id
+    }
+    emit('destroy', data)
+  } catch (err) {
+    alert(err.message)
+  } finally {
+    editting.value = false;
+  }
+}
 function openEditor(e) {
   editting.value = true
 }
@@ -59,6 +71,7 @@ function openEditor(e) {
       </div>
       <button class="reply-button" v-if="!editting" :id="note.id" @click="(e) => reply(e)"> respondre </button> {{ " " }}
           <button class="edit-button" :id="note.id" @click="(e) => editting ? update(e): openEditor(e)"> {{ editting ? "guardar canvis" : "editar" }}</button>
+          <button class="reply-button" :id="note.id" @click="(e) => destroy(e)" > esborrar </button>
     </div>
 
     <br />

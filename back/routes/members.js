@@ -3,7 +3,7 @@ var router = express.Router();
 const models = require('../models');
 const { v4: uuidv4 } = require('uuid');
 const { Op } = require('@sequelize/core');
-const uppercaseFirst = str => `${str[0].toUpperCase()}${str.substr(1)}`
+// const uppercaseFirst = str => `${str[0].toUpperCase()}${str.substr(1)}`
 const memberMustExist = require('../guards/memberMustExist')
 const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn')
 
@@ -59,14 +59,13 @@ router.post('/', userShouldBeLoggedIn, async (req, res, next) => {
 
     const [response, created] = await models.Member.findOrCreate({ 
       where : {
-        memberType: data.memberType,
-        // check if official id or name matches same membertype
-        [Op.or]: {
-          officialId: data.officialId,
-          firstname: data.firstname,
-          lastname1 : data.lastname1,
-          commercialName1: data.commercialName1
-        }
+        officialId: data.officialId,
+        // [Op.or]: {
+          
+          // firstname: data.firstname,
+          // lastname1 : data.lastname1,
+          // commercialName1: data.commercialName1
+        // }
       },
       defaults: defaultOptions
     })
