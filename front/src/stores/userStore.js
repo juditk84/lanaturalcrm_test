@@ -1,32 +1,59 @@
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
-import { parse, format } from '@formkit/tempo'
+import { format } from '@formkit/tempo'
 import axios from 'axios'
-import { useAuthStore } from './authStore'
-import { useRouter, useRoute } from 'vue-router'
+
 
 
 
 export const useUserStore = defineStore('userStore', () => {
-const authStore = useAuthStore()
 const user = ref(null)
 const userTasks = ref(null)
 const pinboard = ref(null)
-const userLinks = ref(null)
-const userDocs = ref(null)
-const userNotes = ref(null)
-
 const $reset = () => {user.value = null}
 
 const userAvatar = computed(  
   () =>
     `https://api.dicebear.com/8.x/adventurer/svg?seed=Salem`
 )
-async function addToPinboard(element, data) {
 
-    try {
+async function getComments(type, id) {
+    
+  try { 
+    // make all a query so we can filter?    
+    const response = await axios.get(`api/comments/${type}/${id}/all`,
+    {
+      headers: {
+        Authorization: sessionStorage.getItem("refreshToken"),
+      },
+    },
+    )
+  
+  const notes = response?.data
+          // .filter((note) => !note.parentId)
+          //   .map((note) => {
+          //   // const subNotes = note.subNotes.map((note) => note.id)
+          //       return {
+          //         id: note.id,
+          //         text: note.text,
+          //         creator: note.Worker.username,
+          //         createdAt: note.createdAt,
+          //         respostes: subNotes,
+          //       }
+          //     })
+    console.log(notes)
+  return notes
 
-      const response = await axios.post(`api/comments/${element}/pinboard`,
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// això es tb reply, si es reply s'agafa el parentId in the AddComment component
+async function addComment(element, data) {
+    
+    try {     
+      const response = await axios.post(`api/comments/${element}/${data.commentableType}`,
       {data},
       {
         headers: {
@@ -42,6 +69,37 @@ async function addToPinboard(element, data) {
     console.log("submit button clicked")
 }
 
+async function editComment(element, data) {
+
+  try {
+    const response = await axios.patch(`api/comments/${element}/${data.id}`,
+    {data},
+    {
+      headers: {
+        Authorization: sessionStorage.getItem("refreshToken"),
+      }
+    })
+    return response.data
+  } catch (error) {
+    alert(error.message)
+  }
+}
+
+async function deleteComment(id, element, data) {
+
+  try {
+    const response = await axios.delete(`api/comments/${element}/${id}`,
+    {data},
+    {
+      headers: {
+        Authorization: sessionStorage.getItem("refreshToken"),
+      }
+    })
+    return response.data
+  } catch (error) {
+    alert(error.message)
+  }
+}
 async function fetchAllUserRelatedAssets(){
   try {
 
@@ -65,34 +123,6 @@ async function fetchAllUserRelatedAssets(){
           subTasks : children,
         }
     })
-    userNotes.value = response?.data.user.Notes
-      .filter((note) => !note.parentId)
-        .map((note) => {
-          return {
-            id: note.id,
-            text: note.text,
-            title: note.title
-          }
-        }) 
-    userDocs.value += response?.data.user.Documents
-        .map((doc) => {
-          return {
-            id: doc.id,
-            title: doc.title, 
-            description: doc.description,
-            url: doc.url
-          }
-        }) 
-      userLinks.value += response?.data.user.Links
-        .map((link) => {
-          return {
-            id: link.id,
-            title: link.title, 
-            description: link.description,
-            url: link.url
-          }
-        })
-
       
   } catch (error) {
     console.log(error);
@@ -106,14 +136,14 @@ async function fetchAllUserRelatedAssets(){
     user,
     userAvatar,
     history,
-    links: userLinks,
     tasks: userTasks,
-    docs: userDocs,
-    notes: userNotes,
     pinboard,
     $reset,
     fetchAllUserRelatedAssets,
-    addToPinboard
+    getComments,
+    addComment,
+    editComment,
+    deleteComment
   }
 
 })

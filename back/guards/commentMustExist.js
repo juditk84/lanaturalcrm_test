@@ -9,7 +9,8 @@ async function commentMustExist(req, res, next) {
     switch(element){
         case "note" : 
             comment = await models.Note.findOne({
-                where: {id: id}
+                where: {id: id},
+                include: { model: models.Note, as: 'SubNotes'}
             })
         break;
         case "link":
@@ -20,7 +21,7 @@ async function commentMustExist(req, res, next) {
         default:
             throw new Error(`no tenim ${element}, proba something else`)
     }
-
+    console.log(comment)
     req.comment = comment;
 
     next()

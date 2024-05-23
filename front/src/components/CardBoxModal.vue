@@ -18,7 +18,7 @@ const props = defineProps({
   },
   buttonLabel: {
     type: String,
-    default: 'Done'
+    default: 'x'
   },
   hasCancel: Boolean,
   modelValue: {
@@ -58,14 +58,14 @@ window.addEventListener('keydown', (e) => {
       is-modal
     >
       <CardBoxComponentTitle :title="title">
-        <BaseButton
+        <!-- <BaseButton
           v-if="hasCancel"
           :icon="mdiClose"
           color="whiteDark"
           small
           rounded-full
           @click.prevent="cancel"
-        />
+        /> -->
       </CardBoxComponentTitle>
 
       <div class="space-y-3">

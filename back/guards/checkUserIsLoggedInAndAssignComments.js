@@ -6,7 +6,7 @@ const models = require("../models");
 const uppercaseFirst = str => `${str[0].toUpperCase()}${str.substr(1)}`
 
 async function checkUserIsLoggedInAndAssignComments(req, res, next){
-const { type, element } = req.params
+const { element, type } = req.params
 const { data } = req.body
 
 
@@ -26,13 +26,13 @@ if (!token) {
         },
         attributes: ["id"] 
       })
-     
+      
       try {
         let commObj = {
             id: uuidv4(),
             title: data.title,
             creatorId: user.id,
-            commentableId: data.commentableId
+            commentableId: type === "dashboard" ? user.id : data.commentableId
         };
         switch (element){
             case "note":
@@ -40,7 +40,7 @@ if (!token) {
                     ...commObj,
                     text: data.text,
                     parentId: data.parentId || null,
-                    commentableType: type === "pinboard" ? "worker" : type
+                    commentableType: type === "dashboard" ? "worker" : type
                 })   
             break;
             case "link":
@@ -50,7 +50,7 @@ if (!token) {
                     ...commObj,
                     description: data.description,
                     url: data.url,
-                    commentableType : type === "pinboard" ? "worker" : type,
+                    commentableType : type === "dashboard" ? "worker" : type,
                 })
             break;
             default: 

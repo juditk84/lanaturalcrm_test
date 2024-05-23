@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHashHistory, routeLocationKey, routerKey, useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/authStore'
 import { useUserStore } from '@/stores/userStore'
 
@@ -119,6 +119,14 @@ const routes = [
     name: 'register',
     component: () => import('@/views/RegisterView.vue')
   },
+  // {  
+  //   meta: {
+  //   title: 'Add Comment'
+  //   },
+  //   path: '/afegirComment',
+  //   component: () => import('@/components/AddComment.vue'),
+  //   props: true,
+  // },
   {
     meta: {
       title: 'Error'
@@ -143,7 +151,9 @@ const router = createRouter({
 // guard preventing access to pages unless the user is logged in like a boss:
 
 router.beforeEach((to, from, next) => {
-
+  const route = useRoute()
+  console.log(route.path)
+  console.log(route.params)
   const authStore = useAuthStore();
 
   const userStore = useUserStore()

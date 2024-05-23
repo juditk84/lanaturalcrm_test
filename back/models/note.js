@@ -30,8 +30,8 @@ module.exports = (sequelize, DataTypes) => {
       Note.belongsTo(models.Worker, {as: "creator", foreignKey: 'creatorId'})
 
       // notes can have subnotes
-      Note.belongsTo(models.Member, {as: "Parent", foreignKey: "parentId", allowNull: true});
-      Note.hasMany(models.Member, {as: "SubNotes", foreignKey: "parentId", allowNull: true})
+      Note.belongsTo(models.Note, {as: "Parent", foreignKey: "parentId", allowNull: true});
+      Note.hasMany(models.Note, {as: "SubNotes", foreignKey: "parentId", allowNull: true})
     }
   }
   Note.init({
