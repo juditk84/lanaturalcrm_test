@@ -128,6 +128,7 @@ export const useMemberStore = defineStore('memberStore', () => {
     addMember,
     fetchMembers,
     fetchSpecificMember,
+    fetchSpecificWorker,
     addMember,
     updateMember,
   }
