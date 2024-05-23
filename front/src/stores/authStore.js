@@ -32,7 +32,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-
   const handleLogin = async (credentials) => {
     try {
       const { data } = await axios("api/inici/login", {

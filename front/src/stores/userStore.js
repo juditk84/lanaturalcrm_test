@@ -85,11 +85,10 @@ async function editComment(element, data) {
   }
 }
 
-async function deleteComment(id, element, data) {
+async function deleteComment(element, data) {
 
   try {
-    const response = await axios.delete(`api/comments/${element}/${id}`,
-    {data},
+    const response = await axios.delete(`api/comments/${element}/${data.id}`,
     {
       headers: {
         Authorization: sessionStorage.getItem("refreshToken"),
