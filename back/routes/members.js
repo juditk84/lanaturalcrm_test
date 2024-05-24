@@ -61,7 +61,6 @@ router.post('/', userShouldBeLoggedIn, async (req, res, next) => {
       where : {
         officialId: data.officialId,
         // [Op.or]: {
-          
           // firstname: data.firstname,
           // lastname1 : data.lastname1,
           // commercialName1: data.commercialName1
