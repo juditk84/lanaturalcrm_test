@@ -21,7 +21,7 @@ export const useMemberStore = defineStore('memberStore', () => {
         Authorization: "Bearer " + sessionStorage.refreshToken
         }
       })
-      allMembers.value = {content: results.data,
+      allMembers.value = {content: results?.data,
                           tableContent: results?.data.map(member => { 
                                           return {nom: member.name,
                                                   adreça: member.address,
@@ -32,7 +32,10 @@ export const useMemberStore = defineStore('memberStore', () => {
                             { binder: "ciutat", label: "ciutat"}
                           ],
                           etag: results.headers.etag
-    }} catch(error) {
+    }
+  }
+    
+    catch(error) {
       if(error.response.status !== 304){
         alert(error.message)
       }

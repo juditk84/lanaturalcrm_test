@@ -152,8 +152,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const route = useRoute()
-  console.log(route.path)
-  console.log(route.params)
   const authStore = useAuthStore();
 
   const userStore = useUserStore()

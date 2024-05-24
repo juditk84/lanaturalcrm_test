@@ -11,14 +11,13 @@ import AddMemberForm from '@/components/AddMemberForm.vue'
 
 <template>
     <LayoutAuthenticated>
-      <SectionMain>
+      <!-- <SectionMain>
         <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Xarxa" main>
           </SectionTitleLineWithButton>
-        </SectionMain>  
+        </SectionMain>   -->
       <SectionMain>
         <BaseDivider/>
-          <AddMemberForm>
-        </AddMemberForm>
+          <AddMemberForm />
       </SectionMain>
     </LayoutAuthenticated>
 </template>

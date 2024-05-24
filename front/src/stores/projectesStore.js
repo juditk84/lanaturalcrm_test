@@ -66,7 +66,23 @@ export const useProjectesStore = defineStore('projecteStore', () => {
                                               {binder: "Progrés", label:"Progrés"},
                                               {binder: "DataFinalització", label:"Data finalitz."}
                                               ],
-                              etag: results.headers.etag
+                              etag: results.headers.etag,
+                              ganttBars: results.data.allProjects.map(project => {
+                                                                      return {
+                                                                        name: project.name,
+                                                                        id: project.id,
+                                                                        tasks: project.Tasks.map( task => {
+                                                                                                  return {
+                                                                                                    myBeginDate: task.startDate ,
+                                                                                                    myEndDate: task.deadline,
+                                                                                                    ganttBarConfig: {
+                                                                                                        hasHandles: true,
+                                                                                                        // each bar must have a nested ganttBarConfig object ...
+                                                                                                        id: task.id, // ... and a unique "id" property
+                                                                                                        label: task.title
+                                                                                                        }
+                                                                                                    }}
+                                                                      )}})
                             }
                             
       } catch(error) {

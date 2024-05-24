@@ -80,18 +80,19 @@ const formStatusSubmit = () => {
 </script>
 
 <template>
-  <LayoutAuthenticated>
 
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiHandshakeOutline" title="Add a member, help a member" main>
+      <SectionTitleLineWithButton :icon="mdiHandshakeOutline" title="Afegir un nou membre" main>
        
       </SectionTitleLineWithButton>
-      <FormField label="Selecciona el tipus de membre:">
-          <FormControl v-model="form.memberType" :options="selectOptions" />
-        </FormField>
-        
-        <BaseDivider />
       <CardBox form @submit.prevent="submit">
+        <div class="grid grid-cols-4">
+          <FormField label="Selecciona el tipus de membre:">
+            <FormControl v-model="form.memberType" :options="selectOptions" />
+          </FormField>
+        </div>
+
+          <BaseDivider />
         <FormField v-if="form.memberType === 'contact'" label="noms, cognoms">
           <FormControl v-model="form.firstname" :icon="mdiAccount" placeholder="monti"/>
           <FormControl v-model="form.lastname1" :icon="mdiAccount" placeholder="buli"/>
@@ -160,49 +161,4 @@ const formStatusSubmit = () => {
       </CardBox>
   
     </SectionMain>
-
-  
-
-    <SectionTitle>Custom elements</SectionTitle>
-
-    <SectionMain>
-      <CardBox>
-        <FormField label="Checkbox">
-          <FormCheckRadioGroup
-            v-model="customElementsForm.checkbox"
-            name="sample-checkbox"
-            :options="{ lorem: 'Lorem', ipsum: 'Ipsum', dolore: 'Dolore' }"
-          />
-        </FormField>
-
-        <BaseDivider />
-
-        <FormField label="Radio">
-          <FormCheckRadioGroup
-            v-model="customElementsForm.radio"
-            name="sample-radio"
-            type="radio"
-            :options="{ one: 'One', two: 'Two' }"
-          />
-        </FormField>
-
-        <BaseDivider />
-
-        <FormField label="Switch">
-          <FormCheckRadioGroup
-            v-model="customElementsForm.switch"
-            name="sample-switch"
-            type="switch"
-            :options="{ one: 'One', two: 'Two' }"
-          />
-        </FormField>
-
-        <BaseDivider />
-
-        <FormFilePicker v-model="customElementsForm.file" label="Upload" />
-      </CardBox>
-
-     
-    </SectionMain>
-  </LayoutAuthenticated>
 </template>

@@ -3,9 +3,10 @@ import NoteBox from '@/components/NoteBox.vue'
 import AddCommentButton from '@/components/AddCommentButton.vue'
 import CardBoxModal from './CardBoxModal.vue';
 import AddComment from './AddComment.vue';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useMyFetch } from '@/helper/useMyFetch';
 import { useUserStore } from '@/stores/userStore'
+import { useRoute, useRouter } from 'vue-router'
 
 // s'ha de passar commentableType que serà "worker", "task", "projects"...whatever Thing the comments are about
 // i commentableId que serà l'id d'aquesta cosa
@@ -19,11 +20,15 @@ const props = defineProps({
     require: true,
   }
 })
+
+const userStore = useUserStore()
+const route = useRoute()
+
 const loading = ref(false)
 const isModalActive = ref(false)
-const userStore = useUserStore()
 const notes = ref(null)
 const parentId = ref(null)
+
 
 // this is GET /all comments
 async function updateComments(){
@@ -39,8 +44,10 @@ async function updateComments(){
   }
 }
 
-onMounted(() => {
-  updateComments()})
+onMounted(async () => {
+  await updateComments()})
+
+  watch(route, async () => await updateComments())
 
 async function openForm(data) {
    try {
